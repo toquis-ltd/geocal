@@ -1,0 +1,44 @@
+{% extends 'common/index.html' %}
+
+{% block header %}
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/style.css' %}">
+{% endblock %}
+
+{% block content %}
+<article class='home'>
+    <header class='home__header'>
+        <h1 class='home__title'>Welcome to toquis GeoPointers</h1>
+    </header>
+    <content class='application'>
+        <div class='application__item'>
+            <a href="{% url 'converter:PointConverter' %}">
+                <div class='application__item-icon'>
+                        {% load staticfiles %}
+                        <img class="application__item-img" src="{% static 'home/img/converter.jpg' %}">
+                </div>
+                <div class='application__item-content'>
+                   <div class='application__item-discription'>
+                        <p>The converter is easy tool to transform point from one coordinate referance system to other</p>
+                   </div>
+                    <h2 class='application__item-title'>GeoPointers converter</h2>
+                </div>
+            </a>
+        </div>
+        <div class='application__item'>
+            <a href="{% url 'sources:links' %}">
+                <div class='application__item-icon'>
+                        {% load staticfiles %}
+                        <img class="application__item-img" src="{% static 'home/img/converter.jpg' %}">
+                </div>
+                <div class='application__item-content'>
+                   <div class='application__item-discription'>
+                        <p>Here's list of sources of open data</p>
+                   </div>
+                    <h2 class='application__item-title'>GeoPointers sources</h2>
+                </div>
+            </a>
+        </div>
+    </content>
+</article>
+{% endblock %}

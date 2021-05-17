@@ -1,0 +1,19 @@
+{% extends 'sources/form.html' %}
+
+{%block styles%}
+    <!-- <link rel="stylesheet" type="text/css" href="/"> -->
+{%endblock%}
+
+{%block form%}
+
+    <div class="">
+        <label for='site-name'>Please insert the name or the link</label>
+        <input id="site-name" type="text" name="site-name" required="required"> 
+    </div>
+    
+    <div class="">
+        <label for='problem'>problem</label>
+        <textarea id="problem" type="text" name="problem"></textarea>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'common/index.html' %}
+
+{% block header %}
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'search/css/style.css' %}">
+{% endblock %}
+
+{% block content %}
+    <section class="content__container">
+        <div class="search__box">
+            <form  action="{% url 'search:find' %}" method="GET">
+                <input type="text" name="q" placeholder="Enter region name" autocomplete="off" value="{{search_bar}}">
+                <button type="submit">search</button>
+                {% if show_number %}
+                    <label>find {{find_number}} results</label>
+                {% endif %}
+            </form>
+        </div>
+        {% for region in find_regions %}
+            <div class="info__box">
+                <h1 class="region__title"><a href="{% url 'wiki:CoordinateReferenceSystem' region.coord_ref_sys_code %}">{{region.coord_ref_sys_name}}</a></h1>
+                <h3>{{region.area_name}}</h3>
+                <p>EPSG code: {{region.coord_ref_sys_code}}</p>
+            </div>
+        {% endfor %}
+    </section>
+{% endblock %}

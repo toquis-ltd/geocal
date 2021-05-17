@@ -1,0 +1,42 @@
+version: "3.8"
+services:
+  web:
+    build: .
+    tty: true
+    container_name: web
+    env_file:
+      - 'prod.env'
+    volumes:
+      - static:/usr/src/app/static
+    depends_on: 
+      - pgdb
+
+  nginx:
+    build: ./nginx
+    volumes:
+      - static:/usr/src/app/static
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - web
+
+  pgdb:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: toor
+
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+
+volumes:
+  static:

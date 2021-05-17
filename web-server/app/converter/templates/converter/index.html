@@ -1,0 +1,17 @@
+{% extends 'common/index.html' %}
+
+{% block header %}
+    <title>GeoPointers-Converter</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" type="text/css" href="{% static 'converter/css/main.0d400a9f.chunk.css' %}">
+{% endblock %}
+
+{% block content%}
+<main id="root" class = "converter">
+</main>
+{% load staticfiles %}
+    <script src="{% static 'common/js/react.js' %}"></script>
+    <script src="{% static 'converter/js/2.c0008708.chunk.js' %}"></script>
+    <script src="{% static 'converter/js/main.c644b3f2.chunk.js' %} "></script>
+{% endblock %}

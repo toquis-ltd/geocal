@@ -1,0 +1,17 @@
+{% extends 'common/index.html' %}
+{% block header %}
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'sources/css/form.css' %}">
+    {% block styles %}
+    {% endblock %}
+{% endblock %}
+{% block content %}
+<main class="form-container">
+    <form method="POST" action="{% url 'sources:add' name %}">
+        {% csrf_token %}
+        {% block form %}
+        {% endblock %}
+        <button class="" type="submit">submit</button>
+    </form>
+</main>
+{% endblock %}
