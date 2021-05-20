@@ -16,6 +16,7 @@
     <body>
         {% cms_toolbar %}
         {% show_menu 0 100 100 100 'components/menu.html' %}
+        
         {% block content %}{% endblock content %}
         {% include "components/footer.html" %}
         {% render_block "js" %}

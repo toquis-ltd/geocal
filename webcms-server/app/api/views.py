@@ -65,7 +65,9 @@ class Search(APIView):
        
     @render_page
     def get(self, request, format=None):
-        if ((qwest:=request.GET.get('q'))==None): raise Exception ("Can't find anything for empty request")
+        if ((qwest:=request.GET.get('q'))==None): 
+            raise Exception ("Can't find anything for empty request")
+        
         self.context = CoordinateReferenceSystemSearch(qwest)
         return self.__get_responce()
 
