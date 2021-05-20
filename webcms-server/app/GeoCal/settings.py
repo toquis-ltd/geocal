@@ -8,10 +8,6 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-SECRET_KEY = os.getenv("SECRET_KEY")
-DEBUG = bool(int(os.getenv("DEBUG")))
-
-ALLOWED_HOSTS = ['*']
 # Application definition
 
 
@@ -186,6 +182,7 @@ CMS_LANGUAGES = {
 CMS_TEMPLATES = (
     ## Customize this
     ('fullwidth.html', 'Fullwidth'),
+    ('home.html', 'Home'),
 )
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
@@ -220,6 +217,9 @@ REST_FRAMEWORK = {
 }
 
 try:
-    from local_settings import *
+    from .local_settings import *
 except ImportError:
-    pass
+    SECRET_KEY = os.getenv("SECRET_KEY")
+    DEBUG = bool(int(os.getenv("DEBUG")))
+
+    ALLOWED_HOSTS = ['*']

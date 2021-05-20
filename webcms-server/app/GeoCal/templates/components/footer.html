@@ -1,0 +1,32 @@
+{% load static %}
+{% block footer %}
+<footer class="footer">
+    <div class="container footer__top">
+        <h4 class="footer__title">Social</h4>
+    </div>
+    <div class="footer__social-media">
+        <a href="https://www.linkedin.com/company/toquis/" class="footer__social-item">
+            <img src="{% static 'common/img/linkedin.svg' %} " alt="linkedin logo" class="footer__social-ico footer__linkedin">
+        </a>
+        <a href="https://www.youtube.com/channel/UC4Iv7ZREPDggUf-sMA_IkvA/featured" class="footer__social-item">
+            <img src="{% static 'common/img/youtube.svg' %}" alt="youtube logo" class="footer__social-ico footer__youtube">
+        </a>
+    </div>
+    <div class="footer__content">
+        <div class="footer__item footer__copy-right">
+            <p class="">Copyright © 2020 toquis <wbr>- All Rights Reserved.</p>
+        </div>
+        <div class="footer__item footer__mention">
+            <p class="">Powered by toquis.com</p>
+        </div>
+        <div class="footer__item footer__about">
+            <a href="https://toquis.com/contact-1" class="footer__link footer__contact">
+                Contact
+            </a>
+            <a href="https://toquis.com/privacy-policy" class="footer__link footer__privacy">
+                Privacy Policy
+            </a>
+        </div>
+    </div>
+</footer>
+{% endblock %}
