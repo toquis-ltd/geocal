@@ -1,0 +1,9 @@
+@media (max-width:780px) {  
+    .selector__title{
+        font-size: 18px !important;
+    }
+        
+    .selector__footer{
+        margin-bottom: 25px;
+    }
+}

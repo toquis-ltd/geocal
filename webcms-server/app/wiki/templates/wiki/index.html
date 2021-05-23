@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content%}
+    <section class="about">
+        
+        {% block title %}
+            {% include "wiki/title.html" %}
+        {% endblock %}
+
+        {% block discription %}
+            {% include "wiki/attributes.html" %}
+        {% endblock %}
+
+    </section>
+{% endblock %}

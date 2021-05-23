@@ -104,6 +104,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.locale.LocaleMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'cms.middleware.user.CurrentUserMiddleware',
@@ -153,7 +154,9 @@ INSTALLED_APPS = [
     'djangocms_video',
     'GeoCal',
     'rest_framework',
+    'corsheaders',
     'api',
+    'wiki',
 ]
 
 LANGUAGES = (

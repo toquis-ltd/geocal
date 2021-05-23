@@ -1,0 +1,23 @@
+{% block discription %}
+        <div class="container__box">
+            <h3 class="container__title">Attributes</h3>
+            <div class="information">
+                {% for i in p_list%}
+                    {% if i.value != "" %}
+                        <p>
+                            <span class="caption">
+                                {{i.name}}:
+                            </span>
+                            {% if i.address == "" %}
+                                {{i.value | safe | escape }} 
+                            {% else %}
+                                <a href="{% url i.appname  i.address%}">
+                                    {{ i.value }}
+                                </a>
+                            {% endif %}
+                        </p>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+{% endblock %}

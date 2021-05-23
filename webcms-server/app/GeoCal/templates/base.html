@@ -10,6 +10,8 @@
 
         <link rel="stylesheet" href="{% static 'components/css/menu.css' %}">
         <link rel="stylesheet" href="{% static 'common/css/style.css' %}">
+        
+        <link rel="stylesheet" type="text/css" href="{% static 'wiki/css/style.css' %}">
 
         {% render_block "css" %}
     </head>
@@ -18,6 +20,7 @@
         {% show_menu 0 100 100 100 'components/menu.html' %}
         
         {% block content %}{% endblock content %}
+
         {% include "components/footer.html" %}
         {% render_block "js" %}
     </body>

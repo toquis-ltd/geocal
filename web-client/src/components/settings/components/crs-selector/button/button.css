@@ -1,0 +1,13 @@
+.selector__btn {
+    background-color: white;
+    border-radius: 15px;
+    min-width: 250px;
+    height: 20px;
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
+
+.selector__btn:hover {
+      text-decoration: underline;
+}

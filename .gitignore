@@ -12,7 +12,6 @@ setenv.sh
 #data
 *.csv
 *.shp
-*.json
 
 #js libs
 *.min.js
@@ -120,7 +119,3 @@ media/
 
 #https connection
 *.pem
-
-# collestatic files
-static
-scripts
