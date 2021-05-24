@@ -84,7 +84,7 @@ class Search(APIView):
                     }
 
     def __get_crs_list(self) -> dict:
-        for i in self.context.get_list_of_find_crs():
+        for i in self.context.get_list_of_find():
             yield {
                     'code':i.coord_ref_sys_code,
                     'name':i.coord_ref_sys_name,
