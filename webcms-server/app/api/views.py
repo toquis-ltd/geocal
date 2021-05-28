@@ -62,7 +62,7 @@ class Transform(APIView):
             raise e
 
 class Search(APIView):
-       
+
     @render_page
     def get(self, request, format=None):
         if ((qwest:=request.GET.get('q'))==None): 
