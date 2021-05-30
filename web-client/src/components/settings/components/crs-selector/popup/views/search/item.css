@@ -1,0 +1,30 @@
+.result__item {
+    border: 1px solid hsla(0, 0%, 10%, 0.8);
+    padding: 5px;
+    list-style-type: none;
+    /* height: min(12vh, 20vh); */
+    margin-bottom: 5px;
+}
+
+.result__item:hover{
+    box-shadow: 5px 5px #888888;
+    background-color: rgba(182, 182, 182, 0.575);
+    cursor: pointer;
+}
+
+.result__item:focus{
+    box-shadow: 5px 5px #888888
+}
+
+.result__item-title{
+    margin-bottom: 5px;
+}
+
+.result__item-description{
+    margin: 0;
+    margin-bottom: 5px;
+}
+    
+.result__select-btn{
+    margin-left: 85%;
+}
