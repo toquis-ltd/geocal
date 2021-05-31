@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="{{LANGUAGE_CODE}}">
     <head>
-        <title>{% block title %}MapLess{% endblock title %}</title>
+        <title>MapLess</title>
         <meta name="viewport" content="width=device-width,initial-scale=1">
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -41,7 +41,7 @@
 
                 <div class="product__statictics content-container">
                     <div class="product__statistics-item">
-                        <a href="#" class="product__link">
+                        <a href="{% url 'calculator:main' %}" class="product__link">
                             <img src="{% static 'home/img/transform.png' %}" alt="transformation" class="product__statostics-image">
                             <p class="product__statictics-digits">6,920 CRSs</p>
                             <p class="product__statictics-text">Transform between<br/>coordinates referance system </p>
@@ -57,13 +57,6 @@
                         </a>
                     </div>
                 </div>                
-            </div>
-        </section>
-        
-        {% placeholder "" %}
-        <section class="product">
-            <div class="container">
-
             </div>
         </section>
         {% include "components/footer.html" %}

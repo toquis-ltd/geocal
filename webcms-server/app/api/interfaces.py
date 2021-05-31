@@ -19,7 +19,7 @@ class CoordinateReferenceSystemInterface():
             return None
 
     def _get_bounds(self):
-        if area := self._get_area() is None: return None
+        if (area := self._get_area()) is None: return None
         return {
                                 'southBoundLat':area.area_south_bound_lat,
                                 'northBoundLat':area.area_north_bound_lat,

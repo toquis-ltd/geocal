@@ -1,4 +1,9 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'wiki/css/style.css' %}">
+{% endblock %}
 
 {% block content%}
     <section class="about">

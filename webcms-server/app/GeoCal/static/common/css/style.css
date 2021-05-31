@@ -112,7 +112,7 @@ body{
     grid-column-start: 1;
     grid-column-end: 3;
     text-align: center;
-    margin-bottom: 25px;
+    line-height: 75px;
 }
 .footer__link{
     margin: 3vh 15px;

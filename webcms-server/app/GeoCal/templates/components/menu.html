@@ -4,6 +4,9 @@
         <li class="menu__list-item">
             <a href="https://toquis.com/team-1" class="menu__list-link">Toquis</a>
         </li>
+        <li class="menu__list-item">
+            <a href="{% url 'calculator:main' %}" class="menu__list-link">Calculator</a>
+        </li>
         {% for child in children %}
             <li class="menu__list-item">
                 <a href="{{ child.attr.redirect_url|default:child.get_absolute_url }}" class="menu__list-link">

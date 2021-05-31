@@ -7,12 +7,10 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
         <link rel="stylesheet" href="{% static 'components/css/menu.css' %}">
         <link rel="stylesheet" href="{% static 'common/css/style.css' %}">
-        
-        <link rel="stylesheet" type="text/css" href="{% static 'wiki/css/style.css' %}">
-
+        {% block css %}
+        {% endblock %}
         {% render_block "css" %}
     </head>
     <body>
@@ -22,6 +20,8 @@
         {% block content %}{% endblock content %}
 
         {% include "components/footer.html" %}
+
+        {% block underfooter %}{% endblock underfooter %}
         {% render_block "js" %}
     </body>
 </html>

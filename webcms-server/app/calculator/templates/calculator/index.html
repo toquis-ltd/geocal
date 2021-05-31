@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load sekizai_tags static %}
+
+{% block css %}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" type="text/css" href="{% static 'calculator/css/main.0d400a9f.chunk.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'calculator/css/style.css' %}">
+{% endblock %}
+
+{% block content%}
+    <div id='root' class="converter"></div>
+{% endblock %}
+
+{% block underfooter%}
+    <div id='popup'></div>
+    <script src="{% static 'calculator/js/react.js' %}"></script>
+    <script src="{% static 'calculator/js/2.c0008708.chunk.js' %}"></script>
+    <script src="{% static 'calculator/js/main.c644b3f2.chunk.js' %} "></script>
+{% endblock underfooter%}
+
+
+

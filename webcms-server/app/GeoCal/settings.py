@@ -157,6 +157,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'api',
     'wiki',
+    'calculator',
 ]
 
 LANGUAGES = (
@@ -196,13 +197,12 @@ CMS_PLACEHOLDER_CONF = {}
 
 DATABASES = {
     'default': {
-        'CONN_MAX_AGE': 0,
-        'ENGINE': 'django.db.backends.sqlite3',
-        'HOST': 'localhost',
-        'NAME': 'project.db',
-        'PASSWORD': '',
-        'PORT': '',
-        'USER': ''
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('pg_name'),
+        'USER': os.getenv('pg_user'),
+        'HOST':  os.getenv('pg_host'),
+        'PASSWORD': os.getenv('pg_pass'),
+        'PORT': 5432
     }
 }
 
@@ -225,4 +225,4 @@ except ImportError:
     SECRET_KEY = os.getenv("SECRET_KEY")
     DEBUG = bool(int(os.getenv("DEBUG")))
 
-    ALLOWED_HOSTS = ['*']
+    ALLOWED_HOSTS = ['geocal.toquis.com']
