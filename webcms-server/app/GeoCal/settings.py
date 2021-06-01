@@ -15,7 +15,7 @@ ROOT_URLCONF = 'GeoCal.urls'
 
 
 WSGI_APPLICATION = 'GeoCal.wsgi.application'
-
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
