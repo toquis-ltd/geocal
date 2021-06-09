@@ -1,0 +1,22 @@
+{% extends 'sources/form.html' %}
+
+{%block styles%}
+    <!-- <link rel="stylesheet" type="text/css" href="/"> -->
+{%endblock%}
+
+{%block form%}
+
+    <div class="">
+        <label for='site'>Site name:</label>
+        <input  id="site-name" type="text" name="site-name" required="required"> 
+    </div>
+    <div>
+        <label for='site-discription'>Discription:</label>
+        <textarea id="site-discription" name="site-discription" rows="2" maxlength="3072"></textarea>
+    </div>
+    <div class="">
+        <label for='POST-link'>Link</label>
+        <input id="site-address" type="link" name="site-address" required="required"><br/>
+    </div>
+
+{% endblock %}

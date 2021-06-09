@@ -1,0 +1,97 @@
+:root{
+    --item-border: 1px;
+    --item-border-color: #dddddd;
+}
+.source{
+    padding: 7vh 0 0;
+    color: #a9a9b1;
+}
+
+@media (max-width: 820px){
+    .source{
+        width: 85%;
+    }
+    .message{
+        visibility: hidden;
+    }
+}
+
+.source__new-item{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5px;
+}
+.source__new-btn{
+    position: relative;
+    border-radius: 50%;
+    border: 2px solid ;
+    width: 1em;
+    height: 1em;
+    text-align: center;
+    background-color: #323232;
+    color: white;
+    font-size: 32px;
+    padding-bottom: 6px;
+}
+.source__new-btn a{
+    position: relative;
+    bottom: 4px;
+}
+.source__item{
+    border-top: solid var(--item-border) var(--item-border-color);
+    display: grid;
+    grid-template-columns: 3fr 1fr 0.5fr;
+}
+.source__item:last-of-type{
+    border-bottom: solid var(--item-border) var(--item-border-color);
+}
+.source__item-inner{
+    padding: 10px;
+    font-size: max(1.2vw, 1.5vh);
+}
+.source__item-title{
+    color:#323232;
+}
+.source_item-region{
+    margin: auto;
+    font-size: max(1.2vw, 1.6vh);
+    text-align: center;
+}
+.source__item-control{
+    margin: auto 0;
+    text-align: right;
+    padding-right: 2px;
+}
+.source__item-report{
+    position: relative;
+}
+.source_report-icon{
+    height: max(2vw, 2vh);
+    width: max(2vw, 2vh);
+}
+.source__footer {
+    margin: 7vh 0;
+    text-align: center;
+}
+
+/*textbox*/
+.source__item-report .message, .source__new-btn a .message {
+    display: none;
+    width: 120px;
+    background-color: rgba(0, 0, 0, 0.884);
+    color: rgba(255, 255, 255, 0.4);
+    text-align: center;
+    border-radius: 8px;
+    padding: 2px 0;
+    font-size: 16px;
+    
+
+    position: absolute;
+    z-index: 2;
+    bottom: 70%;
+    left: -50px;
+}
+
+.source__item-report:hover .message, .source__new-btn:hover .message {
+    display: inline-block;
+}

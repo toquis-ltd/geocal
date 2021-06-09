@@ -158,6 +158,7 @@ INSTALLED_APPS = [
     'api',
     'wiki',
     'calculator',
+    'sources',
 ]
 
 LANGUAGES = (

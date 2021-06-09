@@ -1,0 +1,35 @@
+{% extends 'common/index.html' %}
+{% block header %}
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'sources/css/form.css' %}">
+    {% block styles %}
+    {% endblock %}
+{% endblock %}
+{% block content %}
+<main class="form-container">
+    <form method="POST" action="{% url 'sources:add' name %}">
+        {% csrf_token %}
+        {% block form %}
+        {% endblock %}
+        <button class="" type="submit">submit</button>
+    </form>
+</main>
+{% endblock %}
+
+<main class="sources">
+    <content class="sources__content">
+        <div class="sources__links-list">
+            {% for i in links %}
+                {% if i.is_verified or i.author == user %}
+                    <div class="sources__links-item">
+                        <h2>
+                            <a href="{{i.site_address}}">{{i.site_name}}</a>
+                            <span>{% if not i.is_verified %}(is waiting for verification){%endif%}</span>
+                        </h2>
+                        <p>{{i.site_discription}}</p>
+                    </div>
+                {%endif%}
+            {% endfor %}
+        </div>
+    </content>
+</main>

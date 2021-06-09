@@ -7,23 +7,23 @@ html{
     box-sizing: border-box;
 }
 
-p, a{
-    font-size: 2vh;
-}
-
-a{
-    text-decoration: none;
-    color: inherit;
-    display: inline-block;
-}
-
-section {
-    padding: 7vh 0 0;
-}
-
 body{
     font-family: 'Lato', sans-serif;
     font-size: 16px;
+}
+
+.ui__adaptif-text{
+    font-size: 2vh;
+}
+ 
+.ui__link{
+    text-decoration: none;
+    color: inherit;
+    display: inline-block; 
+}
+
+.product {
+    padding: 7vh 0 0;
 }
 
 .title{
@@ -56,7 +56,7 @@ body{
     text-align: center;
     color: rgb(27, 27, 27);
     margin: auto 25px;
-    font-size: max(0.7vw, 2.5vh) ;/*18.2px  */
+    font-size: max(0.7vw, 2.5vh) ;
     line-height: 1.5em;
     font-family: Roboto, arial, sans-serif;
     font-weight: 400px;

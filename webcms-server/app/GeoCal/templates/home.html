@@ -41,14 +41,14 @@
 
                 <div class="product__statictics content-container">
                     <div class="product__statistics-item">
-                        <a href="{% url 'calculator:main' %}" class="product__link">
+                        <a href="{% url 'calculator:main' %}" class="product__link ui__link">
                             <img src="{% static 'home/img/transform.png' %}" alt="transformation" class="product__statostics-image">
                             <p class="product__statictics-digits">6,920 CRSs</p>
                             <p class="product__statictics-text">Transform between<br/>coordinates referance system </p>
                         </a>
                     </div>
                     <div class="product__statistics-item">
-                        <a href="#" class="product__link">
+                        <a href="{% url 'sources:links' %}" class="product__link ui__link">
                             <img src="{% static 'home/img/search.png' %}" alt="reaserch for data" class="product__statostics-image">
                             <p class="product__statictics-digits">271 sources</p>
                             <p class="product__statictics-text">
