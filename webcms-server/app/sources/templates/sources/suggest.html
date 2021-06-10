@@ -1,22 +1,21 @@
 {% extends 'sources/form.html' %}
+{% load static %}
 
-{%block styles%}
-    <!-- <link rel="stylesheet" type="text/css" href="/"> -->
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'sources/css/suggest.css' %}">
 {%endblock%}
 
 {%block form%}
-
-    <div class="">
-        <label for='site'>Site name:</label>
-        <input  id="site-name" type="text" name="site-name" required="required"> 
-    </div>
-    <div>
-        <label for='site-discription'>Discription:</label>
-        <textarea id="site-discription" name="site-discription" rows="2" maxlength="3072"></textarea>
-    </div>
-    <div class="">
-        <label for='POST-link'>Link</label>
+    <div class="form__url">
+        <label for='POST-link'>URL:</label></br>
         <input id="site-address" type="link" name="site-address" required="required"><br/>
     </div>
-
+    <div class="form__name">
+        <label for='site'>Site name:</label></br>
+        <input  id="site-name" type="text" name="site-name" required="required"> 
+    </div>
+    <div class="form__discription">
+        <label for='site-discription'>Discription:</label></br>
+        <textarea class="form__textarea" id="site-discription" name="site-discription" rows="2" maxlength="3072"></textarea>
+    </div>
 {% endblock %}

@@ -1,12 +1,32 @@
-textarea, input{
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    box-shadow: 1px 1px 1px #999;
-}
-.form__header{
-    display: flex;
+.form__inner{
+    display: grid;
+    row-gap: 10px;
+    grid-template-columns: repeat(2, 1fr);    
 }
 
-.form__textarea{
-    resize: none;
+.form__inner input{
+    width: 80%;
+}
+
+.form__discription{
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+.form__name input{
+    width: 100%;
+}
+
+.form__submit{
+    margin-left: 85%;
+}
+
+@media (max-width:600px) {
+    .form__inner{
+        display: block;
+    }
+    .form__inner input{
+        width: 100%;
+        margin-bottom: 10px;
+    }
 }

@@ -10,13 +10,12 @@
     <header class="source__header">
         <h2 class="source__title title">
             Open data links data base
-            {% placeholder "title" %}
         </h2>
     </header>
     <content class="source__content">
         <div class="source__new-item">
             <div class="source__new-btn">
-                <a class="ui__link" href="">+
+                <a class="ui__link" href="{% url 'sources:suggest' %}">+
                     <span class="message">Add one</span>
                 </a>
             </div>
@@ -36,7 +35,7 @@
                     <h4 class="">{{i.region}}</h4>
                 </div>
                 <nav class="source__item-control">
-                    <a class="source__item-report ui__link" href="">
+                    <a class="source__item-report ui__link" href="{% url 'sources:report' i.id %}">
                         <span class="message">report</span>
                         <img  class="source_report-icon" src="{% static 'sources\img\report.svg' %}" alt="" srcset="">
                     </a>

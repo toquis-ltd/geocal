@@ -1,19 +1,15 @@
 {% extends 'sources/form.html' %}
+{% load static %}
 
 {%block styles%}
-    <!-- <link rel="stylesheet" type="text/css" href="/"> -->
+    <link rel="stylesheet" type="text/css" href="{% static 'sources/css/report.css' %}">
 {%endblock%}
 
 {%block form%}
-
-    <div class="">
-        <label for='site-name'>Please insert the name or the link</label>
-        <input id="site-name" type="text" name="site-name" required="required"> 
-    </div>
-    
-    <div class="">
-        <label for='problem'>problem</label>
-        <textarea id="problem" type="text" name="problem"></textarea>
+    <input id="id" name="id" type="hidden" required="required" value='{{item.id}}'>
+    <div class="form__discription">
+        <label for='problem'>What's wrong with {{item}}</label></br>
+        <textarea class="form__textarea" id="problem" type="text" name="problem"></textarea>
     </div>
 
 {% endblock %}
