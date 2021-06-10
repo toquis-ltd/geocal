@@ -104,7 +104,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.locale.LocaleMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'cms.middleware.user.CurrentUserMiddleware',
@@ -154,7 +153,6 @@ INSTALLED_APPS = [
     'djangocms_video',
     'GeoCal',
     'rest_framework',
-    'corsheaders',
     'api',
     'wiki',
     'calculator',
@@ -225,5 +223,4 @@ try:
 except ImportError:
     SECRET_KEY = os.getenv("SECRET_KEY")
     DEBUG = bool(int(os.getenv("DEBUG")))
-
-    ALLOWED_HOSTS = ['geocal.toquis.com']
+    ALLOWED_HOSTS = ['mapless.toquis.com']
