@@ -1,14 +1,4 @@
 # Coordinate system converter
-
-## Issues
-
-### CSS
-* (Not critical) Globe object  The globe in popup has strange comportement and didn't positioned at the right place in different view size (This part is in react code)
-* (Not critical) Header Searchbar Height of the Searchbar did't match with button size(this part is in django static/common)
-
-### Django
-* (Medium) Search is case sensitive, problem file is in (search/interfaces.py)
-
 ## Before Deployment
 ### Build react app
 Before deploy docker file you will need Build js project
