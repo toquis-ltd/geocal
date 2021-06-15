@@ -18,6 +18,15 @@
             }
         </style>
         {% render_block "css" %}
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-XWJLWM38MD"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-XWJLWM38MD');
+        </script>
     </head>
     <body>
         {% cms_toolbar %}
@@ -38,15 +47,7 @@
         <section class="product">
             <div class="container">
                 {% placeholder "Title" %}
-
                 <div class="product__statictics content-container">
-                    <div class="product__statistics-item">
-                        <a href="{% url 'calculator:main' %}" class="product__link ui__link">
-                            <img src="{% static 'home/img/transform.png' %}" alt="transformation" class="product__statostics-image">
-                            <p class="product__statictics-digits">6,920 CRSs</p>
-                            <p class="product__statictics-text">Transform between<br/>coordinates referance system </p>
-                        </a>
-                    </div>
                     <div class="product__statistics-item">
                         <a href="{% url 'sources:' %}" class="product__link ui__link">
                             <img src="{% static 'home/img/search.png' %}" alt="reaserch for data" class="product__statostics-image">
@@ -54,6 +55,13 @@
                             <p class="product__statictics-text">
                                 Find open databases <br/>
                             </p>
+                        </a>
+                    </div>
+                    <div class="product__statistics-item">
+                        <a href="{% url 'calculator:main' %}" class="product__link ui__link">
+                            <img src="{% static 'home/img/transform.png' %}" alt="transformation" class="product__statostics-image">
+                            <p class="product__statictics-digits">6,920 CRSs</p>
+                            <p class="product__statictics-text">Transform between<br/>coordinates referance system </p>
                         </a>
                     </div>
                 </div>                

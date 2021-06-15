@@ -9,7 +9,8 @@ from .interface import Isearch
 class CoordinateReferenceSystemSearch(Isearch):
 
     def __init__(self, request):
-        if not match("^[A-Za-z0-9]*$", request) or len(request)==0:
+        
+        if match("\W + \S", request) or len(request)==0:
             self.find = []
             return
 

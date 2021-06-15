@@ -220,6 +220,8 @@ REST_FRAMEWORK = {
 
 try:
     from .local_settings import *
+    allow_corsheaders(MIDDLEWARE, INSTALLED_APPS)
+
 except ImportError:
     SECRET_KEY = os.getenv("SECRET_KEY")
     DEBUG = bool(int(os.getenv("DEBUG")))

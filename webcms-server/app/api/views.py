@@ -13,11 +13,11 @@ from .interfaces import CoordinateReferenceSystemInterface
 
 def render_page(func):
     def wrapper(self, request):
-        try:
+        # try:
             responce = func(self=self, request=request)
             return Response(responce)
-        except Exception as e:
-            return HttpResponse(e, status=404)
+        # except Exception as e:
+        #     return HttpResponse(e, status=404)
     return wrapper
 
 class About(APIView):
@@ -56,10 +56,10 @@ class Transform(APIView):
         return self.__get_responce()
 
     def __get_responce(self) -> dict:
-        try:
+        # try:
             return self.context.get_target_values()
-        except Exception as e:
-            raise e
+        # except Exception as e:
+        #     raise e
 
 class Search(APIView):
 
