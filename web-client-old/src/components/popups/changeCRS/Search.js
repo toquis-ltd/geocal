@@ -1,5 +1,5 @@
 import { useState } from 'react';
-// import Globe from '../../globe/Globe';
+import Globe from '../../globe/Globe';
 import { getCRSList } from '../../../tools/parse';
 import { Item } from './Item';
 
@@ -42,7 +42,7 @@ export function Search({ onSave }) {
         </div>
       </div>
       <div className='complimentary_tool_container'>
-        {/* <Globe onClick={(e) => onGlobeClick(e)} /> */}
+        <Globe onClick={(e) => onGlobeClick(e)} />
       </div>
     </>
   );

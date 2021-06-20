@@ -1,7 +1,7 @@
 
 export function getPlaceholders(unityName) {
     const deglist = ['degree', 'unknown', 'sexagesimal', ' DMS.s'];
-    if (deglist.includes(unityName)) return ['Latitude', 'Longitude', 'Altitude'];
+    if (deglist.includes(unityName)) return ['Longitude', 'Latitude', 'Altitude'];
     return ['X', 'Y', 'Z'];
 }
 

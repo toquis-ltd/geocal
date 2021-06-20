@@ -8,13 +8,25 @@ function StoryCase({source, target, element}){
   const [isActivate, toggleActivate] = useState(false);
   const [pointOnMap, setPoint] = useState();
   var copyLink = (`${process.env.REACT_APP_HOST}/converter/?s_crs=${source.crs.code}&t_crs=${target.crs.code}`);
-
+  
   useEffect(() => {
-    convert(source.crs.code,
-      4326,
-      source.point.x,
-      source.point.y, 
-      source.point.z).then((e) => setPoint({lat:e.x, lng:e.y}));
+    const deglist = ['degree', 'unknown', 'sexagesimal', ' DMS.s'];
+
+    if (!deglist.includes(source.unityOfMeasure)){
+      convert(source.crs.code,
+        4326,
+        source.point.y,
+        source.point.x, 
+        source.point.z).then((e) => setPoint({lat:e.x, lng:e.y}));
+    }else{
+      convert(source.crs.code,
+        4326,
+        source.point.x,
+        source.point.y, 
+        source.point.z).then((e) => setPoint({lat:e.x, lng:e.y}));
+    }
+    
+    
   }, [])
 
   return (
@@ -23,8 +35,8 @@ function StoryCase({source, target, element}){
       <div className='accordion__header'>
         <button className="accordion__btn accordion__open-btn" onClick={() => toggleActivate(!isActivate)}>{source.crs.name} → {target.crs.name}</button>
       
-        <Dropdown title = "Share" link = {copyLink}/>
-        <button className="accordion__btn accordion__remove-btn" onClick = {() => console.log(element)}>🗑️</button>
+        {/* <Dropdown title = "Share" link = {copyLink}/>
+        <button className="accordion__btn accordion__remove-btn" onClick = {() => console.log(element)}>🗑️</button> */}
       </div>
 
       <div className={`accordion__container  accordion__container--${(isActivate) ? 'activate' : 'deactivate'}`}>

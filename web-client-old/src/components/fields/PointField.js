@@ -4,11 +4,11 @@ import { convertToDMS, convertToDecimal } from '../../tools/format';
 import { InputField } from './Input';
 
 const handleFormat = (point, state) => {
-
+  if (point.x.length === 0 && point.y.length === 0) return null;
   const stateList = ["degrees", "d°m's"];
   const index = stateList.indexOf(state.get());
 
-  Object.keys(point).forEach(element => {
+  Object.keys(point).slice(0, 2).forEach(element => {
     switch (index) {
       case 0:
         point[element] = convertToDecimal(point[element]);

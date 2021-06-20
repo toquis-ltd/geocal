@@ -2,6 +2,7 @@ import React from "react"
 import {MapContainer, TileLayer, Marker, Popup} from 'react-leaflet';
 
 export function MapPointCase ({position}){
+  
   return (
     <div className="map__container accordion__map" >
         <MapContainer center={position} zoom={2} zoomControl={false}>

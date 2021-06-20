@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-// import { setBounds } from './globe/D3';
+import { setBounds } from './globe/D3';
 import {ChangeCRS} from './popups/changeCRS/ChangeCRS';
 
 function  CoordinateSystemSelector ({title, crs}) {
@@ -51,7 +51,7 @@ function CheckBounds(sourceCRS, targetCRS){
       const sourceData = sourceCRS.get();
       if (JSON.stringify(sourceData) === JSON.stringify({})) return null
       const sourceBounds = {...sourceData.bounds};
-      // setBounds(sourceBounds)
+      setBounds(sourceBounds)
       const targetData = targetCRS.get();
       if (JSON.stringify(targetData) === JSON.stringify({})) return null
       const targetBounds = {...targetData.bounds};

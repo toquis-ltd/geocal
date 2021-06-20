@@ -7,7 +7,7 @@ export function convertToDMS (value, m = 0, s = 0)  {
     if (value.split(".").length>1)
     {
       m = parseInt(("."+(value.split(".")[1]))*60);
-      s = Number(("."+(value.split(".")[1])-m/60)*3600).toFixed(4).replace(/(\.0+|0+)$/, '');
+      s = Number(("."+(value.split(".")[1])-m/60)*3600).toFixed(6).replace(/(\.0+|0+)$/, '');
     }
     return `${d}°${m}'${s}`
 };
@@ -38,5 +38,5 @@ export function convertToDecimal (value)  {
     const d = Math.abs(dms_list[0]);
     const m = parseFloat(dms_list[1]/60);
     const s = parseFloat(dms_list[2]/3600);
-    return Number((d+m+s)*sign).toFixed(8).replace(/(\.0+|0+)$/, '').toString();
+    return Number((d+m+s)*sign).toFixed(10).replace(/(\.0+|0+)$/, '').toString();
 };

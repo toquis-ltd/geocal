@@ -89,6 +89,7 @@ class Search(APIView):
                     'code':i.coord_ref_sys_code,
                     'name':i.coord_ref_sys_name,
                     'area':i.area_name,
+                    'uom':i.area_name,
                 }
 
 class Globe(APIView):

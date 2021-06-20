@@ -5,7 +5,7 @@ import Popup  from '../Popups';
 import { Navigation } from '../Navigation';
 import { Search } from './Search';
 import { getInformationAboutCode } from '../../../tools/parse';
-// import { setBounds } from '../../globe/D3';
+import { setBounds } from '../../globe/D3';
 
 import Popular  from './Popular';
 
@@ -20,7 +20,7 @@ export function ChangeCRS({ isOpen, onClose, onSave }) {
       getInformationAboutCode(e.code)
       .then(e => {
         setCRS(e.message)
-        // setBounds(e.message.bounds)
+        setBounds(e.message.bounds)
       });
     }
   };
