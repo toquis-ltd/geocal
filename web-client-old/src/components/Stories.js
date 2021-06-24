@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import OutputCoordinateField  from './fields/Output';
 import { MapPointCase } from './Maps';
 import {convert} from '../tools/parse'
-import Dropdown from './Dropdown'
 
 function StoryCase({source, target, element}){
   const [isActivate, toggleActivate] = useState(false);
@@ -34,9 +33,6 @@ function StoryCase({source, target, element}){
 
       <div className='accordion__header'>
         <button className="accordion__btn accordion__open-btn" onClick={() => toggleActivate(!isActivate)}>{source.crs.name} → {target.crs.name}</button>
-      
-        {/* <Dropdown title = "Share" link = {copyLink}/>
-        <button className="accordion__btn accordion__remove-btn" onClick = {() => console.log(element)}>🗑️</button> */}
       </div>
 
       <div className={`accordion__container  accordion__container--${(isActivate) ? 'activate' : 'deactivate'}`}>
