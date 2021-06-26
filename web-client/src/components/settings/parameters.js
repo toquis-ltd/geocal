@@ -1,4 +1,4 @@
-import settings from '../../../../core/converter/settings';
+import settings from '../../core/converter/settings';
 
 const common = {
     title: ' coordinate reference system'

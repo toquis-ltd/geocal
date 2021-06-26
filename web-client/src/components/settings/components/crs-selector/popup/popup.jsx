@@ -10,12 +10,12 @@ import PopularView from './views/popular/popular';
 import './popup.css';
 
 function CrsPopup({isOpen, onClose, parameters}) {
-    const [qwest, setQwest] = useState("");
+    const [search, setSearch] = useState({qwery:'', result:[]});
     return (
         <Popup isOpen={isOpen}>
             <Interface onClose={onClose}/>
             <Navigation>
-                <SearchView name='Search' qwest={{get:()=>qwest, set:setQwest}}/>
+                <SearchView name='Search' state={search} setState={setSearch}/>
                 <PopularView name='Popular'/>
             </Navigation>
         </Popup>
