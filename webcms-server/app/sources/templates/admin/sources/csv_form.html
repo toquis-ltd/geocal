@@ -1,0 +1,76 @@
+{% extends 'admin/change_form.html' %}
+{% load cms_tags menu_tags sekizai_tags static %}
+{% block responsive  %}
+    <style>
+        .file__container{
+            display: flex;
+            justify-content: center;
+            align-items: center;   
+            width: 60vw;
+            height: 40vh;
+            border: 5px dashed red;
+            margin: auto;
+        }
+        .deletelink-box .deletelink:before {
+            content: "\E03B" !important;
+        }
+        .submit-row {
+            display: flex;
+            justify-content: flex-end;
+        }
+    </style>
+{% endblock %}
+
+{% block breadcrumbs %}
+    <div class="breadcrumbs">
+        <a href="{% url 'admin:index'  %}">Home</a> ›
+        <a href="{% url 'admin:app_list' 'sources'  %}">Sources</a> ›
+        <a href="{% url 'admin:sources_link_changelist' %}">Links</a> 
+        <span>› import csv</span>
+    </div>
+{% endblock %}
+
+{% block content %}
+
+    <div>
+        <form action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="file__container" id="drop-zone">
+                    <label id='drop-text' for="csv_file">Upload csv file</label>
+                    <input class="vFileField" type="file" id='csv_file' name='csv_file' hidden>
+                </div>
+                <div class="submit-row">
+                    <div class="deletelink-box" style="width: 100px;">
+                        <a class="deletelink" id='cancel' href="{% url 'admin:sources_link_changelist' %}" style="padding: 10px 0px !important;text-align: center;width: 100px;">Cancel</a>
+                    </div>
+                    <input class="default" type="submit" value='Submit'>
+                </div>
+        </form>
+    </div>
+    <script>
+        dropArea = document.getElementById('drop-zone');
+        dropText = document.getElementById('drop-text');
+        fileHolder = document.getElementById('csv_file');
+
+        dropArea.addEventListener('dragleave', (event) => {
+            event.preventDefault();
+            dropText.innerHTML = 'upload csv file'
+
+            
+        }, false);
+
+        dropArea.addEventListener('dragover', (event) => {
+            event.preventDefault();
+            dropText.innerHTML = 'drop the file'
+
+        }, false);
+        
+        dropArea.addEventListener('drop', (event) => {
+            event.preventDefault();
+            fileHolder.files = event.dataTransfer.files;
+            console.log(event.dataTransfer.files);
+            dropText.innerHTML = `Please press submit to send ${event.dataTransfer.files[0].name} file to the server`
+        }, false);
+
+    </script>
+{% endblock content %}
