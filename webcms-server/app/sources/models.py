@@ -1,18 +1,24 @@
 from django.db import models
 from django.utils import timezone
 
+class Region(models.Model):
+    name = models.CharField(max_length=128)
+    
+    def __str__(self):
+        return self.name
+
 class Link(models.Model):
     
-    site_address = models.URLField()
-    site_name = models.CharField(max_length = 64)
-    region = models.CharField(max_length=128)
-    site_discription = models.TextField(max_length=3072)
+    address = models.URLField()
+    name = models.CharField(max_length = 128)
+    region = models.ForeignKey('Region', on_delete=models.CASCADE)
+    description = models.TextField(max_length=3072, null=True, blank=True)
     author = models.CharField(max_length=32)
     date = models.DateField(default=timezone.now)
     is_verified = models.BooleanField()
 
     def __str__(self):
-        return self.site_name
+        return self.name
 
 class Report(models.Model):
 
@@ -22,4 +28,4 @@ class Report(models.Model):
     date = models.DateField(default=timezone.now)
 
     def __str__(self):
-        return self.site.site_name
+        return self.site.name

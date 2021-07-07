@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('site_name', models.CharField(max_length=64)),
-                ('site_discription', models.TextField(max_length=3072)),
+                ('site_description', models.TextField(max_length=3072)),
                 ('site_address', models.URLField()),
                 ('author', models.CharField(max_length=32)),
                 ('date', models.DateField(default=django.utils.timezone.now)),

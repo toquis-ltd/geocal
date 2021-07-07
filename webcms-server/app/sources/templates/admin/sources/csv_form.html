@@ -10,6 +10,7 @@
             height: 40vh;
             border: 5px dashed red;
             margin: auto;
+            cursor: pointer;
         }
         .deletelink-box .deletelink:before {
             content: "\E03B" !important;
@@ -35,7 +36,7 @@
     <div>
         <form action="" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
-                <div class="file__container" id="drop-zone">
+                <div class="file__container" id="drop-zone" onclick="">
                     <label id='drop-text' for="csv_file">Upload csv file</label>
                     <input class="vFileField" type="file" id='csv_file' name='csv_file' hidden>
                 </div>
@@ -52,11 +53,17 @@
         dropText = document.getElementById('drop-text');
         fileHolder = document.getElementById('csv_file');
 
+        fileHolder.onchange = (event) => {
+            dropText.innerHTML = `Please press submit to send ${fileHolder.files[0].name} file to the server`
+        };
+
+        dropArea.addEventListener('click', (event) => {
+            fileHolder.click();
+        }, false);
+
         dropArea.addEventListener('dragleave', (event) => {
             event.preventDefault();
-            dropText.innerHTML = 'upload csv file'
-
-            
+            dropText.innerHTML = 'upload csv file'            
         }, false);
 
         dropArea.addEventListener('dragover', (event) => {
@@ -68,7 +75,6 @@
         dropArea.addEventListener('drop', (event) => {
             event.preventDefault();
             fileHolder.files = event.dataTransfer.files;
-            console.log(event.dataTransfer.files);
             dropText.innerHTML = `Please press submit to send ${event.dataTransfer.files[0].name} file to the server`
         }, false);
 
