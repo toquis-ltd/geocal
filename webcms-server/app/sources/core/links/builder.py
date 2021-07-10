@@ -15,10 +15,9 @@ class LinkFab:
         if _:
             self.region.save()
  
-        # obj = Region.objects.filter(name=name)
-        # if obj != None:
-        #     Report(broken_link)
+        obj = Region.objects.filter(name=name)
+        if obj != None:
+            Report(broken_link)
         
         res = Link(name=name, address=url, description=description, region=self.region, author=author, is_verified=False)
-        print(res)
         res.save()
