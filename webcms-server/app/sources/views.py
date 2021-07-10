@@ -30,7 +30,6 @@ def add(request, context):
         Report(site=link, problem=problem, author=get_username(request)).save()
 
     def add_suggest():
-        print(request.POST.get('site-name'))
         Link(name=request.POST.get('site-name'),
              discription=request.POST.get('site-discription'),
              address=request.POST.get('site-address'),
