@@ -39,11 +39,10 @@ def add(request, context):
 
     if context == "report":
         add_report()
-        return response
-
-    if context == "suggest":
+    elif context == "suggest":
         add_suggest()
-        return response
+    
+    return response
 
 def download(request):
     response = HttpResponse(content_type='text/csv')
