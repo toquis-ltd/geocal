@@ -31,7 +31,7 @@ def add(request, context):
 
     def add_suggest():
         Link(name=request.POST.get('site-name'),
-             discription=request.POST.get('site-discription'),
+             description=request.POST.get('site-description'),
              address=request.POST.get('site-address'),
              author=get_username(request),
              is_verified=False

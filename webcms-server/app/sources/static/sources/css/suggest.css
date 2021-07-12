@@ -8,7 +8,7 @@
     width: 80%;
 }
 
-.form__discription{
+.form__description{
     grid-column-start: 1;
     grid-column-end: 3;
 }

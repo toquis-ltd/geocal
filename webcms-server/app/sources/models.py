@@ -11,7 +11,7 @@ class Link(models.Model):
     
     address = models.URLField()
     name = models.CharField(max_length = 128)
-    region = models.ForeignKey('Region', on_delete=models.CASCADE)
+    region = models.ForeignKey('Region', on_delete=models.CASCADE, null=True, blank=True)
     description = models.TextField(max_length=3072, null=True, blank=True)
     author = models.CharField(max_length=32)
     date = models.DateField(default=timezone.now)
