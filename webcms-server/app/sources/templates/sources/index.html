@@ -23,26 +23,26 @@
             </div>
         </div>
         <div class="source__list">
-            {% for i in object_list %}
-            <div class="source__item">
-                <div class="source__item-inner">
-                    <h3 class="source__item-title"><a class="source__item-link ui__link" href="{{i.address}}">
-                        {{i.name}}
-                    </a></h3>
-                    <p class="source_item-description">
-                        {{i.description}}
-                    </p>
+            {% for i in links %}
+                <div class="source__item">
+                    <div class="source__item-inner">
+                        <h3 class="source__item-title"><a class="source__item-link ui__link" href="{{i.address}}">
+                            {{i.name}}
+                        </a></h3>
+                        <p class="source_item-description">
+                            {{i.description}}
+                        </p>
+                    </div>
+                    <div class="source_item-region">
+                        <h4 class="">{{i.region}}</h4>
+                    </div>
+                    <nav class="source__item-control">
+                        <a class="source__item-report ui__link" href="{% url 'sources:report' i.id %}">
+                            <span class="message">report</span>
+                            <img  class="source_report-icon" src="{% static 'sources\img\report.svg' %}" alt="" srcset="">
+                        </a>
+                    </nav>
                 </div>
-                <div class="source_item-region">
-                    <h4 class="">{{i.region}}</h4>
-                </div>
-                <nav class="source__item-control">
-                    <a class="source__item-report ui__link" href="{% url 'sources:report' i.id %}">
-                        <span class="message">report</span>
-                        <img  class="source_report-icon" src="{% static 'sources\img\report.svg' %}" alt="" srcset="">
-                    </a>
-                </nav>
-            </div>
             {% endfor %}
         </div>
     </content>

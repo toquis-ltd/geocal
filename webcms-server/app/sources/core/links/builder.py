@@ -11,13 +11,26 @@ class LinkFab:
         region = item.get('region')
         author = item.get('author')
 
-        self.region, _   = Region.objects.get_or_create(name=region)
+        self.region, _ = Region.objects.get_or_create(name=region)
         if _:
             self.region.save()
- 
-        obj = Region.objects.filter(name=name)
-        if obj != None:
-            Report(broken_link)
-        
-        res = Link(name=name, address=url, description=description, region=self.region, author=author, is_verified=False)
+
+        res, _ = Link.objects.get_or_create(
+                                    name=name, 
+                                    address=url, 
+                                    description=description, 
+                                    region=self.region, 
+                                    author=author,
+                                    is_verified=False)
+        try:
+            link = Link.objects.get(
+                                Q(name=name) |
+                                Q(address=url) |
+                                Q(description=description), 
+                                is_verified=True
+                            )
+            Report(site=link, problem=f'{link.name} has duplication problem with {res.name}', author='bot').save()
+        except Link.DoesNotExist:
+            pass
+
         res.save()

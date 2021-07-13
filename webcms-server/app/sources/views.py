@@ -1,5 +1,3 @@
-import csv
-
 from django.views.generic import ListView
 from django.shortcuts import render, redirect
 
@@ -8,6 +6,7 @@ from .utils import get_username
 
 
 class LinkListView (ListView):
+    context_object_name = 'links'
     queryset = Link.objects.filter(is_verified=True)
     template_name = 'sources/index.html'
 

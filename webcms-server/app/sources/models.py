@@ -15,7 +15,7 @@ class Link(models.Model):
     description = models.TextField(max_length=3072, null=True, blank=True)
     author = models.CharField(max_length=32)
     date = models.DateField(default=timezone.now)
-    is_verified = models.BooleanField()
+    is_verified = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
