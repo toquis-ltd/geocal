@@ -15,7 +15,7 @@ def verify(modeladmin, request, queryset):
 verify.short_description = "Verify selected links"
 
 class LinkAdmin(admin.ModelAdmin):
-    search_fields = ['name', 'author']
+    search_fields = ['name', 'address', 'description', 'author']
     list_filter = ('is_verified', )
     list_display = ('name', 'is_verified', 'author', 'date')
     ordering = ['is_verified']
