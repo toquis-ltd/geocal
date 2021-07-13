@@ -1,17 +1,16 @@
 import csv
-from django.shortcuts import render, redirect, HttpResponse
-from django.db.models import Q
+
+from django.views.generic import ListView
+from django.shortcuts import render, redirect
 
 from .models import Link, Report
 from .utils import get_username
 
-def sites_list(request):
 
-    context = {
-                'links':Link.objects.filter(is_verified=True),
-            }
+class LinkListView (ListView):
+    queryset = Link.objects.filter(is_verified=True)
+    template_name = 'sources/index.html'
 
-    return render(request, 'sources/index.html',  context=context)
 
 def contact_form(request, id=None):
     form = request.path.split("/")[2]
@@ -21,7 +20,7 @@ def contact_form(request, id=None):
     return render(request, f'sources/{form}.html', context=context)
 
 def add(request, context):
-    response = redirect('sources:')
+    response = redirect('sources:index')
 
     def add_report():
         problem = request.POST.get('problem')
@@ -42,16 +41,4 @@ def add(request, context):
     elif context == "suggest":
         add_suggest()
     
-    return response
-
-def download(request):
-    response = HttpResponse(content_type='text/csv')
-    
-    file = csv.writer(response)
-    file.writerow(['name', 'discription', 'address'])
-
-    for i in Link.objects.filter(is_verified=True).values_list('site_name', 'site_discription', 'site_address'):
-        file.writerow(i)
-
-    response['Content-Disposition'] = 'attachment; filename="sites_list.csv"'
     return response
