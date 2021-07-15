@@ -4,7 +4,6 @@ from django.urls import path
 app_name = "sources"
 urlpatterns = [
     path('', LinkListView.as_view(), name='index'),
-    path('suggest/', contact_form, name='suggest'),
-    path('report/<int:id>/', contact_form, name='report'),
-    path('add/<str:context>/', add, name='add'),
+    path('suggest/', LinkCreateView.as_view(), name='suggest'),
+    path('report/<int:id>/', ReportCreateView.as_view(), name='report'),
 ]

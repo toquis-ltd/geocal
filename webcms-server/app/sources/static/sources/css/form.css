@@ -4,7 +4,7 @@ textarea, input{
     box-shadow: 1px 1px 1px #999;
 }
 
-.form__textarea{
+textarea{
     resize: none;
     width: 100%;
     height: 25vh;

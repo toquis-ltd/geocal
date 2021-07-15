@@ -6,10 +6,9 @@
 {%endblock%}
 
 {%block form%}
-    <input id="id" name="id" type="hidden" required="required" value='{{item.id}}'>
+    <input id="id" name="id" type="hidden" required="required" value='{{reported_link.id}}'>
     <div class="form__discription">
-        <label for='problem'>What's wrong with {{item}}</label></br>
-        <textarea class="form__textarea" id="problem" type="text" name="problem"></textarea>
+        <label for='description'>What's wrong with {{reported_link.name}}</label></br>
+        {{ form.problem }}
     </div>
-
 {% endblock %}

@@ -9,7 +9,7 @@
 
 {% block content %}
 <main class="form-container container">
-    <form method="POST" action="{% url 'sources:add' context %}">
+    <form method="POST">
         {% csrf_token %}
         <div class="form__inner">
             {% block form %}

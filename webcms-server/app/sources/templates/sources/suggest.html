@@ -5,17 +5,18 @@
     <link rel="stylesheet" type="text/css" href="{% static 'sources/css/suggest.css' %}">
 {%endblock%}
 
-{%block form%}
+{% block form %}
+    
     <div class="form__url">
         <label for='POST-link'>URL:</label></br>
-        <input id="site-address" type="link" name="site-address" required="required"><br/>
+        {{ form.address }}
     </div>
     <div class="form__name">
         <label for='site'>Site name:</label></br>
-        <input  id="site-name" type="text" name="site-name" required="required"> 
+        {{ form.name }}
     </div>
     <div class="form__description">
         <label for='site-description'>Description:</label></br>
-        <textarea class="form__textarea" id="site-description" name="site-description" rows="2" maxlength="3072"></textarea>
+        {{ form.description }}
     </div>
 {% endblock %}
