@@ -1,4 +1,4 @@
-import './simple.css';
+import '../../common.css';
 
 function Interface({onClose, children}) {
     return (

@@ -1,5 +1,6 @@
 import {memo} from 'react'
 import getCurrentList from '../../../../../../../core/search/search'
+import SearchIcon from './search-icon';
 
 import CrsItem from './item'
 import './search.css';
@@ -23,7 +24,7 @@ export default memo(function SearchView({state, setState}) {
             <div className='search__header'>
                 <div className="search__bar">
                     <input className='search__field' onChange={e=>setQwery(e.currentTarget?.value)} value={state.qwery}/>
-                    <button className='search__btn' onClick={setResult}>search</button>
+                    <button className='search__btn' onClick={setResult}><SearchIcon/></button>
                 </div>
             </div>
             <div className='search__container result'>

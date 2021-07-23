@@ -4,13 +4,14 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.0);
 }
+
 .popup__inner {
     position: absolute;
     margin: auto;
     background-color: #f5f5f5;
-    border: solid 4px #333333;
+    border: none;
     border-radius: 25px;
     z-index: 10;
 }
