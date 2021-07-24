@@ -1,8 +1,12 @@
 import {memo} from 'react'
 import getCurrentList from '../../../../../../../core/search/search'
-import SearchIcon from './search-icon';
+
+import SearchIcon from './icons/search-icon';
+import CloseIcon from './icons/close-icon';
 
 import CrsItem from './item'
+
+import './search.sass';
 import './search.css';
 
 export default memo(function SearchView({state, setState}) {
@@ -23,8 +27,17 @@ export default memo(function SearchView({state, setState}) {
         <div className='search'>
             <div className='search__header'>
                 <div className="search__bar">
-                    <input className='search__field' onChange={e=>setQwery(e.currentTarget?.value)} value={state.qwery}/>
-                    <button className='search__btn' onClick={setResult}><SearchIcon/></button>
+                    <div className="search__bar-inner">
+                        <input 
+                            className='search__field' 
+                            onChange={e=>setQwery(e.currentTarget?.value)} 
+                            onKeyPress={e=> e.key==='Enter' && setResult()}
+                            value={state.qwery}/>
+                        
+                        { state.qwery && <button className='search__btn search__btn-clear' onClick={()=>setQwery('')}><CloseIcon/></button> }
+                        
+                        <button className='search__btn search__btn-find' onClick={setResult}><SearchIcon/></button>
+                    </div>
                 </div>
             </div>
             <div className='search__container result'>
