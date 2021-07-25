@@ -5,7 +5,7 @@ function Popup ({isOpen, children}) {
   if (!isOpen) return null;
   return ReactDOM.createPortal (
     <div className='popup'>
-      <div className={`popup__inner`}>
+      <div className={`popup__inner`} >
         {children}
       </div>
     </div>,

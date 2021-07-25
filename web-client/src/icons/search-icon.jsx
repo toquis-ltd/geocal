@@ -10,4 +10,4 @@ function SearchIcon(props) {
     );
 }
 
-export default SearchIcon
+export default SearchIcon;

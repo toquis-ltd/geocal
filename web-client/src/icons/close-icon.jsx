@@ -13,4 +13,4 @@ function CloseIcon(props) {
     );
 }
 
-export default CloseIcon
+export default CloseIcon;

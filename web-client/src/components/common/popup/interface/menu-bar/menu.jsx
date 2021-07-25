@@ -1,20 +1,21 @@
 import { useState } from 'react';
 
-import '../common.css';
-import './menu.css';
+import BackIcon from '../../../../../icons/back-icon';
 
-function Interface({onClose, children}) {
-    const [isMobile, toggleMobile] =  useState(window.screen.width <= 1024);
-    window.addEventListener('resize', ()=>{
-        toggleMobile(window.screen.width <= 800);
-        console.log(window.screen.width)
-    });
+import '../common.sass';
+import './menu.sass';
+
+function Interface({onClose}) {
+    const size = 1024;
+    const [isMobile, toggleMobile] =  useState(window.screen.width <= size);
+    window.addEventListener('resize', () => toggleMobile(window.screen.width <= size));
     return (
             <div className="popup__menu-bar">
-                { (isMobile) ?
-                    <button className='popup__mobile-close-btn' onClick={onClose}> {'<='} </button> :
-                    <button className='popup__close-btn' onClick={onClose}>&#215;</button>
-                }
+                <button 
+                className='popup__close-btn'
+                onClick={onClose}>
+                                { (isMobile) ? <><BackIcon/> <span>Back</span></> : <>&#215;</> }
+                </button>
             </div>
     );
 }

@@ -1,8 +1,8 @@
 import {memo} from 'react'
 import getCurrentList from '../../../../../../../core/search/search'
 
-import SearchIcon from './icons/search-icon';
-import CloseIcon from './icons/close-icon';
+import SearchIcon from '../../../../../../../icons/search-icon';
+import CloseIcon from '../../../../../../../icons/close-icon';
 
 import CrsItem from './item'
 
