@@ -1,6 +1,6 @@
 .header__top{
     opacity: .8;
-    height: 100vh;
+    height: 80vh;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -20,13 +20,13 @@
     font-family: "Georgia", sans-serif;
     font-weight: bold;
     margin: auto;
-    font-size: 10vw;
+    font-size: 5vw;
 }
 
 .header__title{
     font-family: "Georgia", sans-serif;
     font-weight: bold;
-    font-size: 15.5vw;
+    font-size: 10vw;
     text-shadow: 0px 64px 32px hsla(0, 0%, 0%, 0.8);
     margin: auto;
 }
@@ -34,7 +34,7 @@
 .header__text{
     margin-bottom: -12px;
     font-family: Georgia, sans-serif;
-    font-size: 3.5vw;
+    font-size: 2.5vw;
     line-height: 28px;
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
     display: flex;
