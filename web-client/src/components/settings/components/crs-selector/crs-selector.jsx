@@ -1,8 +1,8 @@
 import {useState} from 'react';
 
-import SelectBtn from './button/button';
 import About from './about/about';
 import CrsPopup from './popup/popup';
+import SelectBtn from './button/button';
 
 import './crs-selector.css';
 
