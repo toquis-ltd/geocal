@@ -1,15 +1,13 @@
-import {memo} from 'react'
-import getCurrentList from '../../../../../../../core/search/search'
+import { memo } from 'react';
 
 import SearchIcon from '../../../../../../../icons/search-icon';
 import CloseIcon from '../../../../../../../icons/close-icon';
 
-import CrsItem from './item'
+import {getCRSList} from './api';
 
 import './search.sass';
-import './search.css';
 
-export default memo(function SearchView({state, setState}) {
+export default memo(function Search({state, setState}) {
     const setQwery = (value) => {
         setState(prev => ({
                 ...prev,
@@ -18,14 +16,14 @@ export default memo(function SearchView({state, setState}) {
         );
     }
     const setResult = () => {
-        getCurrentList(state.qwery)
+        getCRSList(state.qwery)
         .then(res => {
             setState(prev => ({...prev, result:res}))
         });
     }
     return (
         <div className='search'>
-            <div className='search__header'>
+            <div className='search__inner'>
                 <div className="search__bar">
                     <div className="search__bar-inner">
                         <input 
@@ -38,13 +36,6 @@ export default memo(function SearchView({state, setState}) {
                         
                         <button className='search__btn search__btn-find' onClick={setResult}><SearchIcon/></button>
                     </div>
-                </div>
-            </div>
-            <div className='search__container result'>
-                <div className="result__list">
-                    {
-                        state.result?.map((i, j)=><CrsItem key={j} element={i}/>)
-                    }
                 </div>
             </div>
         </div>

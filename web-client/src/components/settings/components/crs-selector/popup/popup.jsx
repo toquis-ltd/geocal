@@ -3,7 +3,7 @@ import {useState} from 'react';
 import Popup from '../../../../common/popup/popup';
 import Interface from '../../../../common/popup/interface/menu-bar/menu';
 
-import SearchView from './views/search/search';
+import SearchView from './views/search/view';
 
 import './popup.sass';
 
