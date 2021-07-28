@@ -1,7 +1,7 @@
 import {memo} from 'react';
 
 import Search from './search';
-import Result from './result';
+import Result from './result/result';
 
 import './view.sass';
 

@@ -1,6 +1,5 @@
 import {useState} from 'react';
 
-import About from './about/about';
 import CrsPopup from './popup/popup';
 import SelectBtn from './button/button';
 
@@ -18,7 +17,6 @@ function CrsSelector ({parameters}) {
                 <SelectBtn onClick={()=>toggleChanging(true)}/>
             </div>
             <div className='selector__footer'>
-                <About code={parameters.code}/>
             </div>
             <CrsPopup 
                 isOpen={isChanging}

@@ -1,6 +1,6 @@
 import { memo } from 'react';
 
-import CrsItem from './item';
+import CrsItem from '../item/item';
 
 import './result.sass';
 
