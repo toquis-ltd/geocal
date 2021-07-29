@@ -12,6 +12,13 @@ from api.models import CoordinateReferenceSystem
 
 class CoordinateReferenceSystemSearch(Service):
 
+    get_item_parameters = lambda item: {
+                                        'code': item.coord_ref_sys_code,
+                                        'name': item.coord_ref_sys_name,
+                                        'area': item.area_name,
+                                        'unityOfMeasure': item.get_unity_of_measure()
+                                    }
+
     def _get_result(self) -> QuerySet:
         if self._query.isdigit() and len(self._query) >= 4:
             return CoordinateReferenceSystem.objects.filter(coord_ref_sys_code=self._query)
@@ -27,12 +34,8 @@ class CoordinateReferenceSystemSearch(Service):
         return request.GET.get('q')
 
     def _get_response(self) -> dict:
-        get_item = lambda item:{
-                    'code':item.coord_ref_sys_code,
-                    'name':item.coord_ref_sys_name,
-                    'area':item.area_name,
-                    }
-        find_crs = list(map(get_item, self._result))
+        
+        find_crs = map(CoordinateReferenceSystemSearch.get_item_parameters, self._result)
         return  {
                     'epsg_exist': True,
                     'find': len(self._result),

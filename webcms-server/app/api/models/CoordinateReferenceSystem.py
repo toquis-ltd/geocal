@@ -31,5 +31,14 @@ class CoordinateReferenceSystem(models.Model):
     def __str__ (self):
         return f"ESPG: {self.coord_ref_sys_code}  -  {self.coord_ref_sys_name}"
 
+    def get_unity_of_measure(self):
+        return self._get_unity_of_measure()
+
+    def _get_unity_of_measure(self):
+        try:
+            return SpatialReference(str(self.coord_ref_sys_code)).units[1] 
+        except:
+            return 'unknown'
+
     class Meta:
         ordering = ['coord_ref_sys_code']
