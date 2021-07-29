@@ -1,5 +1,5 @@
-from .models import *
 from django.contrib.gis.gdal import SpatialReference
+from .models import *
 
 class CoordinateReferenceSystemInterface():
     def __init__(self, code):
@@ -11,7 +11,49 @@ class CoordinateReferenceSystemInterface():
         self.area_of_use_code = self.crs.area_of_use_code
         self.datum_code = self.crs.datum_code
         self.base_crs_code = self.crs.base_crs_code
+    
+    def get_area(self):
+        return self._get_area()
 
+    def get_bounds(self):
+        return self._get_bounds()
+    
+    def get_coordinate_system(self):
+        return self._get_coordinate_system()
+    
+    def get_code(self):
+        return self._get_code()
+
+    def get_data_source(self):
+        return self._get_data_source()
+
+    def get_datum(self):
+        return self._get_datum()
+
+    def get_ellipsoid(self):
+        return self._get_ellipsoid()
+    
+    def get_geodetic_coordinate_reference_system(self):
+        return self._get_geodetic_coordinate_reference_system()
+
+    def get_name(self):
+        return self._get_name()
+
+    def get_primem_meridian(self):
+        return self._get_primem_meridian()
+
+    def get_remarks(self):
+        return self._get_remarks()
+
+    def get_revision_date(self):
+        return self._get_revision_date()
+
+    def get_unity_of_measure(self):
+        return self._get_unity_of_measure()
+    
+    def is_deprecated(self):
+        return self._is_deprecated()
+    
     def _get_area(self):
         try:
             return Area.objects.get(code = self.area_of_use_code)
@@ -86,48 +128,6 @@ class CoordinateReferenceSystemInterface():
     def _is_deprecated(self):
         return self.crs.deprecated
 
-
-    def get_area(self):
-        return self._get_area()
-
-    def get_bounds(self):
-        return self._get_bounds()
-    
-    def get_coordinate_system(self):
-        return self._get_coordinate_system()
-    
-    def get_code(self):
-        return self._get_code()
-
-    def get_data_source(self):
-        return self._get_data_source()
-
-    def get_datum(self):
-        return self._get_datum()
-
-    def get_ellipsoid(self):
-        return self._get_ellipsoid()
-    
-    def get_geodetic_coordinate_reference_system(self):
-        return self._get_geodetic_coordinate_reference_system()
-
-    def get_name(self):
-        return self._get_name()
-
-    def get_primem_meridian(self):
-        return self._get_primem_meridian()
-
-    def get_remarks(self):
-        return self._get_remarks()
-
-    def get_revision_date(self):
-        return self._get_revision_date()
-
-    def get_unity_of_measure(self):
-        return self._get_unity_of_measure()
-    
-    def is_deprecated(self):
-        return self._is_deprecated()
 
 class DatumInterface():
     def __init__(self, code):

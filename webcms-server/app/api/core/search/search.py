@@ -1,6 +1,8 @@
 from re import match
 
 from django.db.models import Q
+from django.db.models.functions import Greatest
+from django.contrib.postgres.search import TrigramSimilarity
 from django.db.models.query import QuerySet, EmptyQuerySet
 
 from django.http.request import HttpRequest
@@ -11,18 +13,16 @@ from api.models import CoordinateReferenceSystem
 class CoordinateReferenceSystemSearch(Service):
 
     def _get_result(self) -> QuerySet:
-        if match("\W + \S", self._query) or match("[^\S]", self._query) or len(self._query)==0:
-            return EmptyQuerySet
-
         if self._query.isdigit() and len(self._query) >= 4:
             return CoordinateReferenceSystem.objects.filter(coord_ref_sys_code=self._query)
-
-        q = fr'\y({self._query})\y'
-        return CoordinateReferenceSystem.objects.filter(
-                                                                Q(coord_ref_sys_name__iregex=q) |
-                                                                Q(area_name__iregex=q) |
-                                                                Q(area__area_of_use__iregex=q)
-                                                            )
+        
+        params = Greatest(
+                    TrigramSimilarity('coord_ref_sys_name', self._query),
+                    TrigramSimilarity('area_name', self._query)
+                    )
+        
+        return CoordinateReferenceSystem.objects.annotate(similarity=params).filter(similarity__gte=0.1).order_by('-similarity')
+        
     def _get_queryset(self, request:HttpRequest) -> str:
         return request.GET.get('q')
 

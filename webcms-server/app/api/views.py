@@ -11,13 +11,14 @@ from .core.service.interface import Service
 
 from .models.Popular import Popular
 from .interfaces import CoordinateReferenceSystemInterface
+
 def render_page(func):
     def wrapper(self, request):
-        try:
+        # try:
             responce = func(self=self, request=request)
             return Response(responce)
-        except Exception as e:
-            return HttpResponse(e, status=404)
+        # except Exception as e:
+        #     return HttpResponse(e, status=404)
     return wrapper
 
 class About(APIView):
@@ -40,37 +41,17 @@ class About(APIView):
                     }
         except:
             raise Exception ("About API error in message composing")
-
-class Transform(APIView):
-    
-    @render_page
-    def get(self, request):
-        self.context = PointConversionInterface({
-                                            "s_crs":request.GET.get("s_crs"),
-                                            "t_crs":request.GET.get("t_crs"),
-                                            "source_x":request.GET.get("source_x", "0"),
-                                            "source_y":request.GET.get("source_y", "0"),
-                                            "source_z":request.GET.get("source_z", "0"),
-                                        })
-
-        return self.__get_responce()
-
-    def __get_responce(self) -> dict:
-        # try:
-            return self.context.get_target_values()
-        # except Exception as e:
-        #     raise e
-
+   
 class Search(APIView):
 
     @render_page
     def get(self, request, format=None):
-        try:
-            return CoordinateReferenceSystemSearch(request).get()
-        except:
-            return {
-                    'epsg_exist': False,
-                }
+        # try:
+        return CoordinateReferenceSystemSearch(request).get()
+        # except:
+        #     return {
+        #             'epsg_exist': False,
+        #         }
 
 class Globe(APIView):
     @render_page
@@ -89,6 +70,7 @@ class PopularCRS(APIView):
                     'code':item.crs.coord_ref_sys_code,
                     'name':item.crs.coord_ref_sys_name,
                     'area':item.crs.area_name,
+                    'unityOfMeasure': CoordinateReferenceSystemInterface(item.crs.coord_ref_sys_code).get_unity_of_measure(), 
                 }
         find_popular_crs = list(map(get_item, Popular.objects.all()))
         return [find_popular_crs]
