@@ -14,11 +14,8 @@ from .interfaces import CoordinateReferenceSystemInterface
 
 def render_page(func):
     def wrapper(self, request):
-        # try:
-            responce = func(self=self, request=request)
-            return Response(responce)
-        # except Exception as e:
-        #     return HttpResponse(e, status=404)
+        responce = func(self=self, request=request)
+        return Response(responce)
     return wrapper
 
 class About(APIView):
@@ -31,13 +28,10 @@ class About(APIView):
     def __get_responce(self):
         try:
             return {
-                        'epsg_exist': True,
-                        'message':{
-                                    'code': self.context.get_code(),
-                                    'name': self.context.get_name(),
-                                    'bounds': self.context.get_bounds(),
-                                    'unityOfMeasure': self.context.get_unity_of_measure(), 
-                                  },
+                        'code': self.context.get_code(),
+                        'name': self.context.get_name(),
+                        'bounds': self.context.get_bounds(),
+                        'unityOfMeasure': self.context.get_unity_of_measure(), 
                     }
         except:
             raise Exception ("About API error in message composing")
@@ -46,12 +40,8 @@ class Search(APIView):
 
     @render_page
     def get(self, request, format=None):
-        # try:
         return CoordinateReferenceSystemSearch(request).get()
-        # except:
-        #     return {
-        #             'epsg_exist': False,
-        #         }
+
 
 class Globe(APIView):
     @render_page

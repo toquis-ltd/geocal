@@ -1,8 +1,6 @@
-from re import match
-
-from django.db.models import Q
-from django.db.models.functions import Greatest
 from django.contrib.postgres.search import TrigramSimilarity
+
+from django.db.models.functions import Greatest
 from django.db.models.query import QuerySet, EmptyQuerySet
 
 from django.http.request import HttpRequest
@@ -20,6 +18,9 @@ class CoordinateReferenceSystemSearch(Service):
                                     }
 
     def _get_result(self) -> QuerySet:
+        if len(self._query) == 0:
+            return CoordinateReferenceSystem.objects.none()
+
         if self._query.isdigit() and len(self._query) >= 4:
             return CoordinateReferenceSystem.objects.filter(coord_ref_sys_code=self._query)
         
@@ -34,10 +35,7 @@ class CoordinateReferenceSystemSearch(Service):
         return request.GET.get('q')
 
     def _get_response(self) -> dict:
-        
-        find_crs = map(CoordinateReferenceSystemSearch.get_item_parameters, self._result)
         return  {
-                    'epsg_exist': True,
                     'find': len(self._result),
-                    'findCRS': find_crs,
+                    'findCRS': map(CoordinateReferenceSystemSearch.get_item_parameters, self._result),
                 }
