@@ -15,7 +15,7 @@ class Service(ABC):
         return self._response
     
     @abstractmethod
-    def _get_queryset(self):
+    def _get_queryset(self, request):
         pass
 
     @abstractmethod

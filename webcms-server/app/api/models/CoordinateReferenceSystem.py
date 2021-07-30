@@ -1,4 +1,6 @@
+from django.contrib.gis.gdal import SpatialReference
 from django.db import models
+
 from .Area import Area
 
 class CoordinateReferenceSystem(models.Model):
@@ -36,7 +38,7 @@ class CoordinateReferenceSystem(models.Model):
 
     def _get_unity_of_measure(self):
         try:
-            return SpatialReference(str(self.coord_ref_sys_code)).units[1] 
+            return SpatialReference(self.coord_ref_sys_code).units[1] 
         except:
             return 'unknown'
 

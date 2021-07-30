@@ -1,5 +1,5 @@
-from .models import *
 from django.contrib.gis.gdal import SpatialReference
+from .models import *
 
 class CoordinateReferenceSystemInterface():
     def __init__(self, code):

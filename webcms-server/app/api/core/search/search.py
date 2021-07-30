@@ -1,41 +1,37 @@
 from django.contrib.postgres.search import TrigramSimilarity
 
 from django.db.models.functions import Greatest
-from django.db.models.query import QuerySet, EmptyQuerySet
+from django.db.models.query import QuerySet
 
 from django.http.request import HttpRequest
 
-from api.core.service.interface import Service
-from api.models import CoordinateReferenceSystem
+from api.core.etc.list import CoordinateReferenceSystemList as CRSList
 
-class CoordinateReferenceSystemSearch(Service):
+from api.models import CoordinateReferenceSystem as CRS
 
-    get_item_parameters = lambda item: {
-                                        'code': item.coord_ref_sys_code,
-                                        'name': item.coord_ref_sys_name,
-                                        'area': item.area_name,
-                                        'unityOfMeasure': item.get_unity_of_measure()
-                                    }
+class CoordinateReferenceSystemSearch(CRSList):
 
+    def _get_queryset(self, request:HttpRequest) -> str:
+        return request.GET.get('q')
+                           
     def _get_result(self) -> QuerySet:
+        """ This function is retunring QuerySet of Coordinate Referance System(to make reading easier this name gonna be abridged to CRS)
+            if search keyword is empty this function return empty QuerySet
+            if the search keyword is made from only digits this function will return QuerySet with only one or zero CRS
+            if the search keyword is a string 
+        """
         if len(self._query) == 0:
-            return CoordinateReferenceSystem.objects.none()
+            return CRS.objects.none()
 
         if self._query.isdigit() and len(self._query) >= 4:
-            return CoordinateReferenceSystem.objects.filter(coord_ref_sys_code=self._query)
+            return CRS.objects.filter(coord_ref_sys_code=self._query)
         
         params = Greatest(
                     TrigramSimilarity('coord_ref_sys_name', self._query),
-                    TrigramSimilarity('area_name', self._query)
+                    TrigramSimilarity('area_name', self._query),
+                    TrigramSimilarity('remarks', self._query)
                     )
         
-        return CoordinateReferenceSystem.objects.annotate(similarity=params).filter(similarity__gte=0.1).order_by('-similarity')
+        return CRS.objects.annotate(similarity=params).filter(similarity__gte=0.1).order_by('-similarity')
         
-    def _get_queryset(self, request:HttpRequest) -> str:
-        return request.GET.get('q')
-
-    def _get_response(self) -> dict:
-        return  {
-                    'find': len(self._result),
-                    'findCRS': map(CoordinateReferenceSystemSearch.get_item_parameters, self._result),
-                }
+    

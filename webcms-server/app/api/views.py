@@ -6,10 +6,9 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from .core.converter.interface import PointConversionInterface
-from .core.search.search import CoordinateReferenceSystemSearch
-from .core.service.interface import Service
+from .core.search.search import CoordinateReferenceSystemSearch as CRSS
+from .core.popular.popular import PopularCoordinateReferenceSystem as PCRS
 
-from .models.Popular import Popular
 from .interfaces import CoordinateReferenceSystemInterface
 
 def render_page(func):
@@ -40,7 +39,7 @@ class Search(APIView):
 
     @render_page
     def get(self, request, format=None):
-        return CoordinateReferenceSystemSearch(request).get()
+        return CRSS(request).get()
 
 
 class Globe(APIView):
@@ -53,14 +52,7 @@ class Globe(APIView):
             raise Exception("please select exsisting json")
 
 class PopularCRS(APIView):
-    
+           
     @render_page
     def get(self, request, format=None):
-        get_item = lambda item:{
-                    'code':item.crs.coord_ref_sys_code,
-                    'name':item.crs.coord_ref_sys_name,
-                    'area':item.crs.area_name,
-                    'unityOfMeasure': CoordinateReferenceSystemInterface(item.crs.coord_ref_sys_code).get_unity_of_measure(), 
-                }
-        find_popular_crs = list(map(get_item, Popular.objects.all()))
-        return [find_popular_crs]
+        return PCRS(request).get() 
