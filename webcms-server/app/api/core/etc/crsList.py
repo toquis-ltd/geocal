@@ -1,11 +1,12 @@
-from ..abs.service import Service 
+from ..abs.service import Service
 
 class CoordinateReferenceSystemList (Service):
     get_item_parameters = lambda item: {
                                         'code': item.coord_ref_sys_code,
                                         'name': item.coord_ref_sys_name,
                                         'area': item.area_name,
-                                        'unityOfMeasure': item.get_unity_of_measure()
+                                        'unityOfMeasure': item.get_unity_of_measure(),
+                                        # 'bounds': item.get_bounds()
                                     }
     
     def _get_queryset(self, *args, **kwargs) -> None:

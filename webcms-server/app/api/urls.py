@@ -1,9 +1,10 @@
 from .views import *
 from django.urls import path
+from .core.proj4.proj4 import Proj4
 
 urlpatterns = [
-    path('epsg/', About.as_view()),
-    path('search/', Search.as_view()),
-    path('globe/', Globe.as_view()),
-    path('popular/', PopularCRS.as_view()),
+    path('about/', get_about),
+    path('search/', get_search),
+    path('popular/', get_popular),
+    path('proj4/', get_wkt)
 ]

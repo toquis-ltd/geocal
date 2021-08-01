@@ -5,14 +5,14 @@ from django.db.models.query import QuerySet
 
 from django.http.request import HttpRequest
 
-from api.core.etc.list import CoordinateReferenceSystemList as CRSList
+from api.core.etc.crsList import CoordinateReferenceSystemList as CRSList
 
 from api.models import CoordinateReferenceSystem as CRS
 
 class CoordinateReferenceSystemSearch(CRSList):
 
     def _get_queryset(self, request:HttpRequest) -> str:
-        return request.GET.get('q')
+        return request.GET.get('q') or ''
                            
     def _get_result(self) -> QuerySet:
         """ This function is retunring QuerySet of Coordinate Referance System(to make reading easier this name gonna be abridged to CRS)
