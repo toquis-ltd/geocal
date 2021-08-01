@@ -151,6 +151,7 @@ INSTALLED_APPS = [
     'djangocms_style',
     'djangocms_googlemap',
     'djangocms_video',
+    'django.contrib.postgres',
     'GeoCal',
     'rest_framework',
     'api',

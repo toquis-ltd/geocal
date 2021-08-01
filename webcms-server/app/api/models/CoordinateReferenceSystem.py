@@ -1,5 +1,9 @@
+from django.contrib.gis.gdal import SpatialReference
 from django.db import models
+
 from .Area import Area
+from .Datum import Datum
+from .PrimeMeridian import PrimeMeridian
 
 class CoordinateReferenceSystem(models.Model):
 
@@ -30,6 +34,49 @@ class CoordinateReferenceSystem(models.Model):
 
     def __str__ (self):
         return f"ESPG: {self.coord_ref_sys_code}  -  {self.coord_ref_sys_name}"
+
+    def get_bounds(self):
+        return self._get_bounds()
+
+    def get_unity_of_measure(self):
+        return self._get_unity_of_measure()
+    
+    def _get_bounds(self):
+        area = Area.objects.get(code=self.area_of_use_code)
+        return {
+                    'northBoundLat': area.area_north_bound_lat,
+                    'southBoundLat': area.area_south_bound_lat,
+                    'westBoundLon' : area.area_west_bound_lon,
+                    'eastBoundLon' : area.area_east_bound_lon,
+            }
+    
+    def _get_datum(self):
+        try:
+            return Datum.objects.get(datum_code = self.crs.datum_code)
+        except Exception as e:
+            if self.datum_code == None:
+                return None
+            source = self.__class__.objects.get(coord_ref_sys_code = self.base_crs_code)
+            return Datum.objects.get(datum_code = source.datum_code)
+
+    def _get_ellipsoid(self):
+        try:
+            return Ellipsoid.objects.get(ellipsoid_code = self._get_datum().ellipsoid_code)
+        except:
+            return None
+
+    def _get_primem_meridian(self):
+        try:
+            return PrimeMeridian.objects.get(prime_meridian_code = self._get_datum().prime_meridian_code)
+        except:
+            return None
+
+    def _get_unity_of_measure(self):
+        try:
+            return SpatialReference(self.coord_ref_sys_code).units[1] 
+        except:
+            return 'unknown'
+    
 
     class Meta:
         ordering = ['coord_ref_sys_code']
