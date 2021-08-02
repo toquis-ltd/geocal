@@ -6,14 +6,9 @@
     padding-left: 10px
     padding-bottom: 5px
 
-@media (max-width: 800px) 
-    .result 
-        margin-left: 10px
-
 .result::-webkit-scrollbar
     width: 10px
 
-    
 .result::-webkit-scrollbar-thumb 
     display: block
     background-color: rgba(124, 124, 124, 0.7)
@@ -26,6 +21,13 @@
 .result::-webkit-scrollbar-track
     width: 10px
 
+
+@media (max-width: 800px)
+    .result 
+        margin-left: 10px
+
+        &::-webkit-scrollbar-thumb
+            background-color: transparent
 
 
     

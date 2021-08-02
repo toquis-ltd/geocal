@@ -16,7 +16,7 @@ export default memo(function Search({state, setState}) {
         );
     }
     const setResult = () => {
-        getCRSList(state.qwery)
+        getCRSList(state)
         .then(res => {
             setState(prev => ({...prev, result:res}))
         });
@@ -30,9 +30,9 @@ export default memo(function Search({state, setState}) {
                             className='search__field' 
                             onChange={e=>setQwery(e.currentTarget?.value)} 
                             onKeyPress={e=> e.key==='Enter' && setResult()}
-                            value={state.qwery}/>
+                            value={state}/>
                         
-                        { state.qwery && <button className='search__btn search__btn-clear' onClick={()=>setQwery('')}><CloseIcon/></button> }
+                        { state && <button className='search__btn search__btn-clear' onClick={()=>setQwery('')}><CloseIcon/></button> }
                         
                         <button className='search__btn search__btn-find' onClick={setResult}><SearchIcon/></button>
                     </div>
