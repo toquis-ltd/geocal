@@ -1,5 +1,6 @@
 import {memo} from 'react';
 
+import Globe from '../../../../../../common/globe/globe'
 import Search from './search';
 import Result from './result/result';
 
@@ -7,7 +8,7 @@ import './view.sass';
 
 export default memo(function SearchView({state, setState}) {
     return (
-        <div className="view">
+        <div className="view__search">
             <Search state={state?.qwery} setState={setState} />
             <Result state={state?.result} />
         </div>
