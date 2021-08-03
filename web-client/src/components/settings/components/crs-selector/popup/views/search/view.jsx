@@ -1,6 +1,5 @@
 import {memo} from 'react';
 
-import Globe from '../../../../../../common/globe/globe'
 import Search from './search';
 import Result from './result/result';
 

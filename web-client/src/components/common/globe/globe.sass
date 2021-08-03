@@ -2,12 +2,11 @@
     position: fixed
     background-color: red
 
-#svg 
-  width: 100%
-  height: auto
-
-.sphere 
-    fill: #adadc0
+.sphere
+    fill: #6e7a96
+    &:hover
+        fill: #6e7a96d0
+        
 
 .country, .states, .provinces 
     fill: rgb(74, 106, 211)
@@ -27,4 +26,6 @@
   stroke: rgb(58, 58, 58)
   stroke-width: .5px
   stroke-opacity: .5
-  
+
+svg g
+    transform: scale(1.5)
