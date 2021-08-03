@@ -1,4 +1,4 @@
-import { useRef, useEffect, memo } from 'react';
+import { useRef, useEffect, useCallback,  memo } from 'react';
 import {feature} from 'topojson';
 import * as d3 from 'd3';
 
@@ -9,13 +9,20 @@ import './globe.sass'
 export default memo(function Globe({height=300, width=300}) {
 
         const svgRef = useRef(null);
-        const rotate = useRef([0,0,0]);
+        const rotate = useRef(JSON.parse(window.localStorage.getItem('rotate')) || [0,0,0]);
         const World = feature(world, world.objects.custom);
         
         const graticule = d3.geoGraticule();
         const projection = d3.geoOrthographic().scale(width/3).translate([width/3 , height/3]).rotate(rotate.current);
         const path = d3.geoPath(projection);
 
+        const rotationHandler = useCallback((value) => {
+            const save = window.localStorage.setItem('rotate', JSON.stringify(value));
+            rotate.current = value;
+            setTimeout(save, 400);
+        }, []);
+
+        //globe logic
         useEffect(() => {
             const svg = d3.select(svgRef.current);
             const g = svg.append('g')
@@ -44,14 +51,14 @@ export default memo(function Globe({height=300, width=300}) {
             ###################################################
             ###################################################
             */
-
+            
             g.selectAll('.country')
                 .on("click", (event, d) => {
                     alert(d.properties.name)
                 });
 
             g.call(d3.drag().on("drag", (event, d) => {
-                    rotate.current = projection.rotate()
+                    rotationHandler(projection.rotate());
                     const k = 50 / projection.scale()
                     projection.rotate([
                       rotate.current[0] + event.dx * k,
@@ -71,8 +78,9 @@ export default memo(function Globe({height=300, width=300}) {
                 })
                 
             );
-               
+            
         }, [graticule, path, World.features, projection, rotate]);
+
 
         return <svg width={width} height={height} ref = {svgRef}/>
 });
