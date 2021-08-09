@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import { useState } from 'react';
 
 import Popup from '../../../../common/popup/popup';
 import Interface from '../../../../common/popup/interface/menu-bar/menu';

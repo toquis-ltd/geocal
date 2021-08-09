@@ -6,6 +6,7 @@ import Result from './result/result';
 import './view.sass';
 
 export default memo(function SearchView({state, setState}) {
+    
     return (
         <div className="view__search">
             <Search state={state?.qwery} setState={setState} />
