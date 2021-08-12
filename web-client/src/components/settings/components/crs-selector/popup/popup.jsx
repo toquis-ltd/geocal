@@ -9,7 +9,7 @@ import GlobeView from './views/globe/view';
 
 import './popup.sass';
 
-function CrsPopup({isOpen, onClose, parameters}) {
+function CrsPopup({isOpen, onClose}) {
     const [search, setSearch] = useState({qwery:'', result:[]});
 
     return (

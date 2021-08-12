@@ -22,7 +22,7 @@ export default memo(function Globe({width, height}) {
 
             const graticule = d3.geoGraticule();
             const projection = d3.geoOrthographic()
-                            .scale((width+height)/7.4) //7.4 is scale coef witch work well with width*0.8 of parent size and inherit heeght
+                            .scale(width/3.5) //3.5 is scale coef witch work well with width*0.8 of parent size and inherit heeght
                             .translate([width/3, height/3])
                             .rotate(rotate.current);
 
