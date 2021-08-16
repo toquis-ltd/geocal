@@ -5,12 +5,12 @@ import Result from './result/result';
 
 import './view.sass';
 
-export default memo(function SearchView({state, setState}) {
+export default memo(function SearchView() {
     
     return (
         <div className="view__search">
-            <Search state={state?.qwery} setState={setState} />
-            <Result state={state?.result} />
+            <Search />
+            <Result />
         </div>
     );
 });

@@ -1,6 +1,4 @@
-import {Action} from './index';
-
-const HistoryReducer = (state=false, action:Action) => {
+const HistoryReducer = (state=false, action:any) => {
     switch (action.type) {
         default:
             return state;

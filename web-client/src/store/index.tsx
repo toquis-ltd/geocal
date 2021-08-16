@@ -1,9 +1,9 @@
 import { createStore } from '@reduxjs/toolkit'
 
-import AllReducers from '../reducers';
+import rootReducer from '../reducers';
 
 const store = createStore(
-        AllReducers,  
+        rootReducer,  
         (window as any).__REDUX_DEVTOOLS_EXTENSION__ &&
         (window as any).__REDUX_DEVTOOLS_EXTENSION__()
     );

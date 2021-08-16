@@ -1,15 +1,21 @@
-import { useState, useEffect, useRef} from "react";
+import { useState, useLayoutEffect, useRef} from "react";
+
+type Prop = {
+    isRenderFinnished:Boolean, 
+    width?: number, 
+    height?: number,
+}
 
 export default function useCurrentSize() {
 
     const ref = useRef(null);
-    const [container, sizeHandle] = useState({});
+    const [container, sizeHandle] = useState<Prop>({isRenderFinnished:false});
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         const handleResize = () => sizeHandle({
                                                 isRenderFinnished:true, 
-                                                width: ref?.current?.offsetWidth, 
-                                                height:ref?.current?.offsetHeight
+                                                width: ref.current.offsetWidth, 
+                                                height:ref.current.offsetHeight
                                             });        
         handleResize();
         window.addEventListener('resize', handleResize, false);
@@ -18,5 +24,5 @@ export default function useCurrentSize() {
         }
     }, [])
 
-    return [ref, container];
+    return [ref, container] as const;
 }

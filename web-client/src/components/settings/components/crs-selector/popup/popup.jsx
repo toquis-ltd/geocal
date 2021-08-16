@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import Popup from '../../../../common/popup/popup';
 import Interface from '../../../../common/popup/interface/menu-bar/menu';
 
@@ -10,14 +8,12 @@ import GlobeView from './views/globe/view';
 import './popup.sass';
 
 function CrsPopup({isOpen, onClose}) {
-    const [search, setSearch] = useState({qwery:'', result:[]});
-
     return (
         <Popup isOpen={isOpen}>
             <Interface onClose={onClose}/>
             <div className="view">
                 <div className="view__inner">
-                    <SearchView name='Search' state={search} setState={setSearch}/>
+                    <SearchView />
                     <GlobeView />
                 </div>
             </div>

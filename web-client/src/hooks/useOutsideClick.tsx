@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react';
 
 export default function useOutsideClick(component, eventName) {
-    const [isActive, setActive] = useState(false);
+    const [isActive, setActive] = useState<Boolean>(false);
     
     useEffect(() => {
         const handleClickOutside = event => {
@@ -14,5 +14,5 @@ export default function useOutsideClick(component, eventName) {
         return () => document.removeEventListener(eventName, handleClickOutside);
     }, [isActive, component, eventName]);
   
-    return [isActive, setActive];
+    return [isActive, setActive] as const;
 }

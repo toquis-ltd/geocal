@@ -1,12 +1,28 @@
-import {Action} from './index';
 
-const PopupReducer = (state=false, action:Action) => {
+type State = {
+    crsPopup: boolean,
+    qwery: String,
+    result: [],
+};
 
+const PopupReducer = (state:State, action:any) => {
     switch (action.type) {
-        case 'TOGGLE':
-            return !state;
+
+        case 'crs/toggle':
+            return false;
+        
+        case 'crs/setQwery':
+            return {...state, qwery:action.payload};
+        
+        case 'crs/setResult':
+            return {...state, result:action.payload};
+
         default:
-            return state;
+            return {
+                crsPopup: false,
+                qwery: '',
+                result: [],
+            };
     };
 
 };
