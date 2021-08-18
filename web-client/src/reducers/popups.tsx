@@ -1,15 +1,15 @@
 
 type State = {
-    crsPopup: boolean,
+    isChanging: boolean,
     qwery: String,
-    result: [],
+    result: Array<any>,
 };
 
-const PopupReducer = (state:State, action:any) => {
+const PopupReducer = (state:State = {isChanging: false, qwery: '', result: [],} , action:any) => {
     switch (action.type) {
 
         case 'crs/toggle':
-            return false;
+            return {...state, isChanging:(!state.isChanging) };
         
         case 'crs/setQwery':
             return {...state, qwery:action.payload};
@@ -18,11 +18,7 @@ const PopupReducer = (state:State, action:any) => {
             return {...state, result:action.payload};
 
         default:
-            return {
-                crsPopup: false,
-                qwery: '',
-                result: [],
-            };
+            return state;
     };
 
 };

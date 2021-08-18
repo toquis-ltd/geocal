@@ -1,6 +1,6 @@
-import useCurrentSize from '../../../../../../../hooks/useCurrentSize';
+import useCurrentSize from '../../../../../../hooks/useCurrentSize';
 
-import Globe from '../../../../../../common/globe/globe';
+import Globe from '../../../../../common/globe/globe';
 
 import './view.sass';
 

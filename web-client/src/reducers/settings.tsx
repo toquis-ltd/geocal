@@ -1,12 +1,13 @@
-const SettingsReducer = (state:String, action:any) => {
+const SettingsReducer = (state={modifiedCRS:'source', source:{},target:{}}, action:any) => {
     switch (action.type) {
-        case 'setCRS':
-            return state = action.payload.value
+        case 'setOrigin':
+            return {...state, modifiedCRS: action.payload}
 
+        case 'setCRS':
+            return {...state, [state.modifiedCRS]:action.payload}
+        
         default:
-            return {
-                
-            };
+            return state;
     };
 
 };

@@ -1,6 +1,6 @@
 import './settings.css';
 
-import CrsSelector from './components/crs-selector/crs-selector';
+import CrsSelector from './crs-selector/crs-selector'
 import {source, target} from './parameters.js';
 
 function Settings() {

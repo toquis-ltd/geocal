@@ -1,14 +1,13 @@
 const common = {
-    title: 'coordinate reference system'
+    title: ' coordinate reference system'
 };
 
 export const source = {
     title:('Source'+common.title),
-    code: '',
-
+    origin: 'source',
 };
 
 export const target = {
     title:('Target'+common.title),
-    code: '',
+    origin: 'target',
 };

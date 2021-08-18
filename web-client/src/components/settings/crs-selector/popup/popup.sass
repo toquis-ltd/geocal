@@ -42,17 +42,23 @@
         box-shadow: 0px 0px 120px 15px
 
 
-@media (max-width: 800px)
+@media (max-width: 780px)
     .popup
         top: 1%
         left: 1%
         right: 1%
         bottom: 1%
 
-    .popup__inner 
+    .popup__inner
         top: 0
         bottom: 0
         left: 0
         right: 0
         box-shadow: 0px 0px 120px 15px
     
+    .view__inner
+        height: 100%
+        display: grid
+        grid-auto-columns: 100%
+        grid-template-rows: repeat(2, 50%)
+        grid-template-columns: 1fr

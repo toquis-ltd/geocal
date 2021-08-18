@@ -1,12 +1,13 @@
+import { useSelector} from 'react-redux';
+import { memo } from 'react';
+
 import CrsItem from '../item/item';
 
-import { useSelector, useDispatch} from 'react-redux';
 
 import './result.sass';
 
-export default function Result (){
+export default memo(function Result () {
     const result = useSelector(state => state.popups.result);
-
     return(
         <div className='result'>
                 <div className="result__inner">
@@ -16,4 +17,4 @@ export default function Result (){
                 </div>
         </div>
     )
-}
+});

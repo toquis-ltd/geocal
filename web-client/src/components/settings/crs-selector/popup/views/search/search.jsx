@@ -1,23 +1,23 @@
 import { memo } from 'react';
 
 import { useSelector, useDispatch} from 'react-redux';
-import { setQwery, setResult } from '../../../../../../../actions/popups';
+import { setQwery, setResult } from '../../../../../../actions/popups';
 
-import SearchIcon from '../../../../../../../icons/search-icon';
-import CloseIcon from '../../../../../../../icons/close-icon';
+import SearchIcon from '../../../../../../icons/search-icon';
+import CloseIcon from '../../../../../../icons/close-icon';
 
-import {getCRSList} from './api';
+import {fetchCRSList} from './api';
 
 import './search.sass';
 
-export default memo(function Search({}) {
+export default memo(function Search() {
     const qwery = useSelector(state => state.popups.qwery);
     const dispatch = useDispatch();
 
     const clearQwery = () => dispatch(setQwery(''));
     const handleChange = event => dispatch(setQwery(event.currentTarget?.value));
     const handleResult = () => {
-        getCRSList(qwery).then(res => {
+        fetchCRSList(qwery).then(res => {
             dispatch(setResult(res));
         })
     }
@@ -34,6 +34,10 @@ export default memo(function Search({}) {
                             value={qwery}/>
                         {qwery && <button className='search__btn search__btn-clear' onClick={clearQwery}><CloseIcon/></button> }
                         <button className='search__btn search__btn-find' onClick={handleResult}><SearchIcon/></button>
+                    </div>
+                </div>
+                <div className="search__filters">
+                    <div className="search__uom">
                     </div>
                 </div>
             </div>

@@ -4,18 +4,23 @@ type crsHeandler = {
 };
 
 type payload = {
-        origin: String,
+        name: String,
         code?: Number,
         uom?: String,
         area?: String,
         proj4?: String,
 };
 
-export const setCRS = ({}:payload):crsHeandler => {
+export const setCRS = (payload:payload):crsHeandler => {
     return {
         type: 'setCRS',
-        payload: {
-            origin: ''
-        }
+        payload: {...payload}
     };
 };
+
+export const setOrigin = (payload) => {
+    return {
+        type: 'setOrigin',
+        payload: payload
+    }
+}

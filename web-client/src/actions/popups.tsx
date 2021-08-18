@@ -11,3 +11,10 @@ export const setResult = (value) => {
         payload:  value
     }
 }
+
+export const togglePopup = (state:boolean) => {
+    return {
+        type: 'crs/toggle',
+        payload: state
+    }
+}

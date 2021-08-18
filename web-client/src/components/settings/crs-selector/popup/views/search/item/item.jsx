@@ -1,14 +1,29 @@
 import { useRef } from 'react';
-import useOutsideClick from '../../../../../../../../hooks/useOutsideClick';
+import { useDispatch } from 'react-redux';
+
+import {setCRS} from '../../../../../../../actions/settings'
+import useOutsideClick from '../../../../../../../hooks/useOutsideClick';
+
+import { fetchProj4 } from '../api';
 
 import './item.sass'
 
-export default function CrsItem({element}){
+export default function CrsItem({element}) {
+    const dispatch = useDispatch();
     const wraper =  useRef(null);
     const [isActive, toggleActive] = useOutsideClick(wraper, 'mouseup');
 
     const handleClick = () => toggleActive(!isActive);
-
+    const handleSelect = () => {
+        fetchProj4(element.code).then(res=>{
+            dispatch(setCRS({
+                name: element.name,
+                code: element.code,
+                uom: element.unityOfMeasure,
+                proj4: res
+            }));
+        });
+    };
     return (
         <div className={`result__item ${ (isActive) ? 'result__item--activate':''}`} key={element.code} ref={wraper}>
             <div className="result__item-about" onClick={handleClick} >
@@ -19,9 +34,9 @@ export default function CrsItem({element}){
             </div>
             { isActive &&
                 <div className="result__item-control">
-                    <button className='result__btn result__item-select' onClick={()=>null}>select</button>
-                    <button className='result__btn result__item-view'>view on globe</button>
-                    <button className='result__btn result__item-more'>more information about</button>
+                    <button className='result__btn result__item-select' onClick={handleSelect}>select</button>
+                    {/* <button className='result__btn result__item-view'>view on globe</button>
+                    <button className='result__btn result__item-more'>more information about</button> */}
                 </div>
             }
         </div>
