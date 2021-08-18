@@ -22,7 +22,7 @@ function CrsSelector ({parameters}) {
                 <h3 className="field-title selector__title">{parameters.title}</h3>
             </div>
             <div className='selector__container'>
-                <SelectBtn onClick={openPopup}/>
+                <SelectBtn onClick={openPopup} parameters={parameters}/>
             </div>
             <div className='selector__footer'>
             </div>
