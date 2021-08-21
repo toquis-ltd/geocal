@@ -11,7 +11,7 @@ import './item.sass'
 export default function CrsItem({element}) {
     const dispatch = useDispatch();
     const wraper =  useRef(null);
-    const [isActive, toggleActive] = useOutsideClick(wraper, 'mouseup');
+    const [isActive, toggleActive] = useOutsideClick(wraper);
 
     const handleClick = () => toggleActive(!isActive);
     const handleSelect = () => {

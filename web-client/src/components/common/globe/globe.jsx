@@ -7,7 +7,7 @@ import world from '../../../data/globe.json';
 
 import './globe.sass'
 
-export default memo(function Globe({width, height}) {
+export default memo(function Globe({width, height, func}) {
         
     const svgRef = useRef(null);
     const rotate = useRef([0,0,0]);
@@ -35,7 +35,7 @@ export default memo(function Globe({width, height}) {
                 .attr('class', 'sphere')
                 .attr('d', path({type: 'Sphere'}))
                 .on("click", (event,d)=>{
-                    alert("World")
+                    func("World")
                 });
 
             g.append('path')

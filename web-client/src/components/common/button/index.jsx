@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 
-import './button.css';
+import './button.sass';
 
 
 function SelectBtn ({onClick, parameters}) {
@@ -10,7 +10,7 @@ function SelectBtn ({onClick, parameters}) {
     
     return (
         <button className='selector__btn' onClick={onClick}>
-            { (self.name === other?.name) ? self.name + ' EPSG code:' + self.code : self.name || 'Click to select CRS' }
+            { (self?.name && self.name == other?.name) ? self.name + ' EPSG code:' + self.code : self.name || 'Click to select CRS' }
         </button>
     );
 }

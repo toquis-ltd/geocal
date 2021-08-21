@@ -1,11 +1,11 @@
-export const setQwery = (value) => {
+export const setQwery = (value:String) => {
     return {
         type: 'crs/setQwery',
         payload: value
     }
 }
 
-export const setResult = (value) => {
+export const setResult = (value:any) => {
     return {
         type: 'crs/setResult',
         payload:  value

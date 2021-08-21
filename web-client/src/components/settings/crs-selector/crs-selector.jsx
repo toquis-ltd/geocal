@@ -4,11 +4,11 @@ import { togglePopup } from '../../../actions/popups';
 import { setOrigin } from '../../../actions/settings';
 
 import CrsPopup from './popup/popup';
-import SelectBtn from './button/button';
+import SelectBtn from 'components/common/button';
 
 import './crs-selector.css';
 
-function CrsSelector ({parameters}) {
+export default function CrsSelector ({parameters}) {
     const dispatch = useDispatch();
 
     const closePopup = () => dispatch(togglePopup(false));
@@ -29,6 +29,4 @@ function CrsSelector ({parameters}) {
             <CrsPopup onClose={closePopup}/>
         </div>
     );
-}
-
-export default CrsSelector;
+};

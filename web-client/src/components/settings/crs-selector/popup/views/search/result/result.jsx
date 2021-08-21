@@ -13,10 +13,9 @@ export default memo(function Result () {
     const [find, handleFind] = useState(result?.findCRS)
 
     useEffect(()=>{
-        if (origin === 'target') {
-            handleFind(result?.findCRS?.filter(item => item.code !== source.code))
-        };
-    }, []);
+        const data = (origin === 'target') ? result?.findCRS?.filter(item => item.code !== source.code) : result?.findCRS
+        handleFind(data);
+    }, [result]);
 
     return(
         <div className='result'>

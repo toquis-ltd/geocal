@@ -8,14 +8,14 @@ type Prop = {
 
 export default function useCurrentSize() {
 
-    const ref = useRef(null);
+    const ref = useRef<HTMLInputElement>(null);
     const [container, sizeHandle] = useState<Prop>({isRenderFinnished:false});
 
     useLayoutEffect(() => {
         const handleResize = () => sizeHandle({
                                                 isRenderFinnished:true, 
-                                                width: ref.current.offsetWidth, 
-                                                height:ref.current.offsetHeight
+                                                width: ref?.current?.offsetWidth,
+                                                height:ref?.current?.offsetHeight
                                             });        
         handleResize();
         window.addEventListener('resize', handleResize, false);

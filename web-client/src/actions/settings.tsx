@@ -18,7 +18,7 @@ export const setCRS = (payload:payload):crsHeandler => {
     };
 };
 
-export const setOrigin = (payload) => {
+export const setOrigin = (payload:String) => {
     return {
         type: 'setOrigin',
         payload: payload

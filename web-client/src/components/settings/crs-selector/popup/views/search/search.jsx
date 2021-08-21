@@ -1,6 +1,6 @@
 import { memo } from 'react';
 
-import { useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { setQwery, setResult } from '../../../../../../actions/popups';
 
 import SearchIcon from '../../../../../../icons/search-icon';
