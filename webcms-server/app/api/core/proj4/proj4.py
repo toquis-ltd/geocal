@@ -7,7 +7,7 @@ class Proj4(CoordinateReferenceSystemCase):
 
     def _get_result(self) -> QuerySet:
         try:
-            return SpatialReference(self._query).wkt
+            return SpatialReference(self._query).proj
         except Exception as e:
             if self._query == '':
                 raise Exception ("You forget to specify EPSG code") from e
