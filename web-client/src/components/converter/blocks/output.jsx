@@ -1,12 +1,12 @@
-export function Output () {
+export function Output ({point}) {
     return (
       <div className="output-fields">
-        <div className="input-fields__header">
-          <h3 className="field-title">
-            test
-          </h3>
+        <div className="output-fields__header">
         </div>
-        <div className="output-fields__container">
+        <div className="output-fields__container fields__container">
+            <input className='output-fields__item-field fields__item-field' value={point.x} autoComplete="off" readOnly={true} type='text'/>
+            <input className='output-fields__item-field fields__item-field' value={point.y} autoComplete="off" readOnly={true} type='text'/>
+            <input className='output-fields__item-field fields__item-field' value={point.z} autoComplete="off" readOnly={true} type='text'/>
         </div>
       </div>
     )
