@@ -1,6 +1,6 @@
 import  Arrow  from 'icons/arrow-icon'
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Input } from './input';
 import { Output } from './output';
 
@@ -12,18 +12,29 @@ type Points = {
 };
 
 type Point = {
-  x?: number
-  y?: number
-  z?: number
+  x?: number | String
+  y?: number | String
+  z?: number | String
 };
 
-export function PointConverter () {
-  const [points, usePointHandle] = useState<Points>({source:{}, target:{}})
+type Prop = {
+  state:boolean
+}
 
+export function PointConverter ({state}:Prop) {
+  const [points, pointHandle] = useState<Points>({source:{}, target:{}})
+  const FetchConvertion = ():Point => {
+    return points.source.x ? points.source : {}
+  }
+  useEffect(()=>{
+    if (state) {
+      pointHandle({...points, target:FetchConvertion()})
+    }
+  }, [state])
   return (
     <div className="point-converter__colomn">
-      <button className="fields__format-btn">format</button>
-      <Input point={points.source} onChange={usePointHandle}/>
+      <button className="base__button fields__format-btn">format</button>
+      <Input point={points.source} onChange={pointHandle}/>
       <Arrow />
       <Output point={points.target}/>
     </div>

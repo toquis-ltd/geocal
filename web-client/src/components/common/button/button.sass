@@ -1,5 +1,23 @@
-.selector__btn 
+.base__button 
+    outline: none
+    border: none
+    background-color: #333
+    color: #fff
+    transition: .3s
+    cursor: pointer
+    &:hover
+        background-color:  #212121
+    &:active
+        background-color: #5c5c5c
+    &:focus
+        border: 3px solid #212121
+        height: calc(3px + min-height)
+        width: calc(3px + min-width)
+
+
+.selector__btn
     background-color: white
+    color: initial
     border-radius: 15px
     min-width: 250px
     height: 20px

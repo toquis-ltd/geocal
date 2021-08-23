@@ -1,24 +1,28 @@
 .result__item 
     
     padding: 5px
+    height: 97px
     margin-bottom: 5px
     list-style-type: none
     background-color: white
     border: 1px solid #d7d7d7
     border-radius: 10px
+    cursor: pointer
+    transition: height 0.4s
 
     &:hover
         box-shadow: 0 2px 7px #888888
         background-color: #f2f2f2dd
-        cursor: pointer
         
     &--activate
-        box-shadow: 0 1px 5px 2px #888888
-        cursor: pointer
-        
+        height: 119px
+
         &:hover
             box-shadow: 0 2px 7px #c5c5c5
             background-color: #ffffff
+    
+    &:hover
+        height: 120px
 
 .result__item-title
     font-size: 16px
@@ -34,5 +38,7 @@
 .result__btn
     cursor: pointer
     border-radius: 10px
-    &:hover
+    margin: auto 5px
+    &:first-of-type
+        margin-left: 0px
         
