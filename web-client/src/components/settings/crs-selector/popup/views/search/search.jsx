@@ -3,10 +3,10 @@ import { memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setQwery, setResult } from '../../../../../../actions/popups';
 
-import SearchIcon from '../../../../../../icons/search-icon';
-import CloseIcon from '../../../../../../icons/close-icon';
+import SearchIcon from 'icons/search-icon';
+import CloseIcon from 'icons/close-icon';
 
-import {fetchCRSList} from './api';
+import { fetchCRSList } from '../../api';
 
 import './search.sass';
 
