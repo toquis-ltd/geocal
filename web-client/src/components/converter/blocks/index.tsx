@@ -18,6 +18,7 @@ type Point = {
   x?: string
   y?: string
   z?: string
+
 };
 
 type Prop = {

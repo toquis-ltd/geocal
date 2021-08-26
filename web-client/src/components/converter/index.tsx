@@ -22,8 +22,9 @@ export default function Converter () {
             <div className="point-converter__inner">
                 <button className="base__button point-converter__display-btn" onClick={() => handleAddConverter(+1)}>+</button>
                 <div className="point-converter__items">
-                    { isMobile && <PointConverter state={isConvert} /> ||
-                        [...Array(converters)].map( (_, i)=>
+                    { isMobile && <PointConverter state={isConvert} /> }
+                    { !isMobile  && [...Array(converters)].map( (_, i)=>
+
                             <PointConverter state={isConvert} key={i} />
                         )
                     }
