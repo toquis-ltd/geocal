@@ -1,14 +1,10 @@
-import { useDispatch, useSelector } from 'react-redux';
-
-import { setCRS } from 'actions/settings'
+import { useSelector } from 'react-redux';
 
 import Popup from 'components/common/popup/popup';
 import Interface from 'components/common/popup/interface/menu-bar/menu';
 
 import SearchView from './views/search/view';
 import GlobeView from './views/globe/view';
-
-import { fetchProj4 } from './api'
 
 import './popup.sass';
 

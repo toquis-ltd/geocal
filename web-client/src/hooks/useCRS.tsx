@@ -1,6 +1,6 @@
 import { setCRS } from "actions/settings";
 import { fetchProj4 } from "components/settings/crs-selector/popup/api";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 type crs = {
     name:string,

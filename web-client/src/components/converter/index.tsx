@@ -4,16 +4,19 @@ import useLimitedState from 'hooks/useLimitedState';
 import { PointConverter } from './blocks'
 
 import './index.sass'
+import { useCallback } from 'react';
 
 export default function Converter () {
     const isMobile = useMobileOnly();
     const [converters, handleAddConverter] = useLimitedState(1, 4);
-    const [isConvert, toggleConvert] = useState<boolean>(false);
+    const [isConvert, toggleConvert] = useState(false);
 
-    const handleConvert = () => toggleConvert(!isConvert);
+    const handleConvert = useCallback(()=>toggleConvert(!isConvert), [isConvert]);
+    
     useEffect(()=>{
         if (isConvert) handleConvert()
-    }, [isConvert])
+    }, [isConvert, handleConvert])
+
     return (
         <div className='point-converter'>
             <h3 className="field-title">
