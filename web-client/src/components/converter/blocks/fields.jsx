@@ -9,7 +9,7 @@ export function Fields ({name, point, origin, onChange=()=>null}) {
                 className={`${name}-coordinate__field fields__item-field`}
                 onChange={onChange}
                 name='x'
-                value={point.x}
+                value={point.x || ""}
                 placeholder={unity[0]}
                 autoComplete="off"
                 readOnly={readOnly}
@@ -18,7 +18,7 @@ export function Fields ({name, point, origin, onChange=()=>null}) {
                 className={`${name}-coordinate__field fields__item-field`} 
                 onChange={onChange}
                 name='y'
-                value={point.y}
+                value={point.y || ""}
                 placeholder={unity[1]}
                 autoComplete="off"
                 readOnly={readOnly}
@@ -27,7 +27,7 @@ export function Fields ({name, point, origin, onChange=()=>null}) {
                 className={`${name}-coordinate__field fields__item-field`}
                 onChange={onChange}
                 name='z'
-                value={point.z}
+                value={point.z || ""}
                 placeholder={unity[2]}
                 autoComplete="off"
                 readOnly={readOnly}

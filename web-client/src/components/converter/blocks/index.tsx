@@ -1,4 +1,7 @@
+import { DefaultRootState, useSelector } from 'react-redux';
+
 import  Arrow  from 'icons/arrow-icon'
+import FetchConvertion from 'calculation/conversion';
 
 import { useState, useEffect } from 'react';
 import { Input } from './input';
@@ -12,9 +15,9 @@ type Points = {
 };
 
 type Point = {
-  x?: number | String
-  y?: number | String
-  z?: number | String
+  x?: string
+  y?: string
+  z?: string
 };
 
 type Prop = {
@@ -23,14 +26,15 @@ type Prop = {
 
 export function PointConverter ({state}:Prop) {
   const [points, pointHandle] = useState<Points>({source:{}, target:{}})
-  const FetchConvertion = ():Point => {
-    return points.source.x ? points.source : {}
-  }
+  const source = useSelector(({settings}:DefaultRootState)=>settings.source.proj4);
+  const target = useSelector(({settings}:DefaultRootState)=>settings.target.proj4);
+  
   useEffect(()=>{
-    if (state) {
-      pointHandle({...points, target:FetchConvertion()})
+    if (state && source !== undefined && target !== undefined) {
+      pointHandle({...points, target:FetchConvertion(source+'', target+'', points.source)})
     }
-  }, [state])
+  }, [state, points, source, target])
+
   return (
     <div className="point-converter__colomn">
       <button className="base__button fields__format-btn">format</button>

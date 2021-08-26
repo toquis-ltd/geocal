@@ -14,7 +14,7 @@ type crs = {
 const SettingsReducer = (state:settings = {modifiedCRS:'source', source:{}, target:{}}, action:any) => {
     switch (action.type) {
         case 'setOrigin':
-            return {...state, modifiedCRS: action.payload}
+            return {...state, modifiedCRS:action.payload}
 
         case 'setCRS':
             return {...state, [state.modifiedCRS]:action.payload}

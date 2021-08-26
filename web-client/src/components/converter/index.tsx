@@ -23,7 +23,7 @@ export default function Converter () {
                 <button className="base__button point-converter__display-btn" onClick={() => handleAddConverter(+1)}>+</button>
                 <div className="point-converter__items">
                     { isMobile && <PointConverter state={isConvert} /> ||
-                        [...Array(converters)].map(i =>
+                        [...Array(converters)].map( (_, i)=>
                             <PointConverter state={isConvert} key={i} />
                         )
                     }

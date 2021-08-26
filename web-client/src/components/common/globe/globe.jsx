@@ -7,12 +7,12 @@ import world from '../../../data/globe.json';
 
 import './globe.sass'
 
-export default memo(function Globe({width, height, func}) {
+export default memo(function Globe({width, height, onSelect}) {
         
     const svgRef = useRef(null);
     const rotate = useRef([0,0,0]);
     const World = feature(world, world.objects.custom);
-    
+
     useEffect(()=>{
         rotate.current =  (typeof window.localStorage.getItem('rotate') === 'string') ?
                         JSON.parse(window.localStorage.getItem('rotate')) : rotate.current;
@@ -35,7 +35,7 @@ export default memo(function Globe({width, height, func}) {
                 .attr('class', 'sphere')
                 .attr('d', path({type: 'Sphere'}))
                 .on("click", (event,d)=>{
-                    func("World")
+                    onSelect("World")
                 });
 
             g.append('path')
@@ -58,7 +58,7 @@ export default memo(function Globe({width, height, func}) {
             
             g.selectAll('.country')
                 .on("click", (event, d) => {
-                    alert(d.properties.name)
+                    onSelect(d.properties.name)
                 });
             
             g.call(d3.drag()
@@ -91,7 +91,7 @@ export default memo(function Globe({width, height, func}) {
                 svg.selectAll('g').remove()
             }
             
-            }, [World.features, rotate, width, height]);
+            }, [World.features, rotate, width, height, onSelect]);
 
     return <svg width={width} height={height} ref={svgRef}/>
 });

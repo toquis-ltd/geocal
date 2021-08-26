@@ -1,28 +1,29 @@
-import { memo, useEffect, useState } from 'react';
-import { useSelector} from 'react-redux';
+import { memo, useCallback, useEffect, useState, useRef} from 'react';
+import { useSelector } from 'react-redux';
+import _ from 'underscore';
 
 import CrsItem from '../item/item';
 
-
 import './result.sass';
 
-export default memo(function Result ({onSelect}) {
-    const result = useSelector(state => state.popups.result);
-    const origin = useSelector(state => state.settings.modifiedCRS);
-    const source = useSelector(state => state.settings.source);
-    const [find, handleFind] = useState(result?.findCRS)
+export default memo(function Result () {
+    const settings = useSelector(state => state.settings, _.isEqual);
+    const result = useSelector(state => state.popups.result );
+    const [find, setFind] = useState(result?.findCRS);
 
-    useEffect(()=>{
-        const data = (origin === 'target' && result?.findCRS?.length > 1) ? 
-                    result?.findCRS?.filter(item => item.code !== source.code) : result?.findCRS
-        handleFind(data);
-    }, [result]);
+    useEffect(() => {
+        if (settings?.modifiedCRS === 'target' && result?.findCRS?.length > 1) {
+            const data = find?.filter(item => item.code !== settings.source.code);
+            setFind(data);
+        }
+        setFind(result?.findCRS)
+    }, [result?.findCRS])
 
     return(
         <div className='result'>
                 <div className="result__inner">
                     {
-                        find?.map( elem => <CrsItem element={elem} onSelect={onSelect}/> )
+                        find?.map( (elem, index) => <CrsItem element={elem} key={index}/> )
                     }
                 </div>
         </div>
