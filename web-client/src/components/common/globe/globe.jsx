@@ -4,6 +4,7 @@ import { feature } from 'topojson';
 import * as d3 from 'd3';
 
 import world from '../../../data/globe.json';
+// import test from '../../../data/notOptim.json';
 
 import './globe.sass'
 
@@ -23,7 +24,7 @@ export default memo(function Globe({width, height, onSelect}) {
 
             const graticule = d3.geoGraticule();
             const projection = d3.geoOrthographic()
-                            .scale(width/3.5) //7.4 is scale coef witch work well with width*0.8 of parent size and inherit heeght
+                            .scale(width/3.5) //3.5 is scale coef witch work well with width*0.8 of parent size and inherit heeght
                             .translate([width/3, height/3])
                             .rotate(rotate.current);
 

@@ -24,7 +24,7 @@ export default memo(function CrsItem({element}) {
             { isActive &&
                 <div className="result__item-control">
                     <button className='base__button result__btn result__item-select' onClick={handleSelect}>Select</button>
-                    <button className='base__button result__btn result__item-fork'>Fork</button>
+                    <button className='base__button result__btn result__item-fork'>Derive</button>
                 </div>
             }
         </div>
