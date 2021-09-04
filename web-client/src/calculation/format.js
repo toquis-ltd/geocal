@@ -37,16 +37,6 @@ export function convertToDecimal (value)  {
     //convert 
     const d = Math.abs(dms_list[0]);
     const m = parseFloat(dms_list[1]/60);
-    const s = parseFloat(dms_list[2]/3600);
+    const s = (dms_list[2] !== undefined) ? parseFloat(dms_list[2]/3600):0;
     return Number((d+m+s)*sign).toFixed(10).replace(/(\.0+|0+)$/, '').toString();
 };
-
-// export default function FetchFormat(point) {
-//     switch ('DMS'){
-//       case 'DMS':
-//         const response = Object.values(point).forEach(prop => {
-//           convertToDecimal(prop)
-//         });
-//         return {x:response[0], y:response[1], z:response[2]}
-//     } 
-// }
