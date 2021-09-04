@@ -1,15 +1,23 @@
+import { useEffect, useState } from "react";
 import { DefaultRootState, useDispatch, useSelector } from "react-redux";
+import _ from 'underscore';
+
 import { setQwery, setResult } from "actions/popups";
+
 import { fetchCRSList } from "components/settings/crs-selector/popup/api";
 
 export default function useSearchBar() {
     const dispatch = useDispatch();
-    const state = useSelector(({popups}:DefaultRootState) => popups.qwery);
-    const changeHandle = (value:string) => dispatch(setQwery(value));
+    const [localState, handleLocalState] = useState<string>('');
+    const state = useSelector(({popups}:DefaultRootState) => popups.qwery, _.isEqual);
     const fetchListHandle = (value?:string) => {
-        fetchCRSList(value || state).then(res => {
+        fetchCRSList(value || localState).then(res => {
+            dispatch(setQwery(value || localState));
             dispatch(setResult(res));
         })
     }
-    return [state, changeHandle, fetchListHandle]
+    useEffect(() => {
+        handleLocalState(state);
+    }, [state])
+    return [localState, handleLocalState, fetchListHandle]
 }

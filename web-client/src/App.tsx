@@ -1,3 +1,4 @@
+import About from './components/about';
 import Settings from './components/settings/settings';
 import Converter from './components/converter';
 
@@ -7,6 +8,7 @@ function App() {
   return (
     <div className='converter'>
       <Settings/>
+      <About/>
       <Converter/>
     </div>
     );

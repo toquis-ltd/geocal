@@ -3,8 +3,7 @@ import { useRef, useEffect,  memo } from 'react';
 import { feature } from 'topojson';
 import * as d3 from 'd3';
 
-import world from '../../../data/globe.json';
-// import test from '../../../data/notOptim.json';
+import world from '../../../data/map.json';
 
 import './globe.sass'
 
@@ -12,7 +11,7 @@ export default memo(function Globe({width, height, onSelect}) {
         
     const svgRef = useRef(null);
     const rotate = useRef([0,0,0]);
-    const World = feature(world, world.objects.custom);
+    const World = feature(world, world.objects.collection);
 
     useEffect(()=>{
         rotate.current =  (typeof window.localStorage.getItem('rotate') === 'string') ?
