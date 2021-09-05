@@ -1,6 +1,8 @@
-from .views import *
 from django.urls import path
+
 from .core.proj4.proj4 import Proj4
+
+from .views import *
 
 urlpatterns = [
     path('about/', get_about),

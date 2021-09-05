@@ -75,7 +75,7 @@ class CoordinateReferenceSystem(models.Model):
         try:
             return SpatialReference(self.coord_ref_sys_code).units[1] 
         except:
-            return 'unknown'
+            return None
     
 
     class Meta:
