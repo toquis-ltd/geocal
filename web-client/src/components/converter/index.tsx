@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { PointConverter } from './blocks'
+import { PointConverter } from './block'
 
 import './index.sass'
 
