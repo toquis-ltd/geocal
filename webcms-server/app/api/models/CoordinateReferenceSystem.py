@@ -2,6 +2,7 @@ from django.contrib.gis.gdal import SpatialReference
 from django.db import models
 
 from .Area import Area
+from .CoordinateOperation import CoordinateOperation
 from .Datum import Datum
 from .PrimeMeridian import PrimeMeridian
 
@@ -32,15 +33,30 @@ class CoordinateReferenceSystem(models.Model):
     area_name = models.CharField(max_length = 512, blank=True, null=True)
     area = models.ManyToManyField(Area, blank=True)
 
-    def __str__ (self):
+    def __str__ (self) -> str:
         return f"ESPG: {self.coord_ref_sys_code}  -  {self.coord_ref_sys_name}"
+    
+    def is_projected (self):
+        return SpatialReference(self.coord_ref_sys_code).projected
 
     def get_bounds(self):
         return self._get_bounds()
+    
+    def get_projection_method(self) -> str:
+        return self._get_projection_method()
+    
+    def get_primem_meridian(self):
+        return self._get_primem_meridian()
+    
+    def get_proj4(self):
+        return self._get_proj4()
 
     def get_unity_of_measure(self):
         return self._get_unity_of_measure()
     
+    def get_wkt(self):
+        return self._get_wkt()
+
     def _get_bounds(self):
         area = Area.objects.get(code=self.area_of_use_code)
         return {
@@ -49,7 +65,6 @@ class CoordinateReferenceSystem(models.Model):
                     'westBoundLon' : area.area_west_bound_lon,
                     'eastBoundLon' : area.area_east_bound_lon,
             }
-    
     def _get_datum(self):
         try:
             return Datum.objects.get(datum_code = self.crs.datum_code)
@@ -71,12 +86,31 @@ class CoordinateReferenceSystem(models.Model):
         except:
             return None
 
+    def _get_projection_method(self):
+        if self.is_projected():
+            try:
+                return CoordinateOperation.objects.get(coord_op_code = self.projection_conv_code).coord_op_type
+            except:
+                pass
+        return ''
+
+    def _get_proj4(self):
+        try:
+            return SpatialReference(self.coord_ref_sys_code).proj
+        except Exception as e:
+            return SpatialReference(self.coord_ref_sys_code).wkt
+
     def _get_unity_of_measure(self):
         try:
             return SpatialReference(self.coord_ref_sys_code).units[1] 
         except:
             return None
-    
+
+    def _get_wkt(self):
+        try:
+            return SpatialReference(self.coord_ref_sys_code).pretty_wkt
+        except Exception as e:
+            return None
 
     class Meta:
         ordering = ['coord_ref_sys_code']

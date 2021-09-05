@@ -10,9 +10,16 @@ class PersonAdminDatum(admin.ModelAdmin):
 class PersonAdminEllipsoid(admin.ModelAdmin):
     search_fields = ('ellipsoid_code', )
 
+class PersonAdminCoordinateOperation(admin.ModelAdmin):
+    search_fields = ('coord_op_code', )
+
+class PersonAdminCoordinateSystem(admin.ModelAdmin):
+    search_fields = ('coord_sys_code', )
+
 admin.site.register(Area)
+admin.site.register(CoordinateOperation, PersonAdminCoordinateOperation)
 admin.site.register(CoordinateReferenceSystem, PersonAdmin)
-admin.site.register(CoordinateSystem)
+admin.site.register(CoordinateSystem, PersonAdminCoordinateSystem)
 admin.site.register(Datum, PersonAdminDatum)
 admin.site.register(Ellipsoid, PersonAdminEllipsoid)
 admin.site.register(UnityOfMeasure)

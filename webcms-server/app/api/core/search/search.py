@@ -18,7 +18,7 @@ class CoordinateReferenceSystemSearch(CRSList):
         """ This function is retunring QuerySet of Coordinate Referance System(to make reading easier this name gonna be abridged to CRS)
             if search keyword is empty this function return empty QuerySet
             if the search keyword is made from only digits this function will return QuerySet with only one or zero CRS
-            if the search keyword is a string 
+            if the search keyword is a string TrigramSimilarity mathched CRS gonna be returned
         """
         if len(self._query) == 0:
             return CRS.objects.none()

@@ -4,7 +4,6 @@ from rest_framework import status
 
 from .core.search.search import CoordinateReferenceSystemSearch as CRSS
 from .core.popular.popular import PopularCoordinateReferenceSystem as PCRS
-from .core.proj4.proj4 import Proj4
 from .core.about.about import About
 
 def dependency_injection(*args, **kwargs):
@@ -19,11 +18,6 @@ def dependency_injection(*args, **kwargs):
             return func(message)
         return inner
     return wrapper
-
-@api_view(['GET'])
-@dependency_injection(service=Proj4)
-def get_wkt(message):
-    return Response(message)
 
 @api_view(['GET'])
 @dependency_injection(service=CRSS)

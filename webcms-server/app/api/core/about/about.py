@@ -13,4 +13,8 @@ class About(CoordinateReferenceSystemCase):
                     'name': item.coord_ref_sys_name,
                     'unityOfMeasure': item.get_unity_of_measure(),
                     'bounds': item.get_bounds(),
+                    'isProjected': item.is_projected(),
+                    'projectionMethod': item.get_projection_method(),
+                    'proj4': item.get_proj4(),
+                    'wkt': item.get_wkt(),
                 }
