@@ -1,14 +1,9 @@
+import CRS from '../@types/CRS';
+
 type settings = {
     modifiedCRS: 'source' | 'target',
-    source:crs,
-    target:crs,
-}
-
-type crs = {
-    name?:String,
-    code?:number,
-    uom?:String,
-    proj4?:String;
+    source:CRS,
+    target:CRS,
 }
 
 const SettingsReducer = (state:settings = {modifiedCRS:'source', source:{}, target:{}}, action:any) => {

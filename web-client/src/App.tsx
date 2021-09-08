@@ -8,8 +8,8 @@ function App() {
   return (
     <div className='converter'>
       <Settings/>
-      <About/>
       <Converter/>
+      <About/>
     </div>
     );
 }

@@ -1,23 +1,18 @@
-import { setCRS } from "actions/settings";
-import { fetchProj4 } from "components/settings/crs-selector/popup/api";
-import { useDispatch } from "react-redux";
+import CRS from '../@types/CRS'
 
-type crs = {
-    name:string,
+import { useDispatch } from "react-redux";
+import { fetchAboutCRS } from "components/settings/crs-selector/popup/api";
+import { setCRS } from "actions/settings";
+
+interface Selected extends CRS {
     code:number,
-    unityOfMeasure?:string,
 }
 
 export default function useCRS () {
     const dispatch = useDispatch();
-    const set = (item:crs) => {
-        fetchProj4(item.code).then((res:string)=>{
-            dispatch(setCRS({
-                name: item.name,
-                code: item.code,
-                uom: item.unityOfMeasure,
-                proj4: res
-            }));
+    const set = (item:Selected) => {
+        fetchAboutCRS(item?.code).then((res:any)=>{
+            dispatch(setCRS({...res}));
         });
     };
     return set

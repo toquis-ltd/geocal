@@ -2,6 +2,8 @@ import { RootState } from 'reducers';
 import { useSelector } from 'react-redux';
 import { useMobileOnly } from 'hooks/useMobileOnly';
 
+import CrsDecription from './crs'
+
 import './index.sass';
 
 export default function About() {
@@ -12,9 +14,9 @@ export default function About() {
         (!isMobile) ? 
         <div className='converter__about-transformation about'>
             <div className="about__inner">
-                <div className='about__info about__source'>About source coordinate referance system</div>
+                <CrsDecription name='source'/>
                 <div className='about__info about__intersection'>intersection</div>
-                <div className='about__info about__target'>About target coordinate referance system</div>
+                <CrsDecription name='target'/>
             </div>
         </div> : null
     )
