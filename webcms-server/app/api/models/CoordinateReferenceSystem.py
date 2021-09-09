@@ -3,7 +3,9 @@ from django.db import models
 
 from .Area import Area
 from .CoordinateOperation import CoordinateOperation
+from .CoordinateSystem import CoordinateSystem
 from .Datum import Datum
+from .Ellipsoid import Ellipsoid
 from .PrimeMeridian import PrimeMeridian
 
 class CoordinateReferenceSystem(models.Model):
@@ -36,8 +38,25 @@ class CoordinateReferenceSystem(models.Model):
     def __str__ (self) -> str:
         return f"ESPG: {self.coord_ref_sys_code}  -  {self.coord_ref_sys_name}"
     
-    def is_projected (self):
-        return SpatialReference(self.coord_ref_sys_code).projected
+    def get_coordinate_system(self):
+        return {
+                "name":CoordinateSystem.objects.get(coord_sys_code = self.coord_sys_code).coord_sys_name,
+                "type":CoordinateSystem.objects.get(coord_sys_code = self.coord_sys_code).coord_sys_type,
+                "dimension":CoordinateSystem.objects.get(coord_sys_code = self.coord_sys_code).dimension,
+            }
+    
+    def get_ellipsoid(self):
+        elipsoid = self._get_ellipsoid()
+        if elipsoid != None:
+            print("ellipsoidal build ")
+
+            return {
+                "name":elipsoid.ellipsoid_name,
+                "semiMajorAxis":elipsoid.semi_major_axis,
+                "invFlattening":elipsoid.inv_flattening,
+                "ellipsoidShape":elipsoid.ellipsoid_shape,
+            }
+    
 
     def get_bounds(self):
         return self._get_bounds()
@@ -56,7 +75,7 @@ class CoordinateReferenceSystem(models.Model):
     
     def get_wkt(self):
         return self._get_wkt()
-
+    
     def _get_bounds(self):
         area = Area.objects.get(code=self.area_of_use_code)
         return {
@@ -67,7 +86,7 @@ class CoordinateReferenceSystem(models.Model):
             }
     def _get_datum(self):
         try:
-            return Datum.objects.get(datum_code = self.crs.datum_code)
+            return Datum.objects.get(datum_code = self.datum_code)
         except Exception as e:
             if self.datum_code == None:
                 return None
@@ -75,10 +94,10 @@ class CoordinateReferenceSystem(models.Model):
             return Datum.objects.get(datum_code = source.datum_code)
 
     def _get_ellipsoid(self):
-        try:
+        if (CoordinateSystem.objects.get(coord_sys_code = self.coord_sys_code).coord_sys_type == 'ellipsoidal'):
+            print("is ellipsoidal")
             return Ellipsoid.objects.get(ellipsoid_code = self._get_datum().ellipsoid_code)
-        except:
-            return None
+        return None
 
     def _get_primem_meridian(self):
         try:
@@ -87,7 +106,7 @@ class CoordinateReferenceSystem(models.Model):
             return None
 
     def _get_projection_method(self):
-        if self.is_projected():
+        if self.coord_ref_sys_kind == "projected" :
             try:
                 return CoordinateOperation.objects.get(coord_op_code = self.projection_conv_code).coord_op_type
             except:
