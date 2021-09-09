@@ -3,12 +3,11 @@ import { DefaultRootState, useSelector } from 'react-redux';
 import  Arrow  from 'icons/arrow-icon'
 import FetchConvertion from 'calculation/conversion';
 
-import { useState, useEffect } from 'react';
+import {useCallback, useState, useEffect } from 'react';
 import { Input } from './input';
 import { Output } from './output';
 
 import './block.sass';
-import { useCallback } from 'react';
 
 type Points = {
   source: Point,
@@ -21,32 +20,30 @@ type Point = {
   z?: string
 
 };
-
-type Prop = {
-  isConvert:boolean
-  onConvert: Function
+type Props = {
+  onConvert: {
+    current: Function | null
+  } 
 }
 
-export function PointConverter ({isConvert, onConvert}:Prop) {
+export function PointConverter ({onConvert}:Props) {
   const [points, pointHandle] = useState<Points>({source:{}, target:{}})
-  const source = useSelector(({settings}:DefaultRootState)=>settings.source.proj4);
-  const target = useSelector(({settings}:DefaultRootState)=>settings.target.proj4);
+  const source = useSelector(({settings}:DefaultRootState)=>settings.source);
+  const target = useSelector(({settings}:DefaultRootState)=>settings.target);
   const transform = useCallback(()=>{
     if (source !== undefined && target !== undefined) {
-      pointHandle({...points, target:FetchConvertion(source+'', target+'', points.source)})
-      onConvert()
+      FetchConvertion(source, target, points.source).then(res=>{
+        pointHandle({...points, target:res})
+      })
     }
-  }, [points, source, target, onConvert])
+  }, [source, target, points]);
 
   useEffect(()=>{
-    if (isConvert) {
-      transform()
-    }
-  }, [isConvert, transform])
+    onConvert.current = transform
+  }, [onConvert, transform])
 
   return (
     <div className="point-converter__colomn">
-      {/* <button className="base__button fields__format-btn" >format</button> */}
       <Input point={points.source} onChange={pointHandle}/>
       <Arrow />
       <Output point={points.target}/>
