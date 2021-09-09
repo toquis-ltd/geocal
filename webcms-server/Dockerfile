@@ -21,4 +21,3 @@ ADD ./entrypoint.sh /usr/src/app/
 
 #Run django 
 WORKDIR /usr/src/app/
-ENTRYPOINT ["sh", "./entrypoint.sh"]

@@ -1,0 +1,30 @@
+version: "3.8"
+services:
+  web:
+    build: .
+    tty: true
+    container_name: web
+    environment: 
+      pg_name: "postgres"
+      pg_user: "postgres"
+      pg_host: "pgdb"
+      pg_pass: "toor"
+    
+    volumes:
+      - static:/usr/src/app/static
+    depends_on:
+      - pgdb
+    ports:
+      - "8000:8000"
+    command: python ./manage.py runserver 0.0.0.0:8000
+
+  pgdb:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: toor
+
+volumes:
+  static:
