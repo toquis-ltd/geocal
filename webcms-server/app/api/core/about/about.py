@@ -15,7 +15,7 @@ class About(CoordinateReferenceSystemCase):
                     'bounds': item.get_bounds(),
                     'ellipsoid': item.get_ellipsoid(),
                     'kind': item.coord_ref_sys_kind,
-                    'CoordinateSystem': item.get_coordinate_system(),
+                    'coordinateSystem': item.get_coordinate_system(),
                     'projectionMethod': item.get_projection_method(),
                     'proj4': item.get_proj4(),
                     'wkt': item.get_wkt(),

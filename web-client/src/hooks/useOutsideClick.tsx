@@ -6,19 +6,19 @@ interface Div extends HTMLElement {
     }
 };
 
-export default function useOutsideClick(component:Div) {
-    const [isActive, setActive] = useState<Boolean>(false);
+export default function useOutsideClick(component:Div, exception=false) {
+    const [isActive, setActive] = useState<Boolean>(exception);
     
     useEffect(() => {
         const handleClickOutside = (event:MouseEvent) => {
-            if (isActive && component.current && !component.current.contains(event.target)) {
+            if (isActive && component.current && !component.current.contains(event.target) || !exception) {
                     setActive(false);
                 }
         }
         document.addEventListener('mouseup', handleClickOutside);
 
         return () => document.removeEventListener('mouseup', handleClickOutside);
-    }, [isActive, component]);
-  
+    }, [isActive, component, exception]);
+   
     return [isActive, setActive] as const;
 }
