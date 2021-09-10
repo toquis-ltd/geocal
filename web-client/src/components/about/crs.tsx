@@ -41,11 +41,23 @@ export default function CrsDecription({name}:Props) {
                     <ul className="about__list">
                         { (data.coordinateSystem) ?
                             <li className="about__description about__code">
-                                Datum:
+                                Coordinate System:
                                 <ul className="about__list about__elispoid">
                                     <li className="about__bounds-item">Name: {data.coordinateSystem.name}</li>
                                     <li className="about__bounds-item">Type: {data.coordinateSystem.type}</li>
                                     <li className="about__bounds-item">Dimension: {data.coordinateSystem.dimension}</li>
+                                </ul>
+                            </li>:null
+                        }
+                    </ul>
+                    <ul className="about__list">
+                        { (data.datum) ?
+                            <li className="about__description about__code">
+                                Datum:
+                                <ul className="about__list about__elispoid">
+                                    <li className="about__bounds-item">Name: {data.datum.name}</li>
+                                    <li className="about__bounds-item">Type: {data.datum.type}</li>
+                                    <li className="about__bounds-item">Dimension: {data.datum.description}</li>
                                 </ul>
                             </li>:null
                         }

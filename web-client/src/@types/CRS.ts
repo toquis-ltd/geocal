@@ -17,6 +17,12 @@ type CS = {
     dimension: number,
 }
 
+type datum = {
+    name:string,
+    type: string,
+    description: string,
+}
+
 export default interface CRS {
     code?: number,
     name?: string,
@@ -24,6 +30,7 @@ export default interface CRS {
     bounds?: bounds,
     ellipsoid?:ellipsoid,
     coordinateSystem?:CS,
+    datum?:datum,
     kind?: string,
     projectionMethod?:string
     proj4?: string,
