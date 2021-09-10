@@ -54,10 +54,16 @@ class CoordinateReferenceSystem(models.Model):
                 "name":elipsoid.ellipsoid_name,
                 "semiMajorAxis":elipsoid.semi_major_axis,
                 "invFlattening":elipsoid.inv_flattening,
-                "ellipsoidShape":elipsoid.ellipsoid_shape,
             }
     
-
+    def get_datum(self):
+        datum = self._get_datum()
+        return {
+            "name": datum.datum_name,
+            "type": datum.datum_type,
+            "description": datum.origin_description,
+        }
+    
     def get_bounds(self):
         return self._get_bounds()
     
@@ -88,8 +94,6 @@ class CoordinateReferenceSystem(models.Model):
         try:
             return Datum.objects.get(datum_code = self.datum_code)
         except Exception as e:
-            if self.datum_code == None:
-                return None
             source = self.__class__.objects.get(coord_ref_sys_code = self.base_crs_code)
             return Datum.objects.get(datum_code = source.datum_code)
 
