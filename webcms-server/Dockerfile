@@ -17,6 +17,7 @@ RUN mkdir -p /usr/src/app/staticfiles
 #Copy file to folder
 ADD ./app /usr/src/app
 ADD ./*.env /usr/src/app/
+ADD ./entrypoint.dev.sh /usr/src/app/
 ADD ./entrypoint.sh /usr/src/app/
 
 #Run django 
