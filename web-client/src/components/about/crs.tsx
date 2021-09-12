@@ -1,11 +1,13 @@
 import { useSelector } from "react-redux"
 import { RootState } from "reducers"
 
+import {parseProjection, parseParameters} from './parseWKT'
+
 type Props  = {
     name: 'source' | 'target'
 }
 
-export default function CrsDecription({name}:Props) {
+export default function AboutItem({name}:Props) {
     const data = useSelector(({settings}:RootState)=>settings[name])
     return (
             <div className={`about__colomn about__colomn-crs about__colomn-${name}`}>
@@ -57,7 +59,12 @@ export default function CrsDecription({name}:Props) {
                                 <ul className="about__list about__elispoid">
                                     <li className="about__bounds-item">Name: {data.datum.name}</li>
                                     <li className="about__bounds-item">Type: {data.datum.type}</li>
-                                    <li className="about__bounds-item">Dimension: {data.datum.description}</li>
+                                    {
+                                        (parseProjection(data?.wkt)) ? 
+                                        <li className="about__bounds-item">Projection: {parseProjection(data?.wkt)}</li>:null
+                                    }
+                                    { parseParameters(data?.wkt)?.map(item =><li className="about__bounds-item">{item.name}: {item.value}</li>)}
+                                    
                                 </ul>
                             </li>:null
                         }
