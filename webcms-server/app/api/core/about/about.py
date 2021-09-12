@@ -20,4 +20,5 @@ class About(CoordinateReferenceSystemCase):
                     'projectionMethod': item.get_projection_method(),
                     'proj4': item.get_proj4(),
                     'wkt': item.get_wkt(),
+                    'help': item.get_parrametrs(),
                 }

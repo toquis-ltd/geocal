@@ -48,8 +48,6 @@ class CoordinateReferenceSystem(models.Model):
     def get_ellipsoid(self):
         elipsoid = self._get_ellipsoid()
         if elipsoid != None:
-            print("ellipsoidal build ")
-
             return {
                 "name":elipsoid.ellipsoid_name,
                 "semiMajorAxis":elipsoid.semi_major_axis,
@@ -125,7 +123,7 @@ class CoordinateReferenceSystem(models.Model):
 
     def _get_unity_of_measure(self):
         try:
-            return SpatialReference(self.coord_ref_sys_code).units[1] 
+            return SpatialReference(self.coord_ref_sys_code).units[1]
         except:
             return None
 
