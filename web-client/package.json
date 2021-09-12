@@ -12,6 +12,7 @@
     "@types/proj4": "^2.5.2",
     "@types/react": "^17.0.16",
     "@types/react-dom": "^17.0.9",
+    "babel-core": "^7.0.0-bridge.0",
     "d3": "^7.0.0",
     "lodash": "^4.17.21",
     "lodash.throttle": "^4.1.1",
@@ -30,9 +31,11 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "rbuild": "react-scripts build",
+    "dev": "webpack --mode development --watch",
+    "build": "webpack --mode production"
   },
   "eslintConfig": {
     "extends": [
@@ -53,6 +56,14 @@
     ]
   },
   "devDependencies": {
-    "@types/underscore": "^1.11.3"
+    "@babel/core": "^7.15.5",
+    "@babel/preset-env": "^7.15.6",
+    "@babel/preset-react": "^7.14.5",
+    "@types/underscore": "^1.11.3",
+    "css-loader": "^6.2.0",
+    "sass": "^1.39.2",
+    "sass-loader": "^12.1.0",
+    "style-loader": "^3.2.1",
+    "ts-loader": "^9.2.5"
   }
 }

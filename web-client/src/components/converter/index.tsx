@@ -16,7 +16,7 @@ export default function Converter () {
                 </div>
             </div>
             <div className="point-converter__buttons-list">
-                <button className='base__button point-converter__button share-btn' > Donwload CSV </button>
+                <button className='base__button point-converter__button share-btn' > Report </button>
                 <button className='base__button point-converter__button convert-btn' onClick={onClick}> Convert </button>
                 <button className='base__button point-converter__button share-btn' > Share link </button>
             </div>

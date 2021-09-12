@@ -1,11 +1,11 @@
+import {useCallback, useState, useEffect } from 'react';
 import { DefaultRootState, useSelector } from 'react-redux';
 
 import  Arrow  from 'icons/arrow-icon'
 import FetchConvertion from 'calculation/conversion';
 
-import {useCallback, useState, useEffect } from 'react';
-import { Input } from './input';
-import { Output } from './output';
+import { Input } from './input.jsx';
+import { Output } from './output.jsx';
 
 import './block.sass';
 

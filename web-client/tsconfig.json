@@ -3,6 +3,7 @@
     "baseUrl": "src",
     "target": "es5",
     "module": "esnext",
+    "sourceMap": true,
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
@@ -20,9 +21,11 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "typeRoots": ["src/@types"]
+    "typeRoots": [
+      "src/@types"
+    ]
   },
   "include": [
-    "src",
+    "src"
   ]
 }
