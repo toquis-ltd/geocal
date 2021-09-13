@@ -1,4 +1,4 @@
-.converter__about-transformation
+.about
     margin-top: 20px
     width: 100%
 
@@ -16,10 +16,23 @@
     text-align: center
 
 .about__colomn-crs
-    width: 350px
+    min-width: 300px
+    width: 35%
 
 .about__base
     margin-top: 5px
 
 .about__colomn-intersection
     width: 250px
+    height: 300px
+
+
+
+@media (max-width: 1300px)
+    .about__colomn-intersection
+        display: none
+
+@media (max-width: 900px)
+    .about__inner
+        display: block
+        justify-content: space-between

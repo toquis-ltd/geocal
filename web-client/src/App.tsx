@@ -7,8 +7,10 @@ import './App.css';
 function App() {
   return (
     <div className='converter'>
-      <Settings/>
-      <Converter/>
+      <div className="application">
+        <Settings/>
+        <Converter/>
+      </div>
       <About/>
     </div>
     );

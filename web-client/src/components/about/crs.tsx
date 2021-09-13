@@ -15,8 +15,9 @@ export default function AboutItem({name}:Props) {
                 <div className="about__base">
                     <h4 className="about__block-title">Base:</h4>
                     <ul className="about__list">
-                        <li className="about__description about__code">EPSG: {data.code}</li>
                         <li className="about__description about__name">Name: {data.name}</li>
+                        <li className="about__description about__code">EPSG: {data.code}</li>
+                        <li className="about__description about__kind">Unity: {data.unityOfMeasure}</li>
                         <li className="about__description about__kind">Kind: {data.kind}</li>
                         <li className="about__description about__bounds">
                             WGS84 borders:

@@ -1,6 +1,6 @@
 function cleanText(value){
-    const toRemove = new RegExp(/\"/, 'g');
-    const space = new RegExp(/\_/, 'g');
+    const toRemove = new RegExp(/"/, 'g');
+    const space = new RegExp(/_/, 'g');
     return value.replace(space, ' ').replace(toRemove, '')
 }
 
@@ -18,7 +18,7 @@ export function parseParameters(wkt) {
     const list = Array.from(wkt.matchAll(re), item => item[1]);
 
     const lineToObject = value => {
-        const separator = new RegExp(/\,/, 'g');
+        const separator = new RegExp(/,/, 'g');
         const item = value.split(separator).map(i => cleanText(i));
         return {name:item[0], value:item[1]}
     }

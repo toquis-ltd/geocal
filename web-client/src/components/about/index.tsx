@@ -1,21 +1,17 @@
-import { useMobileOnly } from 'hooks/useMobileOnly';
-
 import CrsDecription from './crs'
 import CrsIntersection from './intersection'
 
 import './index.sass';
 
 export default function About() {
-    const isMobile = useMobileOnly()
 
     return (
-        (!isMobile) ? 
         <div className='converter__about-transformation about'>
             <div className="about__inner">
-                <CrsDecription name='source'/>
+                <CrsDecription name='source' key={1}/>
                 <CrsIntersection />
-                <CrsDecription name='target'/>
+                <CrsDecription name='target' key={5}/>
             </div>
-        </div> : null
+        </div>
     )
 }

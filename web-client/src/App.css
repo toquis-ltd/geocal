@@ -20,6 +20,11 @@ input, ::-webkit-input-placeholder{
 .converter {
   padding: 5px;
   margin: 6vh auto;
+  max-width: 80%;
+}
+
+.application {
+  margin: 0 auto;
   max-width: 1005px;
 }
 
