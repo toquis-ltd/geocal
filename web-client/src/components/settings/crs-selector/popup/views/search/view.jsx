@@ -5,11 +5,11 @@ import Result from './result/result';
 
 import './view.sass';
 
-export default memo(function SearchView() {
+export default function SearchView() {
     return (
         <div className="view__search">
             <Search />
             <Result />
         </div>
     );
-});
+};

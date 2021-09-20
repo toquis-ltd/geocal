@@ -7,8 +7,7 @@ import useSearchBar from 'hooks/useSearchBar';
 
 import './search.sass';
 
-export default memo(function Search() {
-
+export default function Search() {
     const [qwery, qweryChange, handleResult] = useSearchBar();
     const clearQwery = () => qweryChange('');
 
@@ -33,4 +32,4 @@ export default memo(function Search() {
             </div>
         </div>
     );
-});
+};

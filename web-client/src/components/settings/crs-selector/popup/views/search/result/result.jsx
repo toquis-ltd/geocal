@@ -23,7 +23,7 @@ export default function Result () {
         <div className='result'>
                 <div className="result__inner">
                     {
-                        find?.map( (elem, index) => <CrsItem element={elem} key={index}/> )
+                        find?.map((elem) => <CrsItem element={elem} key={elem.code} /> )
                     }
                 </div>
         </div>
