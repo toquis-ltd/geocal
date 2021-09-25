@@ -10,10 +10,9 @@ admin.autodiscover()
 
 urlpatterns = [
     path("sitemap.xml", sitemap, {"sitemaps": {"cmspages": CMSSitemap}}),
-    re_path("^api/", include('api.urls'), name='api'),
     re_path("^calculator/", include('calculator.urls'), name='cal'),
+    re_path("^api/", include('api.urls'), name='api'),
     re_path("^sources/", include('sources.urls'), name='sources'),
-    # re_path("/about/", include('wiki.urls'), name='wiki'),
 ]
 
 

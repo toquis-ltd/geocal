@@ -4,9 +4,6 @@
         <li class="menu__list-item ui__adaptif-text">
             <a href="https://toquis.com/" class="menu__list-link ui__link">Toquis</a>
         </li>
-        <li class="menu__list-item ui__adaptif-text">
-            <a href="{% url 'calculator:main' %}" class="menu__list-link ui__link ">Calculator</a>
-        </li>
         {% for child in children %}
             <li class="menu__list-item ui__adaptif-text">
                 <a href="{{ child.attr.redirect_url|default:child.get_absolute_url }}" class="menu__list-link ui__link">

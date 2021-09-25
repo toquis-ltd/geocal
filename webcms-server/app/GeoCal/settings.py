@@ -186,6 +186,7 @@ CMS_LANGUAGES = {
 CMS_TEMPLATES = (
     ## Customize this
     ('fullwidth.html', 'Fullwidth'),
+    ('calculator/index.html', 'Calculator'),
     ('home.html', 'Home'),
 )
 

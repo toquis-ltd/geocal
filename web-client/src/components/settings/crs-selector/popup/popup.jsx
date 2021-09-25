@@ -17,6 +17,7 @@ function CrsPopup({ onClose }) {
             <div className="view">
                 <div className="view__inner">
                     <SearchView />
+                    <GlobeView />
                 </div>
             </div>
         </Popup>

@@ -10,7 +10,7 @@ export default function About() {
             <div className="about__inner">
                 <CrsDecription name='source' key={1}/>
                 <CrsIntersection />
-                <CrsDecription name='target' key={5}/>
+                <CrsDecription name='target' key={2}/>
             </div>
         </div>
     )

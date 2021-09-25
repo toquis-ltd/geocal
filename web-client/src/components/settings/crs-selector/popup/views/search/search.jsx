@@ -1,5 +1,3 @@
-import { memo } from 'react';
-
 import SearchIcon from 'icons/search-icon';
 import CloseIcon from 'icons/close-icon';
 
