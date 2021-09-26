@@ -1,10 +1,15 @@
 import { useSelector } from "react-redux";
 import { RootState } from "reducers";
 
-export default function useCRSelector(){
+
+type Props = 'source' | 'target' | undefined;
+
+export default function useCRSelector(_origin:Props=undefined){
     
-    const _origin = useSelector(({settings}:RootState) => settings.modifiedCRS);
-    const origin = (_origin === 'source') ? 'source' : 'target';
+    const _global_origin =  useSelector(({settings}:RootState) => settings.modifiedCRS);
+    const _local_origin = _origin || _global_origin;
+    
+    const origin = (_local_origin === 'source') ? 'source' : 'target';
 
     const self = useSelector((state:RootState) => state.settings[origin]);
     

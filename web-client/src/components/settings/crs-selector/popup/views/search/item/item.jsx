@@ -15,9 +15,9 @@ export default memo(function CrsItem({element}) {
 
     const dispatch = useDispatch();
     const closeWindow = () => dispatch(togglePopup(false));
-    const [self, other, origin] = useCRSelector();
+    const [self, other,] = useCRSelector();
     const [isAlreadySelected, toggleAlreadySelected] = useState(false)
-    useEffect(()=>toggleAlreadySelected(self?.code===element.code || other?.code === element.code), [self, other])
+    useEffect(()=>toggleAlreadySelected(self?.code===element.code || other?.code === element.code), [self, other, element.code])
     const setCRS = useCRS();
     const handleSelect = () => {
         setCRS(element);

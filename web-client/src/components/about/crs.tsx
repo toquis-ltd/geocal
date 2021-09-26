@@ -30,9 +30,9 @@ export default function AboutItem({name}:Props) {
                 </div>
                 <div className="about__advance">
                     <h4 className="about__block-title">Advance:</h4>
-                    <ul className="about__list">
+                    <ul className="about__list" key="0">
                         { (data.ellipsoid) ?
-                            <li className="about__description about__code">
+                            <li className="about__description ellipsoid about__code">
                                 Elipsoid: {data.ellipsoid.name}
                                 <ul className="about__list about__elispoid">
                                     <li className="about__bounds-item">Semi major axis: {data.ellipsoid.semiMajorAxis}</li>
@@ -41,11 +41,11 @@ export default function AboutItem({name}:Props) {
                             </li>:null
                         }
                     </ul>
-                    <ul className="about__list">
+                    <ul className="about__list" key="1">
                         { (data.coordinateSystem) ?
                             <li className="about__description about__code">
                                 Coordinate System:
-                                <ul className="about__list about__elispoid">
+                                <ul className="about__list about__coordinate-system">
                                     <li className="about__bounds-item">Name: {data.coordinateSystem.name}</li>
                                     <li className="about__bounds-item">Type: {data.coordinateSystem.type}</li>
                                     <li className="about__bounds-item">Dimension: {data.coordinateSystem.dimension}</li>
@@ -53,7 +53,7 @@ export default function AboutItem({name}:Props) {
                             </li>:null
                         }
                     </ul>
-                    <ul className="about__list">
+                    <ul className="about__list" key="3">
                         { (data.datum) ?
                             <li className="about__description about__code">
                                 Datum:
@@ -64,7 +64,7 @@ export default function AboutItem({name}:Props) {
                                         (parseProjection(data?.wkt)) ? 
                                         <li className="about__bounds-item">Projection: {parseProjection(data?.wkt)}</li>:null
                                     }
-                                    { parseParameters(data?.wkt)?.map(item =><li className="about__bounds-item">{item.name}: {item.value}</li>)}
+                                    { parseParameters(data?.wkt)?.map(item =><li className="about__bounds-item" key={item.value}>{item.name}: {item.value}</li>)}
                                     
                                 </ul>
                             </li>:null

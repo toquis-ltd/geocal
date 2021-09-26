@@ -11,7 +11,7 @@ export default function useOutsideClick(component:Div, exception=false) {
     
     useEffect(() => {
         const handleClickOutside = (event:MouseEvent) => {
-            if (isActive && component.current && !component.current.contains(event.target) || !exception) {
+            if ((isActive && component.current && !component.current.contains(event.target)) || !exception) {
                     setActive(false);
                 }
         }
