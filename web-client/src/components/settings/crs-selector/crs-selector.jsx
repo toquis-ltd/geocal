@@ -3,8 +3,8 @@ import { useDispatch } from 'react-redux';
 import { togglePopup } from '../../../actions/popups';
 import { setOrigin } from '../../../actions/settings';
 
-import AdvancedSelectBtn from './button/advanced';
-import DirectSelectBtn from './button/direct';
+import AdvancedSelectBtn from '../button/advanced';
+import DirectSelectBtn from '../button/direct';
 
 import useCRSCode from 'hooks/useCRSCode';
 

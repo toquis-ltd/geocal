@@ -26,3 +26,10 @@ export const setOrigin = (payload:origin) => {
         payload: payload
     }
 }
+
+export const toggleZAxe = (payload:boolean) => {
+    return {
+        type: 'toggleZAxe',
+        payload: payload
+    }
+}

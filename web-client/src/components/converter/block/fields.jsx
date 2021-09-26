@@ -1,4 +1,5 @@
 import useCRSUnity from "hooks/useCRSUnity";
+import { useSelector } from "react-redux";
 
 function Field({className, name, point, readOnly, placeholder, onChange}) {
     return (
@@ -17,13 +18,14 @@ function Field({className, name, point, readOnly, placeholder, onChange}) {
 
 export function Fields ({name, point, origin, onChange=()=>null}) {
     const unity = useCRSUnity(origin);
-    const readOnly = name !== 'input'
+    const readOnly = name !== 'input';
+    const zAxe = useSelector(({settings})=> settings.zAxe);
     return (
         <div className={`${name}-fields__container fields__container`}>
             
             <Field className={name} name='x' onChange={onChange} point={point} readOnly={readOnly} placeholder={unity[0]}/>
             <Field className={name} name='y' onChange={onChange} point={point} readOnly={readOnly} placeholder={unity[1]}/>
-            <Field className={name} name='z' onChange={onChange} point={point} readOnly={readOnly} placeholder={unity[2]}/>
+            {(zAxe) ? <Field className={name} name='z' onChange={onChange} point={point} readOnly={readOnly} placeholder={unity[2]}/>:null}
         </div>
         )
 }
