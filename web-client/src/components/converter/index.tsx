@@ -1,3 +1,4 @@
+import ConverterPropretiesBtn from 'components/settings/button/global';
 import { useRef } from 'react'
 import { PointConverter } from './block'
 import './index.sass'
@@ -10,11 +11,15 @@ export default function Converter () {
             <h3 className="field-title">
                 Point Converter
             </h3>
+            <div className="point-converter__settings">
+                <ConverterPropretiesBtn/>
+            </div>
             <div className="point-converter__inner">
                 <div className="point-converter__items">
                    <PointConverter onConvert={onConvert}/>
                 </div>
             </div>
+
             <div className="point-converter__buttons-list">
                 <button className='base__button point-converter__button share-btn' > Report </button>
                 <button className='base__button point-converter__button convert-btn' onClick={onClick}> Convert </button>
