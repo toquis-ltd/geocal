@@ -26,3 +26,6 @@ django-cors-headers
 djangorestframework
 requests==2.25.1
 gunicorn==20.0.4
+asymmetric_jwt_auth
+certbot-django
+certbot
