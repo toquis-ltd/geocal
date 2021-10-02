@@ -9,7 +9,7 @@ export function convertToDMS (value, m = 0, s = 0)  {
       m = parseInt(("."+(value.split(".")[1]))*60);
       s = Number(("."+(value.split(".")[1])-m/60)*3600).toFixed(6).replace(/(\.0+|0+)$/, '');
     }
-    return `${d}°${m}'${s}`
+    return `${d}°${m}'${s}"`
 };
 
 export function convertToDecimal (value)  {
@@ -22,9 +22,9 @@ export function convertToDecimal (value)  {
     value.replace('"', ''); // 
     value = value.toLowerCase(); //
 
-    //if 'w' or 'e' char in value
-    //when remove it and transform to oposit digit
-    const chartRe = /w|e/g;
+    //if 'w' or 's' char in value
+    //then remove it and transform to oposit digit
+    const chartRe = /w|s/g;
     let  dms_list = value.split(/°|'|"/);
     let sign = Math.sign(Math.sign(dms_list[0])*2+1);
 
