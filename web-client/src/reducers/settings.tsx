@@ -2,12 +2,21 @@ import CRS from '../@types/CRS';
 
 type settings = {
     modifiedCRS: 'source' | 'target',
-    zAxe:boolean,
     source:CRS,
     target:CRS,
+    zAxe:boolean,
+    DMS:boolean,
 }
 
-const SettingsReducer = (state:settings = {zAxe:true, modifiedCRS:'source', source:{}, target:{}}, action:any) => {
+const  _default:settings = {
+    modifiedCRS:'source',
+    source:{},
+    target:{},
+    zAxe:false,
+    DMS:false,
+};
+
+const SettingsReducer = (state:settings = _default, action:any) => {
     switch (action.type) {
         case 'setOrigin':
             return {...state, modifiedCRS:action.payload}
@@ -18,6 +27,9 @@ const SettingsReducer = (state:settings = {zAxe:true, modifiedCRS:'source', sour
         case 'toggleZAxe':
                 return {...state, zAxe:action.payload}
         
+        case 'toggleDMS':
+            return {...state, DMS:action.payload}
+
         default:
             return state;
     };

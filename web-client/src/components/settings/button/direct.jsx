@@ -27,9 +27,9 @@ function DirectSelectBtn ({parameters, updateOrigin}) {
     }
     return (
         <div className="selector__direct" key={parameters.origin}>
-            <input  className='selector__btn' ref={ref} value={value}
+            <input  className='selector__btn' ref={ref} value={value} 
                     onKeyPress={validateChanges}
-                    onClick={onClick} onChange={evt => changeEPSG(evt.target.value)}/>
+                    onClick={onClick} onChange={evt => changeEPSG(evt.target.value)} type='tel'/>
         </div>
     );
 }

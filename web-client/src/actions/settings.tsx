@@ -33,3 +33,10 @@ export const toggleZAxe = (payload:boolean) => {
         payload: payload
     }
 }
+
+export const toggleDMS = (payload:boolean) => {
+    return {
+        type: 'toggleDMS',
+        payload: payload
+    }
+}
