@@ -34,7 +34,7 @@
                         </p>
                     </div>
                     <div class="source_item-region">
-                        <h4 class="">{{i.region}}</h4>
+                        <a href="{% url 'sources:index' %}?filter={{i.region}}"><h4 class="" >{{i.region}}</h4></a> 
                     </div>
                     <nav class="source__item-control">
                         <a class="source__item-report ui__link" href="{% url 'sources:report' i.id %}">

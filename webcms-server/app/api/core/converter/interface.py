@@ -1,10 +1,9 @@
-from .conversion import PointConverter
 from .fields import FilterField
 
 class PointInSpatialReference (FilterField):
 
     def __init__(self, crs:int, x="0.0", y="0.0", z="0.0"):
-        self.crs = self._get_spatial_reference(crs)
+        self.crs = int(crs)
         self._x = x
         self._y = y
         self._z = z
@@ -36,16 +35,3 @@ class PointInSpatialReference (FilterField):
                 'z':self._z 
                 }
 
-class PointConversionInterface (PointConverter):
-    def __init__(self, context:dict):
-        self._source_point = PointInSpatialReference(
-                                                        context.get("s_crs"),
-                                                        context.get("source_x"),
-                                                        context.get("source_y"),
-                                                        context.get("source_z")
-                                                    )
-        self._target_point = PointInSpatialReference(context.get("t_crs"))
-        self._target_point.set_coordinates(self._get_transform_point_values())
-    
-    def get_target_values(self) -> dict:
-        return self._target_point._get_coordinate_dict()
