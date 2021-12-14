@@ -1,14 +1,13 @@
 import { useDispatch } from 'react-redux';
 
-import { togglePopup } from '../../../actions/popups';
-import { setOrigin } from '../../../actions/settings';
+import useCRSCode from 'hooks/useCRSCode';
+import CrsPopup from './popup/popup';
 
 import AdvancedSelectBtn from '../button/advanced';
 import DirectSelectBtn from '../button/direct';
 
-import useCRSCode from 'hooks/useCRSCode';
-
-import CrsPopup from './popup/popup';
+import { togglePopup } from '../../../actions/popups';
+import { setOrigin } from '../../../actions/settings';
 
 import './crs-selector.sass';
 

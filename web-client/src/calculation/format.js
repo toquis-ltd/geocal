@@ -1,4 +1,4 @@
-export function convertToDMS (value, m = 0, s = 0)  {
+ export function convertToDMS (value, m = 0, s = 0)  {
     value = value.toString();
     if (value.length === 0) return "0°0'0"  
     if (/'|"/.test(value) === true) return value

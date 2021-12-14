@@ -9,7 +9,6 @@ services:
       pg_user: "postgres"
       pg_host: "pgdb"
       pg_pass: "toor"
-    
     volumes:
       - static:/usr/src/app/static
     depends_on:

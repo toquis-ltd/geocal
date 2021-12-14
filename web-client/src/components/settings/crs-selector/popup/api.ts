@@ -11,6 +11,12 @@ export async function fetchAboutCRS(code:number) {
 }
 
 export async function fetchTransfrom(source:number, target:number, point:Array<any>) {
-    const parrameters = `?format=json&s_crs=${source}&t_crs=${target}&x=${point[0]}&y=${point[1]}&z=${point[2]}`;
+    let parrameters;
+
+    if (point[2] !== undefined){
+        parrameters = `?format=json&s_crs=${source}&t_crs=${target}&x=${point[0]}&y=${point[1]}&z=${point[2]}`;
+    } else {
+        parrameters = `?format=json&s_crs=${source}&t_crs=${target}&x=${point[0]}&y=${point[1]}`;
+    }
     return await (await fetch(`${process.env.REACT_APP_HOST}/api/transform/${parrameters}`).catch()).json();
 }

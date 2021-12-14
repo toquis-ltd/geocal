@@ -20,6 +20,9 @@ class Conversion():
     def get_transform_propreties(self) -> list:
         return self._get_transform_propreties()
     
+    def get_transformation_name(self) -> str:
+        return self._get_transformation_name()
+
     def _get_transform_propreties(self) -> list:
         steps = []
         for i in self._transformation.definition.replace("step ", "\n").splitlines():
@@ -27,6 +30,13 @@ class Conversion():
             item = re.findall("\w+=\w+", i)
             steps.append({'name':name, 'propreties':item[1:]})
         return steps[1:]
+
+    def _get_transformation_name(self) -> str:
+        try:
+            response = os.popen(f"projinfo -s EPSG:{self._source_point.crs} -t EPSG:{self._target_point.crs}").read()
+            return re.search( 'CONCATENATEDOPERATION\[".*"', response).group().replace('CONCATENATEDOPERATION["', '').replace('"', '')
+        except Exception as e:
+            return f"No transformation available for EPSG:{self._source_point.crs} to EPSG:{self._target_point.crs}"
 
 class PointConversion(Conversion):
     def __init__(self, context:dict):
