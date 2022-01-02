@@ -14,11 +14,18 @@ class LinkListView (ListView):
     def get_queryset(self):
         region_name = self.request.GET.get('filter', '')
         order = self.request.GET.get('orderby', 'region')
+        region_id = None
+
         try:
             region_id = Region.objects.get(name__icontains = region_name)
+        except Region.MultipleObjectsReturned:
+            region_id = Region.objects.filter(name = region_name).first()
+        
+        if region_id != None:
             new_context = Link.objects.filter(region=region_id, is_verified=True).order_by(order)
-        except:
+        else:
             new_context = Link.objects.filter(is_verified=True).order_by(order)
+        
         return new_context
     
 class LinkCreateView (CreateView):

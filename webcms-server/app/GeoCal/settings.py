@@ -203,7 +203,7 @@ DATABASES = {
         'USER': os.getenv('pg_user'),
         'HOST':  os.getenv('pg_host'),
         'PASSWORD': os.getenv('pg_pass'),
-        'PORT': 5432
+        'PORT': 5432,
     }
 }
 

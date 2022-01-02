@@ -2,6 +2,7 @@ import os, re
 
 from abc import abstractmethod
 from pyproj import Transformer
+from pyproj.transformer import TransformerGroup
 
 from .interface import PointInSpatialReference
 
@@ -20,8 +21,11 @@ class Conversion():
     def get_transform_propreties(self) -> list:
         return self._get_transform_propreties()
     
-    def get_transformation_name(self) -> str:
-        return self._get_transformation_name()
+    def get_transformation_name(self, id=0) -> str:
+        return self._get_transformation_name(id=0)
+
+    def get_transformation_list(self) -> str:
+        return self._get_transformation_list()
 
     def _get_transform_propreties(self) -> list:
         steps = []
@@ -31,12 +35,27 @@ class Conversion():
             steps.append({'name':name, 'propreties':item[1:]})
         return steps[1:]
 
-    def _get_transformation_name(self) -> str:
+    def _get_transformation_name(self, id:int) -> str:        
         try:
-            response = os.popen(f"projinfo -s EPSG:{self._source_point.crs} -t EPSG:{self._target_point.crs}").read()
-            return re.search( 'CONCATENATEDOPERATION\[".*"', response).group().replace('CONCATENATEDOPERATION["', '').replace('"', '')
+            pipeline = TransformerGroup(self._source_point.crs, self._target_point.crs).transformers[id]
+            return {
+                'name': pipeline.description,
+                'area': pipeline.area_of_use.name,
+                'accuracy': (f'{pipeline.accuracy}m' if pipeline.accuracy > 0 else 'unknow'),
+            }
         except Exception as e:
-            return f"No transformation available for EPSG:{self._source_point.crs} to EPSG:{self._target_point.crs}"
+            return f"No transformation available for EPSG:{self._source_point.crs} to EPSG:{self._target_point.crs} {e}"
+    
+    def _get_transformation_list(self) -> str:
+        items = []
+        pipelines = TransformerGroup(self._source_point.crs, self._target_point.crs).transformers
+        for i in pipelines:
+            items.append({
+                'name': i.description, 
+                'area': i.area_of_use.name,
+                'accuracy': (f'{i.accuracy}m' if i.accuracy > 0 else 'unknow'),
+            })
+        return items
 
 class PointConversion(Conversion):
     def __init__(self, context:dict):

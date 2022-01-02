@@ -8,4 +8,5 @@ urlpatterns = [
     path('popular/', get_popular),
     path('transform/', get_transform),
     path('deftransform/', get_deftransform),
+    path('enumtransform/', get_transform_list),
 ]

@@ -36,6 +36,12 @@ def get_about(message):
     return Response(message)
 
 @api_view(['GET'])
+def get_transform_list(request):
+    transformation = Conversion({"s_crs":request.GET.get("source"), "t_crs":request.GET.get("target")})
+    response = transformation.get_transformation_list()
+    return Response(response)
+
+@api_view(['GET'])
 def get_deftransform(request):
     transformation = Conversion({"s_crs":request.GET.get("source"), "t_crs":request.GET.get("target")})
     response = transformation.get_transformation_name()
