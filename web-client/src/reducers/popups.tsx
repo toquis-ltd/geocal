@@ -1,15 +1,26 @@
 
 type State = {
-    isChanging: boolean,
+    isChangingCRS: boolean,
+    isChangingTransform: boolean,
     qwery: String,
     result: Array<any>,
 };
 
-const PopupReducer = (state:State = {isChanging: false, qwery: '', result: [],} , action:any) => {
+const defaultState =  {
+                        isChangingCRS: false,
+                        isChangingTransform:false,
+                        qwery: '',
+                        result: [],
+                    }
+
+const PopupReducer = (state:State = defaultState, action:any) => {
     switch (action.type) {
 
         case 'crs/toggle':
-            return {...state, isChanging:(!state.isChanging) };
+            return {...state, isChangingCRS:(!state.isChangingCRS) };
+            
+        case 'transformation/toggle':
+            return {...state, isChangingTransform:(!state.isChangingTransform) };
         
         case 'crs/setQwery':
             return {...state, qwery:action.payload};

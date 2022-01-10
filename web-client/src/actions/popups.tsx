@@ -18,3 +18,10 @@ export const togglePopup = (state:boolean) => {
         payload: state
     }
 }
+
+export const toggleTransformPopup = (state:boolean) => {
+    return {
+        type: 'transformation/toggle',
+        payload: state
+    }
+}

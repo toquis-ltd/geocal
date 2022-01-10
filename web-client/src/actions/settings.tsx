@@ -1,15 +1,22 @@
+
 type crsHeandler = {
     type: string,
     payload: payload
 };
 
 type payload = {
-        name: string,
-        code?: number,
-        uom?: string,
-        area?: string,
-        proj4?: string,
+    name: string,
+    code?: number,
+    uom?: string,
+    area?: string,
+    proj4?: string,
 };
+
+interface Transformation {
+    name: string,
+    area?: string,
+    accuracy?: string,
+}
 
 type origin = 'source' | 'target'
 
@@ -37,6 +44,13 @@ export const toggleZAxe = (payload:boolean) => {
 export const toggleDMS = (payload:boolean) => {
     return {
         type: 'toggleDMS',
+        payload: payload
+    }
+}
+
+export const setTransform = (payload:Transformation) => {
+    return {
+        type: 'setTransform',
         payload: payload
     }
 }

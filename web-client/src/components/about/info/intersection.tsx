@@ -1,24 +1,37 @@
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
-import {fetchTransformationPropreties} from './api';
+import {fetchTransformationList} from '../api';
 
 import { RootState } from "reducers"
 import { useEffect, useState } from 'react';
 
+import { toggleTransformPopup } from 'actions/popups';
+import TransformationPopup from '../popup'
+import {setTransform} from 'actions/settings';
+
 export default function CrsIntersection() {
-    const [source, target] = useSelector(({settings}:RootState)=> [settings.source, settings.target]);
-    const [transformationSteps, handleSteps] =  useState('');
+    const dispatch =  useDispatch();
+    const [source, target, transform] = useSelector(({settings}:RootState)=> [settings.source, settings.target, settings.transform]);
+    // const [transformationSteps, handleSteps] =  useState<transformation | undefined>();
+    
+    const closePopup = () => dispatch(toggleTransformPopup(false));
+    const openPopup = () => dispatch(toggleTransformPopup(true));
+    
     
     useEffect (()=>{
-        fetchTransformationPropreties(source.code, target.code).then(
-            (res:string) => handleSteps(res)
-        )
+        fetchTransformationList(source.code, target.code)
+        .then(res=>dispatch(setTransform(res[0])))
+        
     }, [source, target]);
     
     return (
-            <div className={`about__colomn about__colomn-intersection`}>
+        <>
+            <div className={`about__colomn about__colomn-intersection`} onClick={openPopup}>
                 <h3 className='about__colomn-title'>Transformation: </h3>
-                <h4 className=''>{transformationSteps}</h4>
+                <h5 className=''>{transform?.name}</h5>
             </div>
+            <TransformationPopup onClose={closePopup}/>
+        </>
+
     )
 }

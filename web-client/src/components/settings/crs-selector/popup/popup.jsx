@@ -9,13 +9,13 @@ import GlobeView from './views/globe/view';
 import './popup.sass';
 
 function CrsPopup({ onClose }) {
-    const state = useSelector(state => state.popups.isChanging);
+    const state = useSelector(state => state.popups.isChangingCRS);
 
     return (
-        <Popup isOpen={state}>
+        <Popup isOpen={state} name='crs'>
             <Interface onClose={onClose}/>
-            <div className="view">
-                <div className="view__inner">
+            <div className="view--crs">
+                <div className="view__inner--crs">
                     <SearchView />
                     <GlobeView />
                 </div>

@@ -24,19 +24,29 @@ export function convertToDecimal (value)  {
 
     //if 'w' or 's' char in value
     //then remove it and transform to oposit digit
-    const chartRe = /w|s/g;
-    let  dms_list = value.split(/°|'|"/);
-    let sign = Math.sign(Math.sign(dms_list[0])*2+1);
-
-    if (chartRe.test(value)){
-      value = value.replace(/w|e/g, '');
-      dms_list = value.split(/°|'|"/);
-      sign*=-1;
+    const extract = (re, marker) => {
+      try{ 
+        return value.match(re)[0].replace(marker, '')
+      }catch{
+        return 0
+      }
     }
 
-    //convert 
-    const d = Math.abs(dms_list[0]);
-    const m = parseFloat(dms_list[1]/60);
-    const s = (dms_list[2] !== undefined) ? parseFloat(dms_list[2]/3600):0;
+    const reSign = /^-|w|e/g
+    const sign = (reSign.test(value)) ? -1:1
+    
+    const reDegree = /\d+°/
+    const degree = extract(reDegree, '°')
+    
+    const reMinute = /\d+'/
+    const minute = extract(reMinute, "'")
+    
+    const reSecond = /\d+"/
+    const second = extract(reSecond, '"')
+    
+    const d = parseFloat(degree);
+    const m = parseFloat(minute/60);
+    const s = (second !== undefined) ? parseFloat(second/3600):0;
+    
     return Number((d+m+s)*sign).toFixed(10).replace(/(\.0+|0+)$/, '').toString();
-};
+}

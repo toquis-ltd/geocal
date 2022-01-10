@@ -53,6 +53,14 @@ function CoordinateSystem({data}:any){
                             <li className="about__bounds-item">Name: {data.coordinateSystem.name}</li>
                             <li className="about__bounds-item">Type: {data.coordinateSystem.type}</li>
                             <li className="about__bounds-item">Dimension: {data.coordinateSystem.dimension}</li>
+                            
+                            { (parseProjection(data?.wkt)) ? 
+                                <li className="about__bounds-item" key='wkt'>Projection: {parseProjection(data?.wkt)}</li>:null
+                            }
+                            { parseParameters(data?.wkt)?.map(
+                                item =><li className="about__bounds-item" key={item.name}>{item.name}: {item.value}</li>
+                            )}
+                        
                         </ul>
                     </li>:null
                 }
@@ -69,12 +77,6 @@ function Datum({data}:any){
                     <ul className="about__list about__datum" >
                         <li className="about__bounds-item" key={data.datum.name}>Name: {data.datum.name}</li>
                         <li className="about__bounds-item" key={data.datum.type}>Type: {data.datum.type}</li>
-                        {
-                            (parseProjection(data?.wkt)) ? 
-                            <li className="about__bounds-item" key='wkt'>Projection: {parseProjection(data?.wkt)}</li>:null
-                        }
-                        { parseParameters(data?.wkt)?.map(item =><li className="about__bounds-item" key={item.name}>{item.name}: {item.value}</li>)}
-                        
                     </ul>
                 </li>:null
             }

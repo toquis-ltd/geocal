@@ -6,8 +6,8 @@ import CrsPopup from './popup/popup';
 import AdvancedSelectBtn from '../button/advanced';
 import DirectSelectBtn from '../button/direct';
 
-import { togglePopup } from '../../../actions/popups';
-import { setOrigin } from '../../../actions/settings';
+import { togglePopup } from 'actions/popups';
+import { setOrigin } from 'actions/settings';
 
 import './crs-selector.sass';
 

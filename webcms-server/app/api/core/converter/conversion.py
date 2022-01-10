@@ -41,6 +41,7 @@ class Conversion():
             return {
                 'name': pipeline.description,
                 'area': pipeline.area_of_use.name,
+                'wkt': pipeline.to_wkt(),
                 'accuracy': (f'{pipeline.accuracy}m' if pipeline.accuracy > 0 else 'unknow'),
             }
         except Exception as e:
@@ -53,6 +54,7 @@ class Conversion():
             items.append({
                 'name': i.description, 
                 'area': i.area_of_use.name,
+                'wkt': i.to_wkt(),
                 'accuracy': (f'{i.accuracy}m' if i.accuracy > 0 else 'unknow'),
             })
         return items

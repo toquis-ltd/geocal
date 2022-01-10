@@ -1,11 +1,19 @@
 import CRS from '../@types/CRS';
 
+interface Transformation {
+    name: string,
+    area?: string,
+    accuracy?: string,
+    wkt?: string,
+}
+
 type settings = {
     modifiedCRS: 'source' | 'target',
     source:CRS,
     target:CRS,
     zAxe:boolean,
     DMS:boolean,
+    transform?: Transformation,
 }
 
 const  _default:settings = {
@@ -29,6 +37,9 @@ const SettingsReducer = (state:settings = _default, action:any) => {
         
         case 'toggleDMS':
             return {...state, DMS:action.payload}
+
+        case 'setTransform':
+            return {...state, transform: action.payload}
 
         default:
             return state;

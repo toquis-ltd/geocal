@@ -1,5 +1,5 @@
-import CrsDecription from './crs'
-import CrsIntersection from './intersection'
+import CrsDecription from './info/crs'
+import CrsIntersection from './info/intersection'
 
 import './index.sass';
 

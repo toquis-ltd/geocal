@@ -4,9 +4,11 @@ import _ from 'underscore';
 
 import CrsItem from '../item/item';
 
-import './result.sass';
+import Result from 'components/common/list/result';
 
-export default function Result () {
+import './result.sass'
+
+export default function ResultCRS () {
     const settings = useSelector(state => state.settings, _.isEqual);
     const result = useSelector(state => state.popups.result);
     const [find, setFind] = useState(result?.findCRS);
@@ -20,12 +22,8 @@ export default function Result () {
     }, [result?.findCRS, find, settings])
 
     return(
-        <div className='result'>
-                <div className="result__inner">
-                    {
-                        find?.map(elem => <CrsItem element={elem} key={elem.code} /> )
-                    }
-                </div>
-        </div>
+        <Result className='crs'>
+            {find?.map(elem => <CrsItem element={elem} key={elem.code} /> )}
+        </Result>
     )
 }
