@@ -12,10 +12,13 @@ class Conversion():
     def __init__(self, context:dict):
         self._source_point = PointInSpatialReference(context.get("s_crs"))
         self._target_point = PointInSpatialReference(context.get("t_crs"))
-        self._transformation = Transformer.from_crs(self._source_point.crs, self._target_point.crs)
-    
+        if (proj := context.get("proj", None)) != None:
+            self._transformation = Transformer.from_pipeline(proj)
+        else:
+            self._transformation = Transformer.from_crs(self._source_point.crs, self._target_point.crs)
+
     @abstractmethod
-    def transform(self):
+    def get_transform(self):
         return self._transform()
 
     def get_transform_propreties(self) -> list:
@@ -66,8 +69,7 @@ class PointConversion(Conversion):
         self._transform()
 
     def _transform(self) -> None:
-        self._point = self._source_point.get_coordinates()
-        self._target_point.set_coordinates(self._transformation.transform(*self._point))
+        self._target_point.set_coordinates(self._transformation.transform(*self._source_point.get_coordinates()))
     
     def get_target_values(self) -> dict:
         return self._target_point._get_coordinate_dict()

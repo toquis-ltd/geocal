@@ -10,7 +10,7 @@ export async function fetchAboutCRS(code:number) {
     return await getRequest('about', 'crs',  code);
 }
 
-export async function fetchTransfrom(source:number, target:number, point:Array<any>) {
+export async function fetchTransfrom(source:number, target:number, point:Array<any>, proj:any) {
     let parrameters;
 
     if (point[2] !== undefined){
@@ -18,5 +18,6 @@ export async function fetchTransfrom(source:number, target:number, point:Array<a
     } else {
         parrameters = `?format=json&s_crs=${source}&t_crs=${target}&x=${point[0]}&y=${point[1]}`;
     }
+    parrameters+=`&proj=${proj}`
     return await (await fetch(`${process.env.REACT_APP_HOST}/api/transform/${parrameters}`).catch()).json();
 }

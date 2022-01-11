@@ -4,7 +4,7 @@ interface Transformation {
     name: string,
     area?: string,
     accuracy?: string,
-    wkt?: string,
+    wkt: string,
 }
 
 type settings = {
@@ -39,7 +39,10 @@ const SettingsReducer = (state:settings = _default, action:any) => {
             return {...state, DMS:action.payload}
 
         case 'setTransform':
-            return {...state, transform: action.payload}
+            if (typeof action.payload === typeof state.transform ){
+                return {...state, transform: action.payload}
+            }
+            return {...state}
 
         default:
             return state;
