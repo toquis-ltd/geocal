@@ -47,14 +47,15 @@ def get_deftransform(request):
     response = transformation.get_transformation_name()
     return Response(response)
 
-@api_view(['GET'])
+@api_view(['POST'])
 def get_transform(request):
     transformation = PointConversion({
-                                            "s_crs":request.GET.get("s_crs"),
-                                            "t_crs":request.GET.get("t_crs"),
-                                            "source_x":request.GET.get("x", "0"),
-                                            "source_y":request.GET.get("y", "0"),
-                                            "source_z":request.GET.get("z", "0"),
+                                            "s_crs":request.data.get("s_crs"),
+                                            "t_crs":request.data.get("t_crs"),
+                                            "source_x":request.data.get("x", "0"),
+                                            "source_y":request.data.get("y", "0"),
+                                            "source_z":request.data.get("z", "0"),
+                                            'proj':request.data.get("proj", None),
                                         })
     
     response = transformation.get_target_values()
