@@ -2,7 +2,7 @@ FROM ubuntu:latest
 
 ENV PYTHONBUFFERED=1
 ENV PATH="/sripts:${PATH}"
-ENV DEBIAN_FRONTEND=noninteractive 
+ENV DEBIAN_FRONTEND=noninteractive
 
 # Install linux dependencies 
 RUN apt-get update && apt-get install -y libgdal-dev

@@ -18,6 +18,7 @@ export default memo(function CrsItem({element}) {
     const [isAlreadySelected, toggleAlreadySelected] = useState(false);
 
     useEffect(()=>toggleAlreadySelected(self?.code===element.code || other?.code === element.code), [self, other, element.code])
+    
     const setCRS = useCRS();
     const handleSelect = () => {
         setCRS(element);

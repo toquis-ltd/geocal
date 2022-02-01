@@ -2,6 +2,7 @@
 type State = {
     isChangingCRS: boolean,
     isChangingTransform: boolean,
+    isReporting: boolean,
     qwery: String,
     result: Array<any>,
 };
@@ -9,6 +10,7 @@ type State = {
 const defaultState =  {
                         isChangingCRS: false,
                         isChangingTransform:false,
+                        isReporting:false,
                         qwery: '',
                         result: [],
                     }
@@ -22,6 +24,9 @@ const PopupReducer = (state:State = defaultState, action:any) => {
         case 'transformation/toggle':
             return {...state, isChangingTransform:(!state.isChangingTransform) };
         
+        case 'repport/toggle':
+            return {...state, isReporting:(!state.isReporting) };
+
         case 'crs/setQwery':
             return {...state, qwery:action.payload};
         

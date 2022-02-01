@@ -11,13 +11,37 @@ export async function fetchAboutCRS(code:number) {
 }
 
 export async function fetchTransfrom(source:number, target:number, point:Array<any>, proj:any) {
-    let parrameters;
-
-    if (point[2] !== undefined){
-        parrameters = `?format=json&s_crs=${source}&t_crs=${target}&x=${point[0]}&y=${point[1]}&z=${point[2]}`;
-    } else {
-        parrameters = `?format=json&s_crs=${source}&t_crs=${target}&x=${point[0]}&y=${point[1]}`;
+    const getCookie = (name: string) => {
+        let cookieValue = '';
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
     }
-    parrameters+=`&proj=${proj}`
-    return await (await fetch(`${process.env.REACT_APP_HOST}/api/transform/${parrameters}`).catch()).json();
+    const data = {
+        s_crs:source,
+        t_crs:target,
+        x:point[0],
+        y:point[1],
+        z:point[2],
+        proj:proj,
+    }
+
+    return await (
+        await fetch(`${process.env.REACT_APP_HOST}/api/transform/`, {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken'),
+            },
+            body: JSON.stringify(data)
+
+        }).catch()).json();
 }

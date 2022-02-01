@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import {fetchTransformationList} from '../api';
 
 import { RootState } from "reducers"
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import { toggleTransformPopup } from 'actions/popups';
 import TransformationPopup from '../popup'
@@ -12,7 +12,6 @@ import {setTransform} from 'actions/settings';
 export default function CrsIntersection() {
     const dispatch =  useDispatch();
     const [source, target, transform] = useSelector(({settings}:RootState)=> [settings.source, settings.target, settings.transform]);
-    // const [transformationSteps, handleSteps] =  useState<transformation | undefined>();
     
     const closePopup = () => dispatch(toggleTransformPopup(false));
     const openPopup = () => dispatch(toggleTransformPopup(true));

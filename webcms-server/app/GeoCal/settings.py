@@ -160,6 +160,15 @@ INSTALLED_APPS = [
     'sources',
 ]
 
+#EMAIL
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_HOST_USER = os.getenv("email_host")
+EMAIL_HOST_PASSWORD = os.getenv('email_pass')
+EMAIL_PORT = 587
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
 LANGUAGES = (
     ## Customize this
     ('en', gettext('en')),

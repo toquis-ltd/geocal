@@ -4,11 +4,8 @@ services:
     build: .
     tty: true
     container_name: web
-    environment: 
-      pg_name: "postgres"
-      pg_user: "postgres"
-      pg_host: "pgdb"
-      pg_pass: "toor"
+    env_file: 
+      - dev.env
     volumes:
       - static:/usr/src/app/static
     depends_on:

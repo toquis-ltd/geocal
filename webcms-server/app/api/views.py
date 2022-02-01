@@ -4,6 +4,8 @@ from rest_framework import status
 
 from .core.converter.conversion import Conversion, PointConversion
 from .core.search.search import CoordinateReferenceSystemSearch as CRSS
+from .core.repport import CreateRepport 
+from .core.mail import IssueRepportMail
 from .core.popular.popular import PopularCoordinateReferenceSystem as PCRS
 from .core.about.about import About
 
@@ -24,6 +26,12 @@ def dependency_injection(*args, **kwargs):
 @dependency_injection(service=CRSS)
 def get_search(message):
     return Response(message)
+
+@api_view(['POST'])
+def get_repport(request):
+    CreateRepport(request.data)
+    IssueRepportMail(request.data)
+    return Response('ok')
 
 @api_view(['GET'])
 @dependency_injection(service=PCRS)

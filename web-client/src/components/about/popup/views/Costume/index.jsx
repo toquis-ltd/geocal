@@ -27,7 +27,7 @@ export default function CustomeTransformationView({onClose, onImport}) {
         <div className="transform">
             <div className="transform__inner">
                 <label>Name:</label>
-                <input type="text" name="" id=""  className='transform__wkt-name' value={name} onChange={e => setName(e.target.value)}/>
+                <input type="text" className='transform__wkt-name' value={name} onChange={e => setName(e.target.value)}/>
                 <textarea className='transform__wkt-text' placeholder='Place your wkt or proj' value={wkt} onChange={e => setWKT(e.target.value)}></textarea>
                 <div className="transform__menu">
                     <button className='transformation__btn transform__clear' onClick={onImport}>Back</button>

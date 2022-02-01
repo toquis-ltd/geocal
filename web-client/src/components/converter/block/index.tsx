@@ -31,13 +31,14 @@ export function PointConverter ({onConvert}:Props) {
   const source = useSelector(({settings}:DefaultRootState)=>settings.source);
   const target = useSelector(({settings}:DefaultRootState)=>settings.target);
   const proj = useSelector(({settings}:DefaultRootState)=>settings.transform.wkt);
+
   const transform = useCallback(()=>{
     if (source !== undefined && target !== undefined) {
       FetchConvertion(source, target, points.source, proj).then(res=>{
         pointHandle({...points, target:res})
       })
     }
-  }, [source, target, points]);
+  }, [source, target, points, proj]);
 
   useEffect(()=>{
     onConvert.current = transform

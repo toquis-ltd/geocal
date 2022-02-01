@@ -19,8 +19,6 @@ function TransformationPopup({ onClose }) {
         onClose()
     }
 
-    const onImport = () => toggleImported(true);
-
     return (
         <Popup isOpen={state} name='transform'>
             <Interface onClose={close}/>
