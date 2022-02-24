@@ -1,4 +1,6 @@
 
+import {Transformation} from 'reducers/settings';
+
 type crsHeandler = {
     type: string,
     payload: payload
@@ -11,12 +13,6 @@ type payload = {
     area?: string,
     proj4?: string,
 };
-
-interface Transformation {
-    name: string,
-    area?: string,
-    accuracy?: string,
-}
 
 type origin = 'source' | 'target'
 
@@ -49,11 +45,9 @@ export const toggleDMS = (payload:boolean) => {
 }
 
 
-type setT = Transformation | undefined;
-
-export const setTransform = ( payload:setT  ) => {
+export const setTransform = ( payload:Transformation  ) => {
     return {
         type: 'setTransform',
-        payload: payload,
+        payload: payload
     }
 }

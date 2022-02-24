@@ -11,7 +11,6 @@ import './view.sass';
 export default function TransformationView({onClose, onImport}) {
     const [source, target, transform] = useSelector(({settings}) => [settings.source, settings.target, settings.transform?.name]);
     const [list, setList] =  useState([]);
-
     useEffect(() => {
         fetchTransformationList(source.code, target.code).then(i => setList(i))
     }, [source, target]);
@@ -20,7 +19,7 @@ export default function TransformationView({onClose, onImport}) {
         <div className="transform">
             <div className="transform__inner">
                 <Result className='transform'>
-                    {list.reverse().map((transformation) => {
+                    {list?.reverse().map((transformation) => {
                         
                         return <Item 
                             transformation={transformation}
@@ -28,7 +27,8 @@ export default function TransformationView({onClose, onImport}) {
                             isSelected={transform === transformation.name}
                          /> 
                     
-                    })}
+                    }) || <p>No Transformation</p>}
+                    
                 </Result>
                 <div className="transform__menu">
                     <button className='transformation__btn transform__import' onClick={onImport}>Import transformation</button>

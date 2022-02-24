@@ -19,16 +19,13 @@ export default function CrsIntersection() {
     
     useEffect ( () => {
         fetchTransformationList(source.code, target.code)
-        .then(res => {            
-            if (Array.isArray(res)) {
-                if (res.length >= 1) 
-                    dispatch(setTransform(res[0]));
-                if (res.length === 0) 
-                    dispatch(setTransform(undefined));
+        .then(res => {
+            if (Array.isArray(res) && res.length > 0) {
+                dispatch(setTransform(res[0]));
             }
         });
         
-    }, [source, target]);
+    }, [source, target, dispatch]);
     
     return (
         <>

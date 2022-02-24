@@ -7,6 +7,7 @@ export default function Item({transformation, onSelect, isSelected=false}) {
     const handleSelect = () => {
         dispatch(setTransform(transformation));
         onSelect()
+        console.log(typeof(transformation));
     };
     return (
         <div className={`result__item`} onClick={handleSelect}>

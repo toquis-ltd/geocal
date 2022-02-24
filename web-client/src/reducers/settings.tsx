@@ -1,6 +1,6 @@
 import CRS from '../@types/CRS';
 
-interface Transformation {
+export interface Transformation {
     name: string,
     area?: string,
     accuracy?: string,
@@ -22,7 +22,10 @@ const  _default:settings = {
     target:{},
     zAxe:false,
     DMS:false,
-    transform: undefined,
+    transform: {
+       name: 'No Transformationnnn',
+       wkt: 'No Transformation'
+    }
 };
 
 const SettingsReducer = (state:settings = _default, action:any) => {
