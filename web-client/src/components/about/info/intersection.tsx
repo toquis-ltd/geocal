@@ -34,7 +34,7 @@ export default function CrsIntersection() {
         <>
             <div className={`about__colomn about__colomn-intersection`} onClick={openPopup}>
                 <h3 className='about__colomn-title'>Transformation: </h3>
-                <h5 className=''>{ (transform !== undefined) ? transform.name : "No Transformation"}</h5>
+                <h5 className=''>{ (transform === undefined) ? "No Transformation" : transform.name}</h5>
             </div>
             <TransformationPopup onClose={closePopup}/>
         </>

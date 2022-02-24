@@ -7,8 +7,8 @@ import './view.sass';
 
 export default function CustomeTransformationView({onClose, onImport}) {
     const dispatch = useDispatch();
-    const sourceName = useSelector(({settings}) => settings.transform.name)
-    const sourceWKT = useSelector(({settings}) => settings.transform.wkt)
+    const sourceName = useSelector(({settings}) => settings.transform?.name)
+    const sourceWKT = useSelector(({settings}) => settings.transform?.wkt)
 
     const [name, setName] = useState(sourceName);
     const [wkt, setWKT] = useState(sourceWKT);
