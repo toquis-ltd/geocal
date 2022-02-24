@@ -48,9 +48,12 @@ export const toggleDMS = (payload:boolean) => {
     }
 }
 
-export const setTransform = (payload:Transformation) => {
+
+type setT = Transformation | undefined;
+
+export const setTransform = ( payload:setT  ) => {
     return {
         type: 'setTransform',
-        payload: payload
+        payload: payload,
     }
 }

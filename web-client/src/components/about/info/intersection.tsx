@@ -1,13 +1,13 @@
+import { RootState } from "reducers"
 import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 
 import {fetchTransformationList} from '../api';
 
-import { RootState } from "reducers"
-import { useEffect } from 'react';
+import {setTransform} from 'actions/settings';
 
 import { toggleTransformPopup } from 'actions/popups';
 import TransformationPopup from '../popup'
-import {setTransform} from 'actions/settings';
 
 export default function CrsIntersection() {
     const dispatch =  useDispatch();
@@ -17,9 +17,16 @@ export default function CrsIntersection() {
     const openPopup = () => dispatch(toggleTransformPopup(true));
     
     
-    useEffect (()=>{
+    useEffect ( () => {
         fetchTransformationList(source.code, target.code)
-        .then(res=>dispatch(setTransform(res[0])))
+        .then(res => {            
+            if (Array.isArray(res)) {
+                if (res.length >= 1) 
+                    dispatch(setTransform(res[0]));
+                if (res.length === 0) 
+                    dispatch(setTransform(undefined));
+            }
+        });
         
     }, [source, target]);
     
@@ -27,7 +34,7 @@ export default function CrsIntersection() {
         <>
             <div className={`about__colomn about__colomn-intersection`} onClick={openPopup}>
                 <h3 className='about__colomn-title'>Transformation: </h3>
-                <h5 className=''>{transform?.name}</h5>
+                <h5 className=''>{ (transform !== undefined) ? transform.name : "No Transformation"}</h5>
             </div>
             <TransformationPopup onClose={closePopup}/>
         </>

@@ -1,6 +1,8 @@
 from django.contrib.gis.gdal import SpatialReference
 from django.db import models
 
+from pyproj import CRS
+
 from .Area import Area
 from .CoordinateOperation import CoordinateOperation
 from .CoordinateSystem import CoordinateSystem
@@ -39,10 +41,19 @@ class CoordinateReferenceSystem(models.Model):
         return f"ESPG: {self.coord_ref_sys_code}  -  {self.coord_ref_sys_name}"
     
     def get_coordinate_system(self):
-        return {
-                "name":CoordinateSystem.objects.get(coord_sys_code = self.coord_sys_code).coord_sys_name,
-                "type":CoordinateSystem.objects.get(coord_sys_code = self.coord_sys_code).coord_sys_type,
-                "dimension":CoordinateSystem.objects.get(coord_sys_code = self.coord_sys_code).dimension,
+        try:
+            return {
+                    "name": CoordinateSystem.objects.get(coord_sys_code = self.coord_sys_code).coord_sys_name,
+                    "type": CoordinateSystem.objects.get(coord_sys_code = self.coord_sys_code).coord_sys_type,
+                    "dimension": CoordinateSystem.objects.get(coord_sys_code = self.coord_sys_code).dimension,
+                }
+        except:
+            m = CRS.from_user_input(int(self.coord_ref_sys_code)).coordinate_system
+            l = m.to_json_dict()
+            return {
+                'name': 'name',
+                'type': l['subtype'],
+                'dimension': len(m.axis_list),
             }
     
     def get_ellipsoid(self):
@@ -97,7 +108,6 @@ class CoordinateReferenceSystem(models.Model):
 
     def _get_ellipsoid(self):
         if (CoordinateSystem.objects.get(coord_sys_code = self.coord_sys_code).coord_sys_type == 'ellipsoidal'):
-            print("is ellipsoidal")
             return Ellipsoid.objects.get(ellipsoid_code = self._get_datum().ellipsoid_code)
         return None
 
@@ -122,10 +132,12 @@ class CoordinateReferenceSystem(models.Model):
             return SpatialReference(self.coord_ref_sys_code).wkt
 
     def _get_unity_of_measure(self):
-        try:
-            return SpatialReference(self.coord_ref_sys_code).units[1]
-        except:
-            return None
+        ##This code will be update with new 3.9
+        res = SpatialReference(self.coord_ref_sys_code).units[1]
+        if res == None:
+                return CRS.from_user_input(int(self.coord_ref_sys_code)).coordinate_system.to_json_dict()['axis'][0]['unit']
+        else:
+            return res
 
     def _get_wkt(self):
         try:

@@ -13,7 +13,7 @@ type settings = {
     target:CRS,
     zAxe:boolean,
     DMS:boolean,
-    transform?: Transformation,
+    transform?: Transformation | undefined,
 }
 
 const  _default:settings = {
