@@ -22,10 +22,7 @@ const  _default:settings = {
     target:{},
     zAxe:false,
     DMS:false,
-    transform: {
-        name: '',
-        wkt: ''
-    }
+    transform: undefined,
 };
 
 const SettingsReducer = (state:settings = _default, action:any) => {

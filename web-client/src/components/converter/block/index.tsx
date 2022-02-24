@@ -30,7 +30,7 @@ export function PointConverter ({onConvert}:Props) {
   const [points, pointHandle] = useState<Points>({source:{}, target:{}})
   const source = useSelector(({settings}:DefaultRootState)=>settings.source);
   const target = useSelector(({settings}:DefaultRootState)=>settings.target);
-  const proj = useSelector(({settings}:DefaultRootState)=>settings.transform.wkt);
+  const proj = useSelector(({settings}:DefaultRootState)=>settings.transform?.wkt);
 
   const transform = useCallback(()=>{
     if (source !== undefined && target !== undefined) {

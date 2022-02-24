@@ -51,7 +51,7 @@ class Conversion():
 class PointConversion(Conversion):
     def __init__(self, context:dict):
         super().__init__(context)
-        point = (context.get("source_x"), context.get("source_y"), context.get("source_z"))
+        self.point = (context.get("source_x"), context.get("source_y"), context.get("source_z"))
     
     def get_target_values(self) -> dict:
-        return self._transformation.transform(*point)
+        return self._transformation.transform(*self.point)

@@ -9,7 +9,7 @@ import { fetchTransformationList } from '../../../api';
 import './view.sass';
 
 export default function TransformationView({onClose, onImport}) {
-    const [source, target, transform] = useSelector(({settings}) => [settings.source, settings.target, settings.transform.name]);
+    const [source, target, transform] = useSelector(({settings}) => [settings.source, settings.target, settings.transform?.name]);
     const [list, setList] =  useState([]);
 
     useEffect(() => {

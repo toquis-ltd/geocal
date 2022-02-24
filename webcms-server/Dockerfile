@@ -4,8 +4,6 @@ ENV PYTHONBUFFERED=1
 ENV PATH="/sripts:${PATH}"
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get install -y wget
-
 # Install linux dependencies 
 RUN apt-get update && apt-get install -y libgdal-dev
 RUN apt-get install -y binutils libproj-dev gdal-bin
