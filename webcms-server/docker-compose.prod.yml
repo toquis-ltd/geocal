@@ -10,20 +10,9 @@ services:
       - static:/usr/src/app/static
     depends_on:
       - pgdb
-    entrypoint: ["sh", "./entrypoint.sh"]
-
-  nginx:
-    build: ./nginx
-    volumes:
-      - static:/usr/src/app/static
-      - ./data/certbot/conf:/etc/letsencrypt
-      - ./data/certbot/www:/var/www/certbot
     ports:
-      - "80:80"
-      - "443:443"
-    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
-    depends_on:
-      - web
+      - "8000:8000"
+    entrypoint: ["sh", "./entrypoint.sh"]
 
   pgdb:
     image: postgres
