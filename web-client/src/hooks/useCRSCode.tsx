@@ -1,8 +1,7 @@
 import { DefaultRootState, useSelector } from "react-redux"
 
-type crs = 'source' | 'target';
+type crs = 'source' | 'target' | 'target1';
 
 export default function useCRSCode (origin:crs) {
-    const code = useSelector(({settings}:DefaultRootState) => settings[origin].code)
-    return code;
+    return useSelector(({settings}:DefaultRootState) => settings[origin]?.code);
 }

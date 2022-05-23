@@ -87,7 +87,7 @@ export default function AboutItem({name}:Props) {
     const data = useSelector(({settings}:RootState)=>settings[name])
     return (
             <div className={`about__colomn about__colomn-crs about__colomn-${name}`}>
-                <h4 className='about__colomn-title'> About {name} coordinate referance system </h4>
+                <h4 className='about__colomn-title'> About {name} coordinate reference system </h4>
                 <BaseInformation data={data}/>
                 <div className="about__advance" key='advance'>
                     <h4 className="about__block-title">Advance:</h4>

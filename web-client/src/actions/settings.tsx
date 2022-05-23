@@ -14,7 +14,7 @@ type payload = {
     proj4?: string,
 };
 
-type origin = 'source' | 'target'
+type origin = 'source' | 'target' | 'target1'; 
 
 export const setCRS = (payload:payload):crsHeandler => {
     return {
@@ -44,6 +44,12 @@ export const toggleDMS = (payload:boolean) => {
     }
 }
 
+export const toggleST = (payload:boolean) => {
+    return {
+        type: 'toggleST',
+        payload: payload
+    }
+}
 
 export const setTransform = ( payload:Transformation  ) => {
     return {

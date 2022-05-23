@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "reducers";
 
 
-type Props = 'source' | 'target' | undefined;
+type Props = 'source' | 'target' | 'target1' | undefined;
 
 export default function useCRSelector(_origin:Props=undefined){
     

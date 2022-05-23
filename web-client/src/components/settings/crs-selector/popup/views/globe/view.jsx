@@ -1,5 +1,5 @@
 import useSearchBar from 'hooks/useSearchBar';
-import useCurrentSize from '../../../../../../hooks/useCurrentSize';
+import useCurrentSize from 'hooks/useCurrentSize';
 
 import Globe from 'components/common/globe/globe';
 

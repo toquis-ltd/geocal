@@ -35,6 +35,5 @@ export default function CrsIntersection() {
             </div>
             <TransformationPopup onClose={closePopup}/>
         </>
-
     )
 }

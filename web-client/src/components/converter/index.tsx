@@ -1,16 +1,19 @@
+import { useRef, useState } from 'react'
 import { useDispatch } from 'react-redux';
-import ConverterPropretiesBtn from 'components/settings/button/global';
+
 import { toggleRepport } from 'actions/popups'
 
-import { useRef, useState } from 'react'
+import ConverterPropretiesBtn from 'components/settings/button/global';
+
 import { PointConverter } from './block'
 import RepportPopup from './popup';
+
 import './index.sass'
 
 export default function Converter () {
     const dispatch = useDispatch();
-    const onConvert = useRef<Function | null>(null);
     const onClick = () => (onConvert.current!==null) ? onConvert.current():null
+    const onConvert = useRef<Function | null>(null);
     const [stateLocal, handleChange] = useState(false)
     const startRepporting = () => {
         handleChange(!stateLocal);

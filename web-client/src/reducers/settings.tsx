@@ -8,20 +8,24 @@ export interface Transformation {
 }
 
 type settings = {
-    modifiedCRS: 'source' | 'target',
+    modifiedCRS: 'source' | 'target' |  'target1',
     source:CRS,
     target:CRS,
+    target1:CRS,
     zAxe:boolean,
     DMS:boolean,
+    ST:boolean,
     transform?: Transformation | undefined,
 }
 
-const  _default:settings = {
+const _default:settings = {
     modifiedCRS:'source',
     source:{},
     target:{},
+    target1:{},
     zAxe:false,
     DMS:false,
+    ST:false,
     transform: {
        name: 'No Transformationnnn',
        wkt: 'No Transformation'
@@ -41,6 +45,9 @@ const SettingsReducer = (state:settings = _default, action:any) => {
         
         case 'toggleDMS':
             return {...state, DMS:action.payload}
+        
+        case 'toggleST':
+                return {...state, ST:action.payload}
 
         case 'setTransform':
             if (typeof action.payload === typeof state.transform ){

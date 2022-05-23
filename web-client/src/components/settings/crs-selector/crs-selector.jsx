@@ -1,36 +1,42 @@
+import { useContext } from 'react';
 import { useDispatch } from 'react-redux';
-
-import useCRSCode from 'hooks/useCRSCode';
-import CrsPopup from './popup/popup';
-
-import AdvancedSelectBtn from '../button/advanced';
-import DirectSelectBtn from '../button/direct';
 
 import { togglePopup } from 'actions/popups';
 import { setOrigin } from 'actions/settings';
 
+import useCRSCode from 'hooks/useCRSCode';
+
+import AdvancedSelectBtn from '../button/advanced';
+import DirectSelectBtn from '../button/direct';
+import settingContext from '../settingContext';
+
+import CrsPopup from './popup/popup';
+
 import './crs-selector.sass';
 
-export default function CrsSelector ({parameters}) {
-    const dispatch = useDispatch();
+export default function CrsSelector ({}) {
 
+    const {title, origin} = useContext(settingContext);
+
+    const dispatch = useDispatch();
     const closePopup = () => dispatch(togglePopup(false));
+    
     const openPopup = () => {
         dispatch(togglePopup(true));
-        dispatch(setOrigin(parameters.origin))
-    }
-    const crsCode = useCRSCode(parameters.origin);
+        dispatch(setOrigin(origin))
+    };
 
+    const crsCode = useCRSCode(origin);
     return (
         <div className='selector'>
             <div className='selector__header'>
-                <h3 className="field-title selector__title">{parameters.title}</h3>
+                <h3 className="field-title selector__title">{title}</h3>
             </div>
             <div className='selector__container'>
-                <DirectSelectBtn parameters={parameters} updateOrigin={()=>dispatch(setOrigin(parameters.origin))}/>
+                <DirectSelectBtn origin={origin} updateOrigin={()=>dispatch(setOrigin(origin))}/>
             </div>
             <div className='selector__footer'>
-                <AdvancedSelectBtn onClick={openPopup} parameters={parameters}/>
+                <AdvancedSelectBtn onClick={openPopup}/>
                 EPSG: {crsCode}
             </div>
             <CrsPopup onClose={closePopup}/>
