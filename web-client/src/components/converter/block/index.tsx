@@ -40,9 +40,6 @@ export function PointConverter ({onConvert}:Props) {
   const transform = useCallback(()=>{
     if (source !== undefined && target !== undefined) {
       let point = {...points.source};
-      if (isUnity) {
-        [point.x, point.y] = [point.y, point.x]
-      }
       FetchConvertion(source, target, point).then(res=>pointHandle({...points, target:res})).then(()=> console.log(isUnity))
     }
 
