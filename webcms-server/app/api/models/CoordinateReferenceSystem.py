@@ -42,20 +42,23 @@ class CoordinateReferenceSystem(models.Model):
     
     def get_coordinate_system(self):
         try:
+            cs = CoordinateSystem.objects.get(coord_sys_code = self.coord_sys_code)
             return {
-                    "name": CoordinateSystem.objects.get(coord_sys_code = self.coord_sys_code).coord_sys_name,
-                    "type": CoordinateSystem.objects.get(coord_sys_code = self.coord_sys_code).coord_sys_type,
-                    "dimension": CoordinateSystem.objects.get(coord_sys_code = self.coord_sys_code).dimension,
+                    "name": cs.coord_sys_name,
+                    "type": cs.coord_sys_type,
+                    "dimension": cs.dimension
                 }
         except:
-            m = CRS.from_user_input(int(self.coord_ref_sys_code)).coordinate_system
+            m = CRS.from_user_input(self.coord_sys_code).coordinate_system
             l = m.to_json_dict()
             return {
-                'name': 'name',
+                'name': f'ESPG:{self.coord_sys_code}',
                 'type': l['subtype'],
                 'dimension': len(m.axis_list),
-            }
-    
+                }
+        finally:
+            return None
+
     def get_ellipsoid(self):
         elipsoid = self._get_ellipsoid()
         if elipsoid != None:
@@ -67,11 +70,12 @@ class CoordinateReferenceSystem(models.Model):
     
     def get_datum(self):
         datum = self._get_datum()
-        return {
-            "name": datum.datum_name,
-            "type": datum.datum_type,
-            "description": datum.origin_description,
-        }
+        if datum is not None: 
+            return {
+                "name": datum.datum_name,
+                "type": datum.datum_type,
+                "description": datum.origin_description,
+            }
     
     def get_bounds(self):
         return self._get_bounds()
@@ -105,11 +109,15 @@ class CoordinateReferenceSystem(models.Model):
         except Exception as e:
             source = self.__class__.objects.get(coord_ref_sys_code = self.base_crs_code)
             return Datum.objects.get(datum_code = source.datum_code)
+        finally:
+            return None
 
     def _get_ellipsoid(self):
-        if (CoordinateSystem.objects.get(coord_sys_code = self.coord_sys_code).coord_sys_type == 'ellipsoidal'):
-            return Ellipsoid.objects.get(ellipsoid_code = self._get_datum().ellipsoid_code)
-        return None
+        try:
+            if (CoordinateSystem.objects.get(coord_sys_code = self.coord_sys_code).coord_sys_type == 'ellipsoidal'):
+                return Ellipsoid.objects.get(ellipsoid_code = self._get_datum().ellipsoid_code)
+        except:
+            return None
 
     def _get_primem_meridian(self):
         try:

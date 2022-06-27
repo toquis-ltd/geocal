@@ -16,6 +16,7 @@ type settings = {
     DMS:boolean,
     ST:boolean,
     transform?: Transformation | undefined,
+    version: string,
 }
 
 const _default:settings = {
@@ -29,7 +30,8 @@ const _default:settings = {
     transform: {
        name: 'No Transformationnnn',
        wkt: 'No Transformation'
-    }
+    },
+    version: "0.0.1",
 };
 
 const SettingsReducer = (state:settings = _default, action:any) => {

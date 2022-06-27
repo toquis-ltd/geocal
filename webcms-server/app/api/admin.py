@@ -17,8 +17,10 @@ class PersonAdminCoordinateOperation(admin.ModelAdmin):
 class PersonAdminCoordinateSystem(admin.ModelAdmin):
     search_fields = ('coord_sys_code', )
 
+class PersonAdminArea(admin.ModelAdmin):
+    search_fields = ('name', 'code')
 
-admin.site.register(Area)
+admin.site.register(Area, PersonAdminArea)
 admin.site.register(CoordinateOperation, PersonAdminCoordinateOperation)
 admin.site.register(CoordinateReferenceSystem, PersonAdmin)
 admin.site.register(CoordinateSystem, PersonAdminCoordinateSystem)

@@ -15,8 +15,8 @@ function TransformationPopup({ onClose }) {
     const [isImporting, toggleImported] = useState(false);
 
     const close = () => {
-        toggleImported(false)
-        onClose()
+        toggleImported(false);
+        onClose();
     }
 
     return (
@@ -28,7 +28,7 @@ function TransformationPopup({ onClose }) {
                         (isImporting) ?
                             <CustomeTransformationView onClose={onClose} onImport={() => toggleImported(false)}/>
                         :
-                            <TransformationView onClose={onClose} onImport={() => toggleImported(true)}/>
+                            <TransformationView onClose={() => toggleImported(true)} onImport={() => toggleImported(true)}/>
                     }
                 </div>
             </div>

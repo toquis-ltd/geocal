@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { setTransform } from 'actions/settings';
@@ -13,8 +13,12 @@ export default function CustomeTransformationView({onClose, onImport}) {
     const [name, setName] = useState(sourceName);
     const [wkt, setWKT] = useState(sourceWKT);
 
+    useEffect(()=>{
+        setWKT(JSON.stringify(JSON.parse(wkt), null, 2));
+    }, [])
+
     const handleSelect = () => {
-        dispatch(setTransform({name:name, wkt:wkt}));
+        dispatch(setTransform({name:name, wkt:JSON.stringify(JSON.parse(wkt))}));
         onClose();
     };
 
