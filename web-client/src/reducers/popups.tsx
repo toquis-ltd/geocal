@@ -15,6 +15,7 @@ const defaultState =  {
                         result: [],
                     }
 
+
 const PopupReducer = (state:State = defaultState, action:any) => {
     switch (action.type) {
 

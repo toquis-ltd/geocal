@@ -1,5 +1,3 @@
-import CRS from '../@types/CRS'
-
 import { useDispatch } from "react-redux";
 import { fetchAboutCRS } from "components/settings/crs-selector/popup/api";
 import { setCRS } from "actions/settings";

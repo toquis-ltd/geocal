@@ -1,12 +1,9 @@
-
-import {Transformation} from 'reducers/settings';
-
-type crsHeandler = {
+interface crsHeandler  {
     type: string,
     payload: payload
 };
 
-type payload = {
+interface payload  {
     name: string,
     code?: number,
     uom?: string,

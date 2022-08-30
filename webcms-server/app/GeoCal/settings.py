@@ -8,7 +8,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Application definition
-
+DEBUG = bool(int(os.getenv("DEBUG")))
 
 ROOT_URLCONF = 'GeoCal.urls'
 
@@ -48,11 +48,11 @@ LANGUAGE_CODE = 'en'
 
 TIME_ZONE = 'Europe/Paris'
 
-USE_I18N = True
+USE_I18N = False
 
-USE_L10N = True
+USE_L10N = False
 
-USE_TZ = True
+USE_TZ = False
 
 USE_X_FORWARDED_HOST = True
 
@@ -229,11 +229,9 @@ REST_FRAMEWORK = {
     ]
 }
 
-try:
+if DEBUG:
     from .local_settings import *
     allow_corsheaders(MIDDLEWARE, INSTALLED_APPS)
-
-except ImportError:
+else:
     SECRET_KEY = os.getenv("SECRET_KEY")
-    DEBUG = bool(int(os.getenv("DEBUG")))
     ALLOWED_HOSTS = ['mapless.toquis.com']

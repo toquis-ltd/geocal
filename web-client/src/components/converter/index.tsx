@@ -14,7 +14,7 @@ export default function Converter () {
     const dispatch = useDispatch();
     const onClick = () => (onConvert.current!==null) ? onConvert.current():null
     const onConvert = useRef<Function | null>(null);
-    const [stateLocal, handleChange] = useState(false)
+    const [stateLocal, handleChange] = useState(false);
     const startRepporting = () => {
         handleChange(!stateLocal);
         dispatch(toggleRepport(stateLocal));

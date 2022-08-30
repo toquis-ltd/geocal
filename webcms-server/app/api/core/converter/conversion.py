@@ -1,8 +1,9 @@
-import os, re
-
 from abc import abstractmethod
+
 from pyproj import Transformer, CRS
 from pyproj.transformer import TransformerGroup
+
+from api.models.CoordinateReferenceSystem import CoordinateReferenceSystem as dataCRS 
 
 class Conversion():
     def __init__(self, context:dict):
@@ -42,7 +43,7 @@ class Conversion():
         for i in pipelines:
             items.append({
                 'name': i.description, 
-                'area': i.area_of_use.name,
+                'area': (i.area_of_use.name if i.area_of_use is not None else None),
                 'wkt': i.to_json(),
                 'accuracy': (f'{i.accuracy}m' if i.accuracy > 0 else 'unknow'),
             })

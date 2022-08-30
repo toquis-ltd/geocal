@@ -16,12 +16,6 @@ type Points = {
   target1: Point
 };
 
-type Point = {
-  x?: string
-  y?: string
-  z?: string
-
-};
 type Props = {
   onConvert: {
     current: Function | null
@@ -35,22 +29,20 @@ export function PointConverter ({onConvert}:Props) {
   const target1 = useSelector(({settings}:DefaultRootState)=>settings.target1);
   const proj = useSelector(({settings}:DefaultRootState)=>settings.transform?.wkt);
   const isSecondTransforming = useSelector(({settings}:DefaultRootState)=>settings.ST);
-  const isUnity = useCRSUnity("source")[0] == "Latitude";
+  const isUnity = useCRSUnity("source")[0] === "Latitude";
   
-  const transform = useCallback(()=>{
-    if (source !== undefined && target !== undefined) {
-      let point = {...points.source};
-      FetchConvertion(source, target, point).then(res=>pointHandle({...points, target:res})).then(()=> console.log(isUnity))
+  const transform = useCallback(() =>{
+    if (isSecondTransforming === false){
+      FetchConvertion(source, target, {...points.source}, undefined).then(res=>pointHandle({...points, target:res}));
+      return
     }
+    FetchConvertion(source, target, {...points.source}, undefined)
+    .then(res => {
+      FetchConvertion(source, target1, {x:points.source.x, y:points.source.y, z:res.z.toString()}, undefined)
+      .then(res1 => pointHandle({...points, target:res, target1:res1}));
+    } )
+  }, [source, points]);
 
-  }, [source, target, points]);
-
-  useEffect(()=>{
-    if (target !== undefined && target1 !== undefined) {
-      FetchConvertion(target, target1, points.target).then(res=>{pointHandle({...points, target1:res})})
-    }
-  }, [points.target])
-  
   useEffect(()=>{
     onConvert.current = transform
   }, [onConvert, transform])

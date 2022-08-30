@@ -1,24 +1,3 @@
-import CRS from '../@types/CRS';
-
-export interface Transformation {
-    name: string,
-    area?: string,
-    accuracy?: string,
-    wkt: string,
-}
-
-type settings = {
-    modifiedCRS: 'source' | 'target' |  'target1',
-    source:CRS,
-    target:CRS,
-    target1:CRS,
-    zAxe:boolean,
-    DMS:boolean,
-    ST:boolean,
-    transform?: Transformation | undefined,
-    version: string,
-}
-
 const _default:settings = {
     modifiedCRS:'source',
     source:{},
