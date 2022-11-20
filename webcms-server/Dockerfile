@@ -22,6 +22,4 @@ ADD ./app /usr/src/app
 ADD ./*.env /usr/src/app/
 ADD ./entrypoint.dev.sh /usr/src/app/
 ADD ./entrypoint.sh /usr/src/app/
-
-#Run django
 WORKDIR /usr/src/app/
