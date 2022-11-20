@@ -5,6 +5,7 @@
 
 {% block css %}
     <link rel="stylesheet" type="text/css" href="{% static 'sources/css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'sources/css/search.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -13,6 +14,18 @@
         <h2 class="source__title title">
             Open data links data base
         </h2>
+        <form id="search-form" class="search-bar">
+            <input type="search" list="location-list" id="search-bar" pattern=".*\S.*"  required>
+            <button class="search-btn" type="submit">
+                <span>Search</span>
+            </button>
+        </form>
+        <svg></svg>
+        <datalist id="location-list">
+            {% for region in locations %}
+                <option value='{{region}}'>
+            {% endfor %}
+        </datalist>
     </header>
     <content class="source__content">
         <div class="source__new-item">
@@ -52,4 +65,13 @@
         </div>
     </footer>
 </main>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://d3js.org/topojson.v1.min.js"></script>
+<script>
+    document.getElementById("search-form").addEventListener("submit", function(event){
+        event.preventDefault();
+        // console.log(`${window.location.hostname}/sources/?filter${document.getElementById('search-bar').value}`);
+        window.location.href = `../sources/?filter=${document.getElementById('search-bar').value}`
+    });
+</script>
 {% endblock %}

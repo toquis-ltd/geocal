@@ -3,6 +3,8 @@ from django.http import HttpRequest
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView
 
+
+
 from .forms.suggest import SuggestForm
 from .models import Link, Region, Report
 from .utils import get_username
@@ -10,6 +12,11 @@ from .utils import get_username
 class LinkListView (ListView):
     context_object_name = 'links'
     template_name = 'sources/index.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['locatio'] = Region.objects.all()
+        return context
 
     def get_queryset(self):
         region_name = self.request.GET.get('filter', '')

@@ -1,13 +1,18 @@
+import csv
+
 from django.contrib import admin, messages
 from django.contrib.auth.decorators import permission_required
 
 from django.utils.decorators import method_decorator
 from django.urls import path
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
 
 from ..models import Link
 from ..core.csv.reader import buildFromCSV
 from ..core.links.builder import LinkFab
+
+from ..forms.export_csv import ExportCSVForm
 
 def verify(modeladmin, request, queryset):
     queryset.update(is_verified = True)
@@ -32,6 +37,7 @@ class LinkAdmin(admin.ModelAdmin):
         urls = super().get_urls()
         my_urls = [
             path('import-csv/', self.import_csv, name='import-links'),
+            path('export-csv/', self.export_csv, name='export-links'),
         ]
         return my_urls + urls
 
@@ -43,7 +49,23 @@ class LinkAdmin(admin.ModelAdmin):
                 return redirect("..")
             self.message_user(request, "Your csv file has been imported")
             return redirect("..")
-        
-        return render(request, "admin/sources/csv_form.html")
+        return render(request, "admin/sources/csv_import_form.html")
+    
+    @method_decorator(permission_required("sources", login_url='admin:login'))
+    def export_csv(self, request):
+        form = ExportCSVForm()
+        if request.method == "POST":
+            response = HttpResponse(
+                    content_type='text/csv',
+                    headers={'Content-Disposition': 'attachment; filename="export_data_source.csv"'},
+                )
+            if form.is_valid():
+                fieldnames = form.get_selected_field()
+                csvfile = csv.DictWriter(response, fieldnames)
+                for item in Link.objects.all()[0:form.numbre]:
+                    csvfile.writerow(*[exec(f'item.{j}') for j in fieldnames])
+                return response()
+
+        return render(request, "admin/sources/csv_export_form.html", {'form': form})
 
 admin.site.register(Link, LinkAdmin)

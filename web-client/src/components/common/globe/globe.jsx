@@ -13,6 +13,7 @@ export default memo(function Globe({width, height, onSelect}) {
     const rotate = useRef([0,0,0]);
     const World = feature(world, world.objects.collection);
 
+
     useEffect(()=>{
         rotate.current =  (typeof window.localStorage.getItem('rotate') === 'string') ?
                         JSON.parse(window.localStorage.getItem('rotate')) : rotate.current;
@@ -23,10 +24,10 @@ export default memo(function Globe({width, height, onSelect}) {
 
             const graticule = d3.geoGraticule();
             const projection = d3.geoOrthographic()
-                            .scale(width/3.5) //3.5 is scale coef witch work well with width*0.8 of parent size and inherit heeght
-                            .translate([width/3, height/3])
-                            .rotate(rotate.current);
-
+                                                    .scale(width/3.5) //3.5 is scale coef witch work well with width*0.8 of parent size and inherit heeght
+                                                    .translate([width/3, height/3])
+                                                    .rotate(rotate.current);
+            
             const path = d3.geoPath(projection);
             const svg = d3.select(svgRef.current);
             const g = svg.append('g')

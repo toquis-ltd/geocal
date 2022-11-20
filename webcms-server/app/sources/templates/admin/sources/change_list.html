@@ -3,7 +3,10 @@
 
 {% block object-tools-items %}
     <li>
-        <a href="{% url 'admin:import-links' %}" class="btn addlink btn-high btn-success">Import csv</a>
+        <a href="{% url 'admin:export-links' %}" class="btn btn-high btn-success">Export csv</a>
+    </li>
+    <li>
+        <a href="{% url 'admin:import-links' %}" class="btn btn-high btn-success">Import csv</a>
     </li>
     {{ block.super }}
 {% endblock %}
