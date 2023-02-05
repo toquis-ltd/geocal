@@ -1,9 +1,13 @@
 #!/bin/bash
 
-python manage.py makemigrations --noinput
+apt install -y wget
 
-python manage.py migrate --noinput
+wget https://cdn.proj.org/us_nga_egm08_25.tif -P /usr/share/proj
 
-python manage.py collectstatic --noinput
+python3 manage.py makemigrations --noinput
+
+python3 manage.py migrate --noinput
+
+python3 manage.py collectstatic --noinput 
 
 gunicorn GeoCal.wsgi --bind 0.0.0.0:8000

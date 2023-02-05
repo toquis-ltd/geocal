@@ -1,0 +1,31 @@
+.svgContainer
+    position: fixed
+    background-color: red
+
+.sphere
+    fill: #6e7a96
+    &:hover
+        fill: #6e7a96ee
+        
+
+.country, .states, .provinces 
+    fill: rgb(74, 106, 211)
+    stroke: rgb(0, 0, 0)
+    stroke-width: 0.15px
+
+.country:hover, .states:hover, .provinces:hover 
+  fill: rgba(43, 8, 199, 0.568)
+
+.rect
+  fill:rgb(250, 180, 76)
+  stroke: rgb(0, 0, 0)
+  z-index: 1
+
+.graticule 
+  fill: none
+  stroke: rgb(58, 58, 58)
+  stroke-width: .5px
+  stroke-opacity: .5
+
+svg g
+    transform: scale(1.5)

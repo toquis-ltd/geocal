@@ -1,0 +1,26 @@
+version: "3.8"
+services:
+  web:
+    build: .
+    tty: true
+    container_name: web
+    env_file:
+      - 'prod.env'
+    volumes:
+      - static:/usr/src/app/static
+    depends_on:
+      - pgdb
+    ports:
+      - "8000:8000"
+    entrypoint: ["sh", "./entrypoint.sh"]
+
+  pgdb:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: toor
+      
+volumes:
+  static:

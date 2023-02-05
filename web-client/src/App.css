@@ -1,3 +1,18 @@
+html{
+  box-sizing: border-box;   
+}
+
+body {
+    background-color: #f5f5f5;
+}
+
+*,
+*::before,
+*::after{
+  box-sizing: inherit;
+  margin: 0;
+}
+
 input, ::-webkit-input-placeholder{
   text-align: center;
 }
@@ -5,6 +20,11 @@ input, ::-webkit-input-placeholder{
 .converter {
   padding: 5px;
   margin: 6vh auto;
+  max-width: 80%;
+}
+
+.application {
+  margin: 0 auto;
   max-width: 1005px;
 }
 

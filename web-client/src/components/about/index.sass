@@ -1,0 +1,49 @@
+.about
+    margin-top: 20px
+    width: 100%
+
+.about__inner
+    display: flex
+    justify-content: space-between
+
+.about__colomn
+    padding: 5px 10px
+    text-align: left
+    background-color: white
+    border-radius: 10px
+
+.about__colomn-title
+    text-align: center
+
+.about__colomn-crs
+    min-width: 300px
+    width: 35%
+
+.about__base
+    margin-top: 5px
+
+.about__colomn-intersection
+    width: 320px
+    &:hover
+        cursor: pointer
+        background-color: rgb(235, 235, 235)
+
+
+
+@media (max-width: 1300px)
+    .about__colomn-intersection
+        display: none
+    
+    .about__colomn-crs
+        width: 40%
+
+@media (max-width: 900px)
+    .about__inner
+        flex-direction: column
+        align-items: center
+        justify-content: space-between
+    
+    .about__colomn-crs
+        margin: 10px 0
+    
+        

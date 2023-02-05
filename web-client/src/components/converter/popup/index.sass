@@ -1,0 +1,106 @@
+.popup--repport
+    top: 8%
+    left: 8%
+    right: 8%
+    bottom: 8%
+
+.popup__inner--repport
+    padding: 0
+    left: 10%
+    right: 10%
+    top: 0
+    bottom: 5%
+    box-shadow: 10px 10px 110px 20px #5252523d
+
+    input[type=text] 
+        padding: 6px
+        margin-top: 8px
+        font-size: 17px
+        border: none
+    
+.view--repport
+    height: calc(100% - 30px) //
+    
+.view__inner--repport
+    height: 100%
+
+
+.view__common-info
+    display: flex
+    margin: 20px 10px
+    text-align: left
+    input
+        text-align: left
+
+.view__problem-description
+    height: 60%
+    width: 90%
+    margin: 0 5%
+    border: none
+    resize: none
+
+    &::placeholder
+        text-align: left
+
+.view__problem-name
+    margin: 0 10px
+
+.screnshots-list
+    padding: 0 30px
+    margin: 25px 0px
+    display: flex
+
+.images__list
+    display: flex
+    max-width: 80%
+    max-height: 20%
+
+.screnshot
+    margin: auto
+    max-width: 10vw
+    max-height: 10vh
+    cursor: pointer
+
+.addscreen-btn
+    margin: auto 10px
+    width: 120px
+    height: 100%
+    border-color: rbg(20, 215, 45)
+    border-style: dotted
+    border-radius: 0px
+    background: rgba(0, 0, 0, 0.425)
+
+@media (max-width: 1105px)
+    
+    .popup--repport
+        top: 1%
+        left: 1%
+        right: 1%
+        bottom: 1%
+
+    .popup__inner--repport
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
+        box-shadow: 0px 0px 120px 15px
+
+@media (max-width: 780px)
+    .popup--repport
+        top: 1%
+        left: 1%
+        right: 1%
+        bottom: 1%
+
+    .popup__inner--repport
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
+        box-shadow: 0px 0px 120px 15px
+    
+    .view__inner--repport
+        height: 100%
+    
+    .screnshots-list
+        display: none

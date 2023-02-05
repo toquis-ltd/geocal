@@ -1,7 +1,5 @@
 import csv
 
-from asgiref.sync import sync_to_async
-
 class buildFromCSV():
 
     def __init__(self, request, builder):

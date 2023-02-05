@@ -8,7 +8,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Application definition
-
+DEBUG = bool(int(os.getenv("DEBUG")))
 
 ROOT_URLCONF = 'GeoCal.urls'
 
@@ -48,11 +48,11 @@ LANGUAGE_CODE = 'en'
 
 TIME_ZONE = 'Europe/Paris'
 
-USE_I18N = True
+USE_I18N = False
 
-USE_L10N = True
+USE_L10N = False
 
-USE_TZ = True
+USE_TZ = False
 
 USE_X_FORWARDED_HOST = True
 
@@ -151,6 +151,7 @@ INSTALLED_APPS = [
     'djangocms_style',
     'djangocms_googlemap',
     'djangocms_video',
+    'django.contrib.postgres',
     'GeoCal',
     'rest_framework',
     'api',
@@ -158,6 +159,15 @@ INSTALLED_APPS = [
     'calculator',
     'sources',
 ]
+
+#EMAIL
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_HOST_USER = os.getenv("email_host")
+EMAIL_HOST_PASSWORD = os.getenv('email_pass')
+EMAIL_PORT = 587
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 LANGUAGES = (
     ## Customize this
@@ -185,6 +195,7 @@ CMS_LANGUAGES = {
 CMS_TEMPLATES = (
     ## Customize this
     ('fullwidth.html', 'Fullwidth'),
+    ('calculator/index.html', 'Calculator'),
     ('home.html', 'Home'),
 )
 
@@ -201,7 +212,7 @@ DATABASES = {
         'USER': os.getenv('pg_user'),
         'HOST':  os.getenv('pg_host'),
         'PASSWORD': os.getenv('pg_pass'),
-        'PORT': 5432
+        'PORT': 5432,
     }
 }
 
@@ -214,15 +225,13 @@ THUMBNAIL_PROCESSORS = (
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticatedOrReadOnly'
+        'rest_framework.permissions.AllowAny'
     ]
 }
 
-try:
+if DEBUG:
     from .local_settings import *
     allow_corsheaders(MIDDLEWARE, INSTALLED_APPS)
-
-except ImportError:
+else:
     SECRET_KEY = os.getenv("SECRET_KEY")
-    DEBUG = bool(int(os.getenv("DEBUG")))
     ALLOWED_HOSTS = ['mapless.toquis.com']

@@ -3,15 +3,38 @@ from django.http import HttpRequest
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView
 
+
+
 from .forms.suggest import SuggestForm
-from .models import Link, Report
+from .models import Link, Region, Report
 from .utils import get_username
 
 class LinkListView (ListView):
     context_object_name = 'links'
-    queryset = Link.objects.filter(is_verified=True)
     template_name = 'sources/index.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['locatio'] = Region.objects.all()
+        return context
 
+    def get_queryset(self):
+        region_name = self.request.GET.get('filter', '')
+        order = self.request.GET.get('orderby', 'region')
+        region_id = None
+
+        try:
+            region_id = Region.objects.get(name__icontains = region_name)
+        except Region.MultipleObjectsReturned:
+            region_id = Region.objects.filter(name = region_name).first()
+        
+        if region_id != None:
+            new_context = Link.objects.filter(region=region_id, is_verified=True).order_by(order)
+        else:
+            new_context = Link.objects.filter(is_verified=True).order_by(order)
+        
+        return new_context
+    
 class LinkCreateView (CreateView):
     """
         Do not  inherit SuccessMessageMixin before writing css styles for message
@@ -57,14 +80,15 @@ class ReportCreateView (CreateView):
         context = super(ReportCreateView, self).get_context_data(**kwargs)
         context['reported_link'] = self.reported_link
         return context
-    
-    def post(self, request, **kwargs) :
+
+    def post(self, request, id, **kwargs):
         self._request = request
+        self._id = id
         return super().post(request, **kwargs)
     
     def form_valid(self, form):
         instance = form.save(commit=False)
-        instance.site = Link.objects.get(id=self._request.POST.get('id'))
+        instance.site = Link.objects.get(id=self._id)
         instance.problem = self._request.POST.get('problem')
         instance.author = get_username(self._request)
         instance.save()

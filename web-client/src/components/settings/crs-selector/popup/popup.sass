@@ -1,0 +1,63 @@
+.popup--crs
+    top: 5%
+    left: 5%
+    right: 5%
+    bottom: 7%
+
+.popup__inner--crs
+    padding: 0
+    left: 10%
+    right: 10%
+    top: 0
+    bottom: 5%
+    box-shadow: 10px 10px 110px 20px #52525215
+
+    input[type=text] 
+        padding: 6px
+        margin-top: 8px
+        font-size: 17px
+        border: none
+.view--crs
+    height: calc(100% - 30px) //
+
+.view__inner--crs
+    display: grid
+    height: 100%
+    grid-auto-rows: 100%
+    grid-template-columns: repeat(2, 1fr)
+
+@media (max-width: 1105px)
+    
+    .popup--crs
+        top: 1%
+        left: 1%
+        right: 1%
+        bottom: 1%
+
+    .popup__inner--crs
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
+        box-shadow: 0px 0px 120px 15px
+
+@media (max-width: 780px)
+    .popup--crs
+        top: 1%
+        left: 1%
+        right: 1%
+        bottom: 1%
+
+    .popup__inner--crs
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
+        box-shadow: 0px 0px 120px 15px
+    
+    .view__inner--crs
+        height: 100%
+        display: grid
+        grid-auto-columns: 100%
+        grid-template-rows: repeat(2, 50%)
+        grid-template-columns: 1fr

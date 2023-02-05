@@ -1,0 +1,46 @@
+{% extends 'admin/change_form.html' %}
+{% load cms_tags menu_tags sekizai_tags static %}
+{% block responsive  %}
+    <style>
+        .file__container{
+            display: flex;
+            justify-content: center;
+            align-items: center;   
+            width: 60vw;
+            height: 40vh;
+            border: 5px dashed red;
+            margin: auto;
+            cursor: pointer;
+        }
+        .deletelink-box .deletelink:before {
+            content: "\E03B" !important;
+        }
+        .submit-row {
+            display: flex;
+            justify-content: flex-end;
+        }
+    </style>
+{% endblock %}
+
+{% block breadcrumbs %}
+    <div class="breadcrumbs">
+        <a href="{% url 'admin:index'  %}">Home</a> ›
+        <a href="{% url 'admin:app_list' 'sources'  %}">Sources</a> ›
+        <a href="{% url 'admin:sources_link_changelist' %}">Links</a> 
+        <span>› import csv</span>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div>
+        <main class="form-container container">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form__inner">
+                    {{form}}
+                </div>
+                <button class="form__submit" type="submit">submit</button>
+            </form>
+        </main>
+    </div>
+{% endblock content %}

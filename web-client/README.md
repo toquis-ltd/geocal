@@ -2,6 +2,14 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+####################
+
+----> Globe fix <----
+https://stackoverflow.com/questions/54732099/looking-for-a-world-map-with-a-specific-projection-in-d3js
+
+
+#####################
+
 ## Available Scripts
 
 In the project directory, you can run:
