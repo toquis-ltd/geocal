@@ -1,4 +1,4 @@
- export function convertToDMS (value, m = 0, s = 0)  {
+ export function convertToDMS (value, m = 0, s = 0) {
     value = value.toString();
     if (value.length === 0) return "0°0'0"  
     if (/'|"/.test(value) === true) return value
@@ -15,7 +15,7 @@
 export function convertToDecimal (value)  {
     
     // exception case  
-    if (value.length === 0) return '0'; // if value is empty
+    if (value === undefined || value.length === 0) return '0'; // if value is empty
     if (/'|"/.test(value) === false) return value; // if value doesn't contain any separator
     
     //prepare value

@@ -7,7 +7,7 @@ export function Output ({point}) {
   const points = (DMS && point.x !== undefined && point.y !== undefined) ? {x:convertToDMS(point.x), y:convertToDMS(point.y), z:point.z} : point
   
   return ( <div className="output-fields">
-        <div className="output-fields__header">
+        <div className="fields__header output-fields__header">
         </div>
         <div className="output-fields__container fields__container">
             <Fields name='output' point={points} origin='target' />

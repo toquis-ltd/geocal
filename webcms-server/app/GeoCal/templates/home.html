@@ -31,24 +31,13 @@
     <body>
         {% cms_toolbar %}
         <header class="header">
-            <div class="header__top">
-                <div class="header__top-inner">
-
-                    {% placeholder "Brand" %}
-                    
-                    {% placeholder "Product name" %}
-                        
-                    {% placeholder "Slogan" %}
-
-                </div>
-            </div>
             {% show_menu 0 100 100 100 'components/menu.html' %}
         </header>
         <section class="product">
             <div class="container">
                 {% placeholder "Title" %}
                 <div class="product__statictics content-container">
-                    <div class="product__statistics-item">
+                    <!-- <div class="product__statistics-item">
                         <a href="{% url 'sources:index' %}" class="product__link ui__link">
                             <img src="{% static 'home/img/search.png' %}" alt="reaserch for data" class="product__statostics-image">
                             <p class="product__statictics-digits">271 sources</p>
@@ -56,7 +45,7 @@
                                 Find open databases <br/>
                             </p>
                         </a>
-                    </div>
+                    </div> -->
                     <div class="product__statistics-item">
                         <a href="{% url 'calculator:main' %}" class="product__link ui__link">
                             <img src="{% static 'home/img/transform.png' %}" alt="transformation" class="product__statostics-image">

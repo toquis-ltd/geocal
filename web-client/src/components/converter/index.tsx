@@ -19,6 +19,9 @@ export default function Converter () {
         handleChange(!stateLocal);
         dispatch(toggleRepport(stateLocal));
     }
+    const shareLinkToClipboard = () => {
+        navigator.clipboard.writeText(window.location.href)
+    }
     return (
         <>
         <div className='point-converter'>
@@ -39,7 +42,7 @@ export default function Converter () {
             <div className="point-converter__buttons-list">
                 <button className='base__button point-converter__button report-btn' onClick={startRepporting}> Report </button>
                 <button className='base__button point-converter__button convert-btn' onClick={onClick}> Convert </button>
-                <button className='base__button point-converter__button share-btn' > Share link </button>
+                <button className='base__button point-converter__button share-btn' onClick={shareLinkToClipboard}> Share link </button>
             </div>
         </div>
             <RepportPopup onClose={startRepporting}/>
