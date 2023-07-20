@@ -14,18 +14,20 @@ import {SettingStateType} from './types/settings'
 
 const { Content, Footer } = Layout;
 
+
 const App : React.FC = () => {
-  const [settings, setSettings] = React.useState<SettingStateType>({
+  const [state, setState] = React.useState<SettingStateType>({
     dimensions:2,
     transformations:1,
     dataOutputFormat:'Decimal Degrees',
+    outputFile:'geojson',
   } as SettingStateType);
 
   return (
   <Layout className="layout">
     <Navbar/>
     <Content style={{ margin: '20px 50px', backgroundColor: '#ffffff', borderRadius: "15px", height: '70vh', minHeight: '70vh'}}>
-      <SettingsContext.Provider value={[settings, setSettings]}>
+      <SettingsContext.Provider value={{...state, setState}}>
         <Routes>
             <Route path="/" Component={PreviewPage} />        
             <Route path="/settings" Component={SettingsPage} />
