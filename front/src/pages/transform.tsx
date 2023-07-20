@@ -1,44 +1,24 @@
 import React from 'react';
-import { InboxOutlined } from '@ant-design/icons';
-import { message, Upload } from 'antd';
+import { Col, Row } from 'antd';
 
-import type { UploadFile, UploadProps } from 'antd/es/upload/interface';
 
-const { Dragger } = Upload;
+import FileUploader from '../assets/UploadFile';
 
 const TransformPage : React.FC = () => {
-  const [fileList, setFileList] = React.useState<UploadFile[]>([]);
-  const props: UploadProps = {
-    name: 'file',
-    multiple: false,
-    action: `${import.meta.env.VITE_server}/api/transform/upload`,
-    method: "post",
-    maxCount: 1,
 
-    onChange({file, fileList}) {
-      const { status, response } = file;
-      if (status === 'done') {
-        if (response.status_code > 299) {
-          message.error(`${response.detail}`);
-          setFileList([]);
-          return
-        }
-        message.success(`${file.name} file uploaded successfully.`);
-      } else if (status === 'error') {
-        message.error(`${file.name} file upload failed.`);
-        setFileList([]);
-      }
-      setFileList(fileList)
-    },
-  };
-  
   return (
-      <Dragger  fileList={fileList}  {...props}>
-        <p className="ant-upload-drag-icon">
-          <InboxOutlined />
-        </p>
-        <p className="ant-upload-text">Click or drag file to this area to upload</p>
-    </Dragger>
+    <div className="container" style={{margin:'auto', width:'50%'}}>
+      <div className="inner" style={{height: '200px'}}></div>
+      <Row gutter={[8, 8]}>
+        <Col span={3}>
+        </Col>
+        <Col span={18}>
+          <FileUploader/>
+        </Col>
+        <Col span={3}>
+        </Col>
+      </Row>
+    </div>
   )
 }
 

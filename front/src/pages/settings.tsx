@@ -1,12 +1,17 @@
 import React from 'react'
-import {  Radio } from 'antd';
+import { Col, Row } from 'antd';
+
+import BasicSettings from '../assets/BasicSettings';
 
 const SettingsPage : React.FC = () => {
   return (
-    <Radio.Group>
-      <Radio.Button>2D</Radio.Button>
-      <Radio.Button>3D</Radio.Button>
-    </Radio.Group>
+    <Row gutter={[8, 8]} style={{padding:'10px 5px', width:'100%', height:'100%'}}>
+      <Col span={10}>
+        <BasicSettings />
+      </Col>
+      <Col span={14}>
+      </Col>
+  </Row>
   )
 }
 
