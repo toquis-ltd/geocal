@@ -1,38 +1,36 @@
+/// <reference path="./src/@types/global.d.ts" />
+
 import React from 'react'
 import { Radio, Card, Select } from 'antd';
 
-import {SettingsContext} from '../context/settings';
-import { SettingStateType } from '../types/settings';
+import { SettingsContext } from '../context/settings';
+
+import {
+  TransformationDimentionEnum,
+  NumberOfTranfromationsEnum,
+  FormatVerificationOutputEnum,
+  FileFormatEnum
+} from '../enums/settings';
+
 
 const BasicSettings : React.FC = () => {
   const state = React.useContext<SettingStateType>(SettingsContext)
-  
+
   const dimensionOptions = [
-    { label: '2D', value: 2},
-    { label: '3D', value: 3},
+    { label: '2D', value: TransformationDimentionEnum.TwoDimentions},
+    { label: '3D', value: TransformationDimentionEnum.ThreeDimentions},
   ];
-
+  
   const transformationNumberOptions = [
-    { label: 'One transformation', value: 1},
-    { label: 'Two transformations', value: 2},
+    { label: 'One transformation', value:  NumberOfTranfromationsEnum.One},
+    { label: 'Two transformations', value:  NumberOfTranfromationsEnum.Two},
   ];
 
-  const OutputFormatOptions = [
-    { label: 'Decimal Degrees', value: 'Decimal Degrees'},
-    { label: 'Degrees Minutes', value: 'Degrees Minutes'},
-    { label: 'Degrees Minutes Seconds', value: 'Degrees Minutes Seconds'},
-  ];
+  const OutputFormatOptions =  Object.keys(FormatVerificationOutputEnum)
+                                     .map(key => ({ label: FormatVerificationOutputEnum[key], value:key }));
 
-  const outputFileOptions=[
-    { label: 'Shapefile (.shp)', value: 'shp'},
-    { label: 'CSV (.csv)', value: 'csv'},
-    { label: 'GeoJSON (.geojson)', value: 'geojson'},
-    { label: 'Keyhole Markup Language (.kml)', value: 'kml'},
-    { label: 'Geographic Markup Language (.gml)', value: 'gml'},
-    { label: 'GPS Exchange Format (.gpx)', value: 'gpx'},
-    { label: 'GeoTIFF (.tif)', value: 'tif'},
-    { label: 'NetCDF (.nc)', value: 'nc'},
-  ]
+  const outputFileOptions = Object.keys(FileFormatEnum)
+                                  .map(key => ({ label: FileFormatEnum[key], value:key }));
 
   return (
     <Card title="Basic settings" headStyle={{ textAlign:'center' }} bodyStyle={{ backgroundColor:'#f5f5f5'}}>

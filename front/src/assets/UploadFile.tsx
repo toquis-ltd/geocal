@@ -14,11 +14,7 @@ const FileUploader : React.FC = () => {
     action: `${import.meta.env.VITE_server}/api/transform/upload`,
     maxCount: 1,
     multiple: false,
-
-    // @ts-ignore This property changes the input box size but is not recognized by the TS compiler. This line is from the official docs
-    // https://ant.design/components/upload
-    height: "30vh",
-
+    
     onChange({file, fileList}) {
       const { status, response } = file;
       if (status === 'done') {
@@ -37,7 +33,7 @@ const FileUploader : React.FC = () => {
   };
   return (
     <div className="upload__file" style={{textAlign:"center"}}>
-      <Dragger  fileList={fileList} {...props}>
+      <Dragger  fileList={fileList} {...props} height={300}>
             <p className="ant-upload-drag-icon">
               <InboxOutlined />
             </p>

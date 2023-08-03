@@ -10,23 +10,30 @@ import TransformPage from './pages/transform';
 import PreviewPage from "./pages/preview";
 
 import {SettingsContext} from './context/settings'
-import {SettingStateType} from './types/settings'
+
+import {
+  TransformationDimentionEnum,
+  NumberOfTranfromationsEnum,
+  FormatVerificationOutputEnum,
+  FileFormatEnum
+} from './enums/settings';
 
 const { Content, Footer } = Layout;
 
-
 const App : React.FC = () => {
+  const dec = FormatVerificationOutputEnum.DecimalDegrees;
   const [state, setState] = React.useState<SettingStateType>({
-    dimensions:2,
-    transformations:1,
-    dataOutputFormat:'Decimal Degrees',
-    outputFile:'geojson',
+    dimensions:TransformationDimentionEnum.TwoDimentions,
+    transformations: NumberOfTranfromationsEnum.One,
+    dataOutputFormat: Object.keys(FormatVerificationOutputEnum)[0],
+    outputFile: Object.keys(FileFormatEnum)[2] ,
+    setState: () => {},
   } as SettingStateType);
-
+  
   return (
   <Layout className="layout">
     <Navbar/>
-    <Content style={{ margin: '20px 50px', backgroundColor: '#ffffff', borderRadius: "15px", height: '70vh', minHeight: '70vh'}}>
+    <Content style={{ margin: '20px 50px', backgroundColor: '#ffffff', borderRadius: "15px", minHeight: '70vh'}}>
       <SettingsContext.Provider value={{...state, setState}}>
         <Routes>
             <Route path="/" Component={PreviewPage} />        
