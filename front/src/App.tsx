@@ -29,7 +29,7 @@ const App : React.FC = () => {
     outputFile: Object.keys(FileFormatEnum)[2] ,
     setState: () => {},
   } as SettingStateType);
-  
+
   return (
   <Layout className="layout">
     <Navbar/>

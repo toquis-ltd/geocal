@@ -18,6 +18,13 @@ const SettingsPage : React.FC = () => {
       </Col>
       <Col span={8}>
       </Col>
+      <Col span={8}>
+      </Col>
+      <Col span={8}>
+        <BasicSettings />
+      </Col>
+      <Col span={8}>
+      </Col>
   </Row>
   )
 }

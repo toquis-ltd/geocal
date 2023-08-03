@@ -20,14 +20,13 @@ const BasicSettings : React.FC = () => {
     { label: '2D', value: TransformationDimentionEnum.TwoDimentions},
     { label: '3D', value: TransformationDimentionEnum.ThreeDimentions},
   ];
-  
+
   const transformationNumberOptions = [
     { label: 'One transformation', value:  NumberOfTranfromationsEnum.One},
     { label: 'Two transformations', value:  NumberOfTranfromationsEnum.Two},
   ];
 
   const OutputFormatOptions =  Object.keys(FormatVerificationOutputEnum)
-                                     .map(key => ({ label: FormatVerificationOutputEnum[key], value:key }));
 
   const outputFileOptions = Object.keys(FileFormatEnum)
                                   .map(key => ({ label: FileFormatEnum[key], value:key }));
