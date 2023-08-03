@@ -1,27 +1,37 @@
+/// <reference path="./src/@types/global.d.ts" />
+
 import React from 'react'
 import { Radio, Card, Select } from 'antd';
 
-import {SettingsContext} from '../context/settings';
-import { SettingStateType } from '../types/settings';
+import { SettingsContext } from '../context/settings';
+import {
+  TransformationDimentionEnum,
+  NumberOfTranfromationsEnum,
+  FormatVerificationOutputEnum,
+  FileFormatEnum
+} from '../enums/settings';
+
 
 const BasicSettings : React.FC = () => {
   const state = React.useContext<SettingStateType>(SettingsContext)
-  
+
   const dimensionOptions = [
-    { label: '2D', value: 2},
-    { label: '3D', value: 3},
+    { label: '2D', value: TransformationDimentionEnum.TwoDimentions},
+    { label: '3D', value: TransformationDimentionEnum.ThreeDimentions},
   ];
-
   const transformationNumberOptions = [
-    { label: 'One transformation', value: 1},
-    { label: 'Two transformations', value: 2},
+    { label: 'One transformation', value:  NumberOfTranfromationsEnum.One},
+    { label: 'Two transformations', value:  NumberOfTranfromationsEnum.Two},
   ];
 
-  const OutputFormatOptions = [
-    { label: 'Decimal Degrees', value: 'Decimal Degrees'},
-    { label: 'Degrees Minutes', value: 'Degrees Minutes'},
-    { label: 'Degrees Minutes Seconds', value: 'Degrees Minutes Seconds'},
-  ];
+  const OutputFormatOptions =  Object.keys(FormatVerificationOutputEnum)
+                                              .filter((value => isNaN(Number(value)) === false))
+                                              .map(key => ({ label: FormatVerificationOutputEnum[key], value:key }));
+  //  [
+  //   { label: 'Decimal Degrees', value: FormatVerificationOutputEnum.DecimalDegrees},
+  //   { label: 'Degrees Minutes', value: FormatVerificationOutputEnum.DegreesMinutes},
+  //   { label: 'Degrees Minutes Seconds', value: FormatVerificationOutputEnum.DegreesMinutesSeconds},
+  // ];
 
   const outputFileOptions=[
     { label: 'Shapefile (.shp)', value: 'shp'},
