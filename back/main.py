@@ -10,8 +10,8 @@ from core.transform import api as transform_api
 
 app = FastAPI()
 
-app.mount("/static", StaticFiles(directory="static"), name="static")
-app.mount("/api/transform/", transform_api)
+app.mount("/static/", StaticFiles(directory="static"), name="static")
+app.include_router(transform_api)
 
 templates = Jinja2Templates(directory="./template")
 
@@ -27,10 +27,9 @@ try:
         from fastapi.middleware.cors import CORSMiddleware
 
         ORIGINS = [
-            "http://localhost.tiangolo.com",
-            "https://localhost.tiangolo.com",
             "http://localhost",
             "http://localhost:8080",
+            "http://127.0.0.1:8000"
         ]
 
         app.add_middleware(
