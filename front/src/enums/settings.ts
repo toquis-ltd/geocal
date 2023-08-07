@@ -7,6 +7,7 @@ export enum NumberOfTranfromationsEnum{
     One,
     Two
 }
+
 export enum FormatVerificationOutputEnum{
     DecimalDegrees='Decimal Degrees',
     DegreesMinutes='Degrees Minutes',
