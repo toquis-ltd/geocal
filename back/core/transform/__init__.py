@@ -9,12 +9,23 @@ from fastapi.responses import FileResponse
 import geopandas as gpd
 
 from .point import Point2D, Point3D, PointTransformation
+from .file import FileFormatTransformation, FileFormatEnum
 from .comm import TransformatioDef
 
 api = APIRouter(prefix="/api/transform")
 
+async def delete_all_tmp_files(request: Request):
+    path = f'{os.getcwd()}/tmpfile/{request.client.host}/'
+    for file in os.listdir(path):
+        try:
+            os.remove(f'{path}{file}')
+        except:
+            shutil.rmtree(f'{path}{file}')
+
 @api.post("/upload")
 async def upload_file(request: Request, file:UploadFile):
+    await delete_all_tmp_files(request=request)
+
     path = f'{os.getcwd()}/tmpfile/{request.client.host}/'
     file_name = f'{"mapless"}{os.path.splitext(file.filename)[-1]}'
 
@@ -25,31 +36,23 @@ async def upload_file(request: Request, file:UploadFile):
         local_file.write(file.file.read())
     return {'status_code':200, 'file_id':file_name}
 
-@api.get("/file")
-async def download_transformed_file(request: Request, file_name:str, file_format:Union[str, None]=None):
+@api.post("/download")
+async def download_transformed_file(request: Request, transformation:TransformatioDef, file_format:Union[FileFormatEnum, None]=None):
+
+    dir_path:str = f'{os.getcwd()}/tmpfile/{request.client.host}/'    
+    file_extension:str = os.path.splitext(list(filter(lambda n: n.startswith("mapless"), os.listdir(dir_path)))[0])[1]
+    file_name:str = f'mapless'
+    file_path:str = f'{dir_path}{file_name}{file_extension}'
+    output_file_path:str = f'{dir_path}{file_name}_out'
+
+    gdf:gpd.GeoDataFrame = gpd.read_file(file_path)
     
-    path = f'{os.getcwd()}/tmpfile/{request.client.host}/'
-    file_path = f'{path}{file_name}'
-
-    if file_format == None:
-        return FileResponse(f"{file_path}", media_type='application/octet-stream', filename=f"{file_name}")
+    if file_format != None:
+        file_format_transformation = FileFormatTransformation(gdf, output_file_path, file_format)
+        file_format_transformation.transformation()
     
-    out_path = f'{path}{os.path.splitext(file_name)[0]}_shp'
-    gdf = gpd.read_file(file_path)
-    gdf.to_file(out_path, driver='ESRI Shapefile')
-
-    shutil.make_archive(f"{out_path}", "zip", out_path)
-    return FileResponse(f"{out_path}.zip", media_type='application/octet-stream', filename='mapless-download.zip')
-
-@api.delete("/clean")
-async def delete_all_tmp_files(request: Request):
-    path = f'{os.getcwd()}/tmpfile/{request.client.host}/'
-    for file in os.listdir(path):
-        try:
-            os.remove(f'{path}{file}')
-        except:
-            shutil.rmtree(f'{path}{file}')
-    return {'status_code':200}
+    shutil.make_archive(f"{output_file_path}", "zip", output_file_path)
+    return FileResponse(f"{output_file_path}.zip", media_type='application/octet-stream', filename='mapless-download.zip')
 
 @api.post("/point")
 async def transform_point(point:Union[Point3D, Point2D], transformation:TransformatioDef):

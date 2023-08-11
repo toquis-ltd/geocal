@@ -1,25 +1,10 @@
 from typing import Union, Sequence
 
-from pydantic import BaseModel
 from pyproj import Transformer
 
-class Point2D(BaseModel):
-    x:float
-    y:float
-
-    def unwrap(self) -> Sequence[float]:
-        return self.x, self.y
-
-class Point3D(Point2D):
-    z:float
-
-    def unwrap(self) -> Sequence[float]:
-        return self.x, self.y, self.z
-
+from ..types.points import  Point2D, Point3D
 
 class PointTransformation:
-    point: Union[Point3D, Point2D]
-
     def __init__(self, point: Union[Point3D, Point2D], pipline:Sequence[int]):
         self.point = point
         self.pipline = pipline
