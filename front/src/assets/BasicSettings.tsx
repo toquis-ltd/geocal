@@ -1,7 +1,5 @@
-/// <reference path="./src/@types/global.d.ts" />
-
 import React from 'react'
-import { Radio, Card, Select } from 'antd';
+import { Radio, Card, Select, Checkbox } from 'antd';
 
 import { SettingsContext } from '../context/settings';
 
@@ -22,11 +20,11 @@ const BasicSettings : React.FC = () => {
   ];
 
   const transformationNumberOptions = [
-    { label: 'One transformation', value:  NumberOfTranfromationsEnum.One},
-    { label: 'Two transformations', value:  NumberOfTranfromationsEnum.Two},
+    { label: '1', value:  NumberOfTranfromationsEnum.One},
+    { label: '2', value:  NumberOfTranfromationsEnum.Two},
   ];
 
-  const OutputFormatOptions =  Object.keys(FormatVerificationOutputEnum)
+  const OutputFormatOptions =  Object.values(FormatVerificationOutputEnum)
 
   const outputFileOptions = Object.keys(FileFormatEnum)
                                   .map(key => ({ label: FileFormatEnum[key], value:key }));
@@ -34,17 +32,11 @@ const BasicSettings : React.FC = () => {
   return (
     <Card title="Basic settings" headStyle={{ textAlign:'center' }} bodyStyle={{ backgroundColor:'#f5f5f5'}}>
           <div className="transformations-settings" style={{margin:'5px'}}>
-            <span className="label" style={{marginRight:'5px'}}>Number of dimention:</span>
-            <Radio.Group
-              value={state.dimensions}
-              options={dimensionOptions}
-              optionType="button"
-              buttonStyle="solid"
-              onChange={e => state.setState({...state, dimensions:e.target.value})}
-              />
+            <span className="label" style={{marginRight:'5px'}}>Include height:</span>
+            <Checkbox onChange={() => state.setState({...state, isHeightIncluded: !state.isHeightIncluded})} />
           </div>
           <div className="transformations-settings" style={{margin:'5px'}}>
-            <span className="label" style={{marginRight:'5px'}}>Number of transformation:</span>
+            <span className="label" style={{marginRight:'5px'}}>Number of transformations:</span>
             <Radio.Group 
               value={state.transformations}  
               options={transformationNumberOptions}
@@ -54,18 +46,8 @@ const BasicSettings : React.FC = () => {
               />
           </div>
           <div className="transformations-settings" style={{margin:'5px'}}>
-            <span className="label" style={{marginRight:'5px'}}>Data output format:</span>
-            <Radio.Group 
-              value={state.dataOutputFormat}  
-              options={OutputFormatOptions}
-              optionType="button"
-              buttonStyle="solid"
-              onChange={e => state.setState({...state, dataOutputFormat:e.target.value})}
-              />
-          </div>
-          <div className="transformations-settings" style={{margin:'5px'}}>
             <span className="label" style={{marginRight:'5px'}}>Output file format:</span>
-            <Select options={outputFileOptions} value={state.outputFile} onChange={val => state.setState({...state, outputFile:val})} style={{ width: 300 }}/>
+              <Select options={outputFileOptions} value={state.outputFile} onChange={val => state.setState({...state, outputFile:val})} style={{ width: 300 }}/>
           </div>
     </Card>
   )

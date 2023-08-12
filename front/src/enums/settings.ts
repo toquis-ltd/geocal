@@ -1,6 +1,6 @@
 export enum TransformationDimentionEnum {
-    TwoDimentions,
-    ThreeDimentions
+    TwoDimentions=true,
+    ThreeDimentions=false
 }
 
 export enum NumberOfTranfromationsEnum{
@@ -15,12 +15,10 @@ export enum FormatVerificationOutputEnum{
 }
 
 export enum FileFormatEnum{
-    shp = 'Shapefile (.shp)',
-    csv  = 'CSV (.csv)',
-    geojson = 'GeoJSON (.geojson)',
-    kml  = 'Keyhole Markup Language (kml)',
-    gml = 'Geographic Markup Language (.gml)',
-    gpx = 'GPS Exchange Format (.gpx)',
-    tif  ='GeoTIFF (.tif)',
-    nc  = 'NetCDF (.nc)',
+    shp = 'shp',
+    csv  = 'csv',
+    geojson = 'geojson',
+    kml  = 'kml',
+    gml = 'gml',
+    gpx = 'gpx',
 }

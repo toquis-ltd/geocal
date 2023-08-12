@@ -34,7 +34,7 @@ declare  global {
     }
 
     interface SettingStateType {
-        dimensions:TransformationDimentionEnum,
+        isHeightIncluded:TransformationDimentionEnum,
         Transformations:NumberOfTranfromationsEnum,
         dataOutputFormat: FormatVerificationOutputEnum,
         outputFile: FileFormatEnum,

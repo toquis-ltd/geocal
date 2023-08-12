@@ -21,23 +21,10 @@ function getItem(
 }
 
 const Navbar : React.FC = () => {
-  const navigate = useNavigate();
-  const goto = (key:string) => navigate(`/${key}`);
-
-  const items: MenuItem[] = [
-    getItem('Settings', 'settings', (event)=>goto(event!.key!.toString())),
-    getItem('Verify Transformation', 'verify', (event)=>goto(event!.key!.toString())),
-    getItem('Transform file', 'transform', (event)=>goto(event!.key!.toString())),
-    getItem('Preview', '', (event)=>goto(event!.key!.toString())),
-  ]
 
   return (
-    <Header style={{backgroundColor: "#f5f5f5"}}>
-      <Menu 
-            mode="horizontal"
-            style={{borderRadius: '20px', display: 'flex', justifyContent:'center'}}
-            items={items} 
-       />
+    <Header style={{backgroundColor: "#f5f5f5", textAlign: 'center'}}>
+      <h1>TOQUIS - MAPLESS</h1>
     </Header>
   )
 }

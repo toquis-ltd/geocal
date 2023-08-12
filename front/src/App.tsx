@@ -4,10 +4,7 @@ import { Layout } from 'antd';
 
 import Navbar from './assets/Navbar'
 
-import VarifyPage from "./pages/verify";
-import SettingsPage from "./pages/settings";
 import TransformPage from './pages/transform';
-import PreviewPage from "./pages/preview";
 
 import {SettingsContext} from './context/settings'
 
@@ -23,10 +20,10 @@ const { Content, Footer } = Layout;
 const App : React.FC = () => {
   const dec = FormatVerificationOutputEnum.DecimalDegrees;
   const [state, setState] = React.useState<SettingStateType>({
-    dimensions:TransformationDimentionEnum.TwoDimentions,
+    isHeightIncluded:TransformationDimentionEnum.TwoDimentions,
     transformations: NumberOfTranfromationsEnum.One,
-    dataOutputFormat: Object.keys(FormatVerificationOutputEnum)[0],
-    outputFile: Object.keys(FileFormatEnum)[2] ,
+    dataOutputFormat: FormatVerificationOutputEnum.DecimalDegrees,
+    outputFile: FileFormatEnum.geojson,
     setState: () => {},
   } as SettingStateType);
 
@@ -36,10 +33,7 @@ const App : React.FC = () => {
     <Content style={{ margin: '20px 50px', backgroundColor: '#ffffff', borderRadius: "15px", minHeight: '70vh'}}>
       <SettingsContext.Provider value={{...state, setState}}>
         <Routes>
-            <Route path="/" Component={PreviewPage} />        
-            <Route path="/settings" Component={SettingsPage} />
-            <Route path="/verify" Component={VarifyPage} />
-            <Route path="/transform" Component={TransformPage} />
+            <Route path="/" Component={TransformPage} />
         </Routes>
       </SettingsContext.Provider>
     </Content>

@@ -9,7 +9,7 @@ import {
 } from '../enums/settings';
 
 export const SettingsContext = React.createContext<SettingStateType>({
-    dimensions:TransformationDimentionEnum.TwoDimentions,
+    isHeightIncluded:TransformationDimentionEnum.TwoDimentions,
     transformations: NumberOfTranfromationsEnum.One,
     dataOutputFormat: FormatVerificationOutputEnum.DecimalDegrees,
     outputFile: FileFormatEnum.csv,

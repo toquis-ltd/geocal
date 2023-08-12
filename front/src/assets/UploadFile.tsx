@@ -1,14 +1,20 @@
 import React from 'react'
+import { Col, Row } from 'antd';
 
-import { InboxOutlined, DeleteOutlined} from '@ant-design/icons';
+import { InboxOutlined, DeleteOutlined, RocketFilled} from '@ant-design/icons';
 import { message, Upload, Button } from 'antd';
 
 import type { UploadFile, UploadProps } from 'antd/es/upload/interface';
+import { SettingsContext } from '../context/settings';
+
+import {FileFormatEnum} from '../enums/settings';
 
 const { Dragger } = Upload;
 
 const FileUploader : React.FC = () => {
+  const state = React.useContext<SettingStateType>(SettingsContext)
   const [fileList, setFileList] = React.useState<UploadFile[]>([]);
+
   const props: UploadProps = {
     name: 'file',
     action: `${import.meta.env.VITE_server}/api/transform/upload`,
@@ -31,6 +37,28 @@ const FileUploader : React.FC = () => {
       setFileList(fileList)
     },
   };
+
+  const onDelete = () => {
+    setFileList([]);
+  }
+
+  const onTransform = (e) => {
+    fetch(`${import.meta.env.VITE_server}/api/transform/transform`, {
+      method:'POST',
+      headers: {
+        'accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "pipeline": [0],
+        "pipe_ids": [0],
+        "file_format": state.outputFile
+      })
+    }).then(()=>{
+      window.open(`${import.meta.env.VITE_server}/api/transform/download`)
+    })
+  }
+
   return (
     <div className="upload__file" style={{textAlign:"center"}}>
       <Dragger  fileList={fileList} {...props} height={300}>
@@ -39,9 +67,30 @@ const FileUploader : React.FC = () => {
             </p>
             <p className="ant-upload-text">Click or drag file to this area to upload</p>
       </Dragger>
-      <div style={{marginTop: '10px'}}>
-        <Button type="primary" onClick={()=>setFileList([])} icon={<DeleteOutlined />} size={'large'} children={'Delete'}/>
-      </div>
+      <Row style={{marginTop: '10px'}}>
+        <Col span={6}>
+        </Col>
+        <Col span={6}>
+          <Button 
+            type="primary"
+            onClick={onDelete}
+            icon={<DeleteOutlined />}
+            size={'large'}
+            children={'Delete'}
+          />
+        </Col>
+        <Col span={6}>
+          <Button
+          size={'large'}
+          type="primary"
+          icon={<RocketFilled />}
+          onClick={onTransform}
+          children={'Transform'}
+        />
+        </Col>
+        <Col span={6}>
+        </Col>
+      </Row>
   </div>
   )
 
