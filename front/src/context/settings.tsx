@@ -1,5 +1,4 @@
 import React from 'react';
-import { SettingStateType } from '../enums/settings';
 
 import {
     TransformationDimentionEnum,
@@ -13,5 +12,6 @@ export const SettingsContext = React.createContext<SettingStateType>({
     transformations: NumberOfTranfromationsEnum.One,
     dataOutputFormat: FormatVerificationOutputEnum.DecimalDegrees,
     outputFile: FileFormatEnum.csv,
+    areaOfUse: {lat:0.0, long:0.0, areaSize:200},
     setState: () => {},
 } as SettingStateType);

@@ -43,7 +43,7 @@ const FileUploader : React.FC = () => {
   }
 
   const onTransform = (e) => {
-    fetch(`${import.meta.env.VITE_server}/api/transform/transform`, {
+    fetch(`${import.meta.env.VITE_server}/api/transform/file`, {
       method:'POST',
       headers: {
         'accept': 'application/json',

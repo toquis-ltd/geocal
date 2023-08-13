@@ -1,5 +1,5 @@
 import React from 'react'
-import { Radio, Card, Select, Checkbox } from 'antd';
+import { Radio, Card, Select, Checkbox, Button } from 'antd';
 
 import { SettingsContext } from '../context/settings';
 
@@ -10,15 +10,12 @@ import {
   FileFormatEnum
 } from '../enums/settings';
 
+import AreaSelector from './AreaSelector'
 
 const BasicSettings : React.FC = () => {
   const state = React.useContext<SettingStateType>(SettingsContext)
-
-  const dimensionOptions = [
-    { label: '2D', value: TransformationDimentionEnum.TwoDimentions},
-    { label: '3D', value: TransformationDimentionEnum.ThreeDimentions},
-  ];
-
+  const [isAreaSelectorOpen, setAreaSelectorState] = React.useState<bool>(false);
+  
   const transformationNumberOptions = [
     { label: '1', value:  NumberOfTranfromationsEnum.One},
     { label: '2', value:  NumberOfTranfromationsEnum.Two},
@@ -48,6 +45,12 @@ const BasicSettings : React.FC = () => {
           <div className="transformations-settings" style={{margin:'5px'}}>
             <span className="label" style={{marginRight:'5px'}}>Output file format:</span>
               <Select options={outputFileOptions} value={state.outputFile} onChange={val => state.setState({...state, outputFile:val})} style={{ width: 300 }}/>
+          </div>
+          <div className="transformations-settings" style={{margin:'5px', textAlign:'center'}}>
+            <Button type="primary" onClick={() => setAreaSelectorState(true)}>
+                Open area selector
+            </Button>
+            <AreaSelector state={isAreaSelectorOpen} setViewState={setAreaSelectorState} />
           </div>
     </Card>
   )

@@ -18,12 +18,12 @@ import {
 const { Content, Footer } = Layout;
 
 const App : React.FC = () => {
-  const dec = FormatVerificationOutputEnum.DecimalDegrees;
   const [state, setState] = React.useState<SettingStateType>({
     isHeightIncluded:TransformationDimentionEnum.TwoDimentions,
     transformations: NumberOfTranfromationsEnum.One,
     dataOutputFormat: FormatVerificationOutputEnum.DecimalDegrees,
     outputFile: FileFormatEnum.geojson,
+    areaOfUse: {lat:0.0, lon:0.0, areaSize:200},
     setState: () => {},
   } as SettingStateType);
 

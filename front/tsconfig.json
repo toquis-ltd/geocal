@@ -10,7 +10,7 @@
       "./node_modules/@types/",
     ],
     "allowImportingTsExtensions": true,
-    // "resolveJsonModule": true,
+    "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",

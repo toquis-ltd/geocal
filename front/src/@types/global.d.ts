@@ -33,11 +33,21 @@ declare  global {
         file:File
     }
 
+
+    // 200 represents square deg area, wich crs should not over pass
+    // to better understand, consider to read back/core/search code
+    interface CRSArea {
+        lat: number
+        lon: number
+        areaSize: number = 200
+    }
+
     interface SettingStateType {
         isHeightIncluded:TransformationDimentionEnum,
         Transformations:NumberOfTranfromationsEnum,
         dataOutputFormat: FormatVerificationOutputEnum,
         outputFile: FileFormatEnum,
+        areaOfUse: CRSArea
         setState:(c:SettingStateType)=>void,
     };
 }
