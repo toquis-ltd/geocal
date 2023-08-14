@@ -1,24 +1,7 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom';
-import { Layout, Menu } from 'antd';
-
-import type { MenuProps } from 'antd';
+import { Layout } from 'antd';
 
 const { Header } = Layout;
-
-type MenuItem = Required<MenuProps>['items'][number];
-
-function getItem(
-  label: React.ReactNode,
-  key: React.Key,
-  onClick: (e:MenuItem) => void,
-): MenuItem {
-  return {
-    key,
-    label,
-    onClick,
-  } as MenuItem;
-}
 
 const Navbar : React.FC = () => {
 

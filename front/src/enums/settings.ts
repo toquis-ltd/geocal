@@ -1,8 +1,3 @@
-export enum TransformationDimentionEnum {
-    TwoDimentions=true,
-    ThreeDimentions=false
-}
-
 export enum NumberOfTranfromationsEnum{
     One,
     Two

@@ -1,26 +1,38 @@
 import React from 'react'
 import { Modal, Row, Col, Card, Button} from 'antd';
 
-import { SettingsContext } from '../context/settings';
+import { CRSContext } from '../context/crs';
+
+import {GetCRSFromGeoPoint} from '../api'
+
 
 import Globe from './Globe';
 
-interface Prop{
-    state:bool
-    setViewState:React.Dispatch<bool>
+interface Props{
+    state:boolean
+    setViewState:React.Dispatch<boolean>
 }
 
-const AreaSelector : React.FC = (prop:Prop) => {
+const AreaSelector : React.FC<Props> = (prop:Props) => {
   const [coordinate, setCoordinate] = React.useState<CRSArea>({lat:0, long:0} as CRSArea)
+  const CRSItems = React.useContext<CRSListStateType>(CRSContext);
   
+  const OnApply = () => {
+    prop.setViewState(false)
+    GetCRSFromGeoPoint(coordinate).then(res => {
+      CRSItems.setCRSList({...CRSItems, CRSList:res});
+    })
+  }
+
   return (
     <Modal
         title="Select coordinate referance area"
         centered
         open={prop.state}
-        footer={[<Button key="ok" type="primary" onClick={() => prop.setViewState(false)} children={'Ok'} />]}
+        onCancel={() => prop.setViewState(false)}
+        footer={[<Button key="ok" type="primary" onClick={OnApply} children={'Apply'} />]}
         width={1000}>
-        <Row gutter={[16, 32]} >
+        <Row gutter={[16, 32]}>
         <Col span={24}>
           <Card>
             <p><b>Latitude:</b>  {coordinate.lat.toFixed(2)}</p>

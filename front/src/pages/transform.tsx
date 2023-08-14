@@ -1,5 +1,5 @@
 import React from 'react';
-import { Col, Row, Collapse } from 'antd';
+import { Col, Row } from 'antd';
 
 import BasicSettings from '../assets/BasicSettings';
 import CRSItem from '../assets/CRSItem';

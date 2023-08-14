@@ -4,9 +4,7 @@ import { Radio, Card, Select, Checkbox, Button } from 'antd';
 import { SettingsContext } from '../context/settings';
 
 import {
-  TransformationDimentionEnum,
   NumberOfTranfromationsEnum,
-  FormatVerificationOutputEnum,
   FileFormatEnum
 } from '../enums/settings';
 
@@ -14,17 +12,17 @@ import AreaSelector from './AreaSelector'
 
 const BasicSettings : React.FC = () => {
   const state = React.useContext<SettingStateType>(SettingsContext)
-  const [isAreaSelectorOpen, setAreaSelectorState] = React.useState<bool>(false);
+  const [isAreaSelectorOpen, setAreaSelectorState] = React.useState<boolean>(false);
   
   const transformationNumberOptions = [
     { label: '1', value:  NumberOfTranfromationsEnum.One},
     { label: '2', value:  NumberOfTranfromationsEnum.Two},
   ];
-
-  const OutputFormatOptions =  Object.values(FormatVerificationOutputEnum)
-
-  const outputFileOptions = Object.keys(FileFormatEnum)
-                                  .map(key => ({ label: FileFormatEnum[key], value:key }));
+  
+  const outputFileOptions = Object.keys(FileFormatEnum).map(key => ({
+    label: FileFormatEnum[key as keyof typeof FileFormatEnum],
+    value: key as keyof typeof FileFormatEnum
+  }));
 
   return (
     <Card title="Basic settings" headStyle={{ textAlign:'center' }} bodyStyle={{ backgroundColor:'#f5f5f5'}}>
@@ -35,7 +33,7 @@ const BasicSettings : React.FC = () => {
           <div className="transformations-settings" style={{margin:'5px'}}>
             <span className="label" style={{marginRight:'5px'}}>Number of transformations:</span>
             <Radio.Group 
-              value={state.transformations}  
+              value={state.transformations}
               options={transformationNumberOptions}
               optionType="button"
               buttonStyle="solid"

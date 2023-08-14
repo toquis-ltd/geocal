@@ -5,9 +5,10 @@ import { InboxOutlined, DeleteOutlined, RocketFilled} from '@ant-design/icons';
 import { message, Upload, Button } from 'antd';
 
 import type { UploadFile, UploadProps } from 'antd/es/upload/interface';
-import { SettingsContext } from '../context/settings';
 
-import {FileFormatEnum} from '../enums/settings';
+import { TransformedFileDownloadRequest } from '../api';
+import { SettingsContext } from '../context/settings';
+import { FileDownloadProps } from "../@types/api"
 
 const { Dragger } = Upload;
 
@@ -42,21 +43,8 @@ const FileUploader : React.FC = () => {
     setFileList([]);
   }
 
-  const onTransform = (e) => {
-    fetch(`${import.meta.env.VITE_server}/api/transform/file`, {
-      method:'POST',
-      headers: {
-        'accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        "pipeline": [0],
-        "pipe_ids": [0],
-        "file_format": state.outputFile
-      })
-    }).then(()=>{
-      window.open(`${import.meta.env.VITE_server}/api/transform/download`)
-    })
+  const onTransform = () => {
+    TransformedFileDownloadRequest({pipline:[], pipe_ids:[], file_format:state.outputFile} as FileDownloadProps);
   }
 
   return (

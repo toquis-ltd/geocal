@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+//@ts-nocheck
 import React from 'react';
 import * as d3 from 'd3';
 
@@ -11,7 +13,7 @@ import './globe.css'
 interface GlobeProps {
   width: number;
   height: number;
-  onSelect: (name: string) => void;
+  onSelect: (name: CRSArea) => void;
 }
 
 const Globe: React.FC<GlobeProps> = React.memo(({ width, height, onSelect }) => {
@@ -32,7 +34,7 @@ const Globe: React.FC<GlobeProps> = React.memo(({ width, height, onSelect }) => 
     const graticule = d3.geoGraticule();
     const projection = d3
       .geoOrthographic()
-      .scale(width / 2.5)
+      .scale(width / 2.2)
       .translate([width / 2, height / 2])
       .rotate(rotate.current);
 
@@ -45,18 +47,12 @@ const Globe: React.FC<GlobeProps> = React.memo(({ width, height, onSelect }) => 
                 .attr('d', path({type: 'Sphere'}))
                 .on("click", (event,d)=>{
                   const [x, y] = d3.pointer(event);
-                  const [lat, long] = projection.invert([x, y])
+                  const [long, lat] = projection.invert([x, y])
                   
                   // more info about areaSize in def
                   coord.current = {lat:lat, long:long, areaSize:600};
                   onSelect(coord.current);
                   g.selectAll("circle").remove()
-                  const [x1, y1] = projection([lat, long])
-                  g.append("circle")
-                                      .attr("cx", x1)
-                                      .attr("cy", y1)
-                                      .attr("r", 5)
-                                      .attr("fill", "red");
                 });
 
     g.append('path')
@@ -71,7 +67,7 @@ const Globe: React.FC<GlobeProps> = React.memo(({ width, height, onSelect }) => 
       .attr('d', path)
       .attr('class', 'country');
     
-    const [x, y] = projection([coord.current.lat, coord.current.long])
+    const [x, y] = projection([coord.current.long, coord.current.lat])
     g.append("circle")
       .attr("cx", x)
       .attr("cy", y)
@@ -80,16 +76,10 @@ const Globe: React.FC<GlobeProps> = React.memo(({ width, height, onSelect }) => 
 
     g.selectAll('.country').on('click', (event, d) => {
         const [x, y] = d3.pointer(event);
-        const [lat, long] = projection.invert([x, y])
+        const [long, lat] = projection.invert([x, y])
         coord.current = {lat:lat, long:long, areaSize:200};
         onSelect(coord.current);
         g.selectAll("circle").remove()
-        const [x1, y1] = projection([lat, long])
-        g.append("circle")
-                            .attr("cx", x1)
-                            .attr("cy", y1)
-                            .attr("r", 5)
-                            .attr("fill", "red");
     });
 
     g.call(
@@ -107,7 +97,7 @@ const Globe: React.FC<GlobeProps> = React.memo(({ width, height, onSelect }) => 
           g.selectAll('path').attr('d', path);
           g.selectAll('.sphere').attr('d', path({ type: 'Sphere' }));  
 
-          const [x, y] = projection([coord.current.lat, coord.current.long])
+          const [x, y] = projection([coord.current.long, coord.current.lat])
           g.select('circle').attr('cx', x).attr('cy', y);  
         })
         .on('end', (event, d) => {
