@@ -21,7 +21,7 @@ export const TransformedFileDownloadRequest = (props:FileDownloadProps) => {
 
 export const GetCRSFromGeoPoint = async (coordinate:CRSArea) => {
     let response:CRSModelType[];
-    return await await fetch(`${server}/api/search/crs?lat=${coordinate.lat}&long=${coordinate.long}&max_crs_area=200`, {
+    return await await fetch(`${server}/api/search/crs?lat=${coordinate.lat}&long=${coordinate.long}`, {
         method:'GET',
         headers: {
           'Accept': 'application/json',

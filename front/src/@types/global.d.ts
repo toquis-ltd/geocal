@@ -35,13 +35,9 @@ declare  global {
         file:File
     }
 
-
-    // 200 represents square deg area, wich crs should not over pass
-    // to better understand, consider to read back/core/search code
     interface CRSArea {
         lat: number
         long: number
-        areaSize: number = 200
     }
 
     interface CRSModelType {
@@ -52,7 +48,6 @@ declare  global {
         deprecated: boolean
         area_of_use_name: string
         projection_method_name: string
-        accuracy: string
     }
 
     interface CRSListStateType {

@@ -5,7 +5,3 @@ export interface FileDownloadProps {
     pipe_ids:number[]
     file_format:FileFormatEnum
 }
-
-export interface CoordinateProps {
-
-}
