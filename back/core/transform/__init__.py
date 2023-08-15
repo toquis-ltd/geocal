@@ -29,6 +29,7 @@ def verify_uploaded_file(path: str):
     except:
         raise UploadFileException("File is unreadable or corrupted")
 
+
 def delete_all_tmp_files(path:str):
     for file in os.listdir(path):
         try:
@@ -55,6 +56,7 @@ async def upload_file(request: Request, file:UploadFile):
         return {'status_code':500, 'detail': str(e)}
     
     return {'status_code':200}
+
 
 @api.post("/file")
 async def transform_file(request: Request, transformation:FileTransformatioDef):
