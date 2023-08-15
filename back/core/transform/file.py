@@ -6,8 +6,10 @@ from enum import Enum
 import geopandas as gpd
 import fiona
 
+from ..types.file import FileTransformatioDef, FileFormatEnum
+
 # By default, this file formats are disabled. 
-# This allow fiona to transform to them.
+# This allow fiona to transform this formats.
 fiona.drvsupport.supported_drivers['KML'] = 'rw'
 fiona.drvsupport.supported_drivers['GML'] = 'rw'
 fiona.drvsupport.supported_drivers['GPX'] = 'rw'
@@ -15,16 +17,6 @@ fiona.drvsupport.supported_drivers['GPX'] = 'rw'
 
 class FileCoordinateTransformation:
     pass
-
-class FileFormatEnum(str, Enum):
-    shp = 'shp',
-    csv  = 'csv'
-    geojson = 'geojson',
-    kml  = 'kml',
-    gml = 'gml',
-    gpx = 'gpx',
-    tif  ='tif',
-    nc  = 'nc',
 
 class FileFormatTransformation:
     """This class wraps the transformation between files formats and manage files"""
@@ -38,7 +30,7 @@ class FileFormatTransformation:
 
         match self.target_file_format:
             case self.target_file_format.shp:
-                self.gdf.to_file(self.output_path, driver='ESRI Shapefile')
+                self.gdf.to_file(self.output_path, driver='ESRI Shapefile', schema={"properties": {"time": "str", "datetime": "str"}})
             case self.target_file_format.geojson:
                 self.gdf.to_file(self.output_path+'/mapless.geojson', driver='GeoJSON')
             case self.target_file_format.kml:
