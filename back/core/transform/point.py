@@ -2,7 +2,7 @@ from typing import Union, Sequence
 
 from pyproj import Transformer
 
-from ..types.points import  Point2D, Point3D
+from ..types.point import Point2D, Point3D
 
 class PointTransformation:
     def __init__(self, point: Union[Point3D, Point2D], pipline:Sequence[int]):

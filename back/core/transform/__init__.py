@@ -5,17 +5,31 @@ from typing import Union
 
 from fastapi import APIRouter, UploadFile, Request
 from fastapi.responses import FileResponse
+from pyproj import CRS
 
 import geopandas as gpd
 
+from ..types.comm import TransformatioDef
+from ..types.file import FileTransformatioDef
+
 from .point import Point2D, Point3D, PointTransformation
 from .file import FileFormatTransformation, FileFormatEnum
-from .comm import TransformatioDef
 
 api = APIRouter(prefix="/api/transform")
 
-async def delete_all_tmp_files(request: Request):
-    path = f'{os.getcwd()}/tmpfile/{request.client.host}/'
+class UploadFileException(Exception):
+    pass
+
+def verify_uploaded_file(path: str):
+    if os.path.getsize(path) == 0:
+        raise UploadFileException('Uploaded file is empty')
+    
+    try:
+        gdf:gpd.GeoDataFrame = gpd.read_file(path)
+    except:
+        raise UploadFileException("File is unreadable or corrupted")
+
+def delete_all_tmp_files(path:str):
     for file in os.listdir(path):
         try:
             os.remove(f'{path}{file}')
@@ -24,35 +38,48 @@ async def delete_all_tmp_files(request: Request):
 
 @api.post("/upload")
 async def upload_file(request: Request, file:UploadFile):
-    await delete_all_tmp_files(request=request)
-
     path = f'{os.getcwd()}/tmpfile/{request.client.host}/'
     file_name = f'{"mapless"}{os.path.splitext(file.filename)[-1]}'
+    file_path = f'{path}{file_name}'
 
     if not os.path.exists(path):
         os.makedirs(path)
+    delete_all_tmp_files(path=path)
 
-    with open(f'{path}{file_name}', 'wb+') as local_file:
+    with open(file_path, 'wb+') as local_file:
         local_file.write(file.file.read())
-    return {'status_code':200, 'file_id':file_name}
+    
+    try:
+        verify_uploaded_file(file_path)
+    except UploadFileException as e:
+        return {'status_code':500, 'detail': str(e)}
+    
+    return {'status_code':200}
 
-@api.post("/download")
-async def download_transformed_file(request: Request, transformation:TransformatioDef, file_format:Union[FileFormatEnum, None]=None):
-
+@api.post("/file")
+async def transform_file(request: Request, transformation:FileTransformatioDef):
     dir_path:str = f'{os.getcwd()}/tmpfile/{request.client.host}/'    
-    file_extension:str = os.path.splitext(list(filter(lambda n: n.startswith("mapless"), os.listdir(dir_path)))[0])[1]
+    file_extension:str = os.path.splitext(list(filter(lambda n: n.startswith('mapless'), os.listdir(dir_path)))[0])[1]
     file_name:str = f'mapless'
     file_path:str = f'{dir_path}{file_name}{file_extension}'
     output_file_path:str = f'{dir_path}{file_name}_out'
 
     gdf:gpd.GeoDataFrame = gpd.read_file(file_path)
+    gdf.crs = CRS.from_user_input(transformation.pipeline[0])
     
-    if file_format != None:
-        file_format_transformation = FileFormatTransformation(gdf, output_file_path, file_format)
+    if transformation.file_format != None:
+        file_format_transformation = FileFormatTransformation(gdf, output_file_path, transformation.file_format)
         file_format_transformation.transformation()
     
-    shutil.make_archive(f"{output_file_path}", "zip", output_file_path)
-    return FileResponse(f"{output_file_path}.zip", media_type='application/octet-stream', filename='mapless-download.zip')
+    shutil.make_archive(f'{output_file_path}', 'zip', output_file_path)
+
+    return {'status': 200}
+
+@api.get("/download")
+async def download_transformed_file(request: Request):
+    dir_path:str = f'{os.getcwd()}/tmpfile/{request.client.host}'    
+    output_file_path:str = f'{dir_path}/mapless_out'
+    return FileResponse(f'{output_file_path}.zip', media_type='application/octet-stream', filename='mapless-download.zip')
 
 @api.post("/point")
 async def transform_point(point:Union[Point3D, Point2D], transformation:TransformatioDef):
