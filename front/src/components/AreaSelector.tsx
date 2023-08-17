@@ -35,8 +35,8 @@ const AreaSelector : React.FC<Props> = (prop:Props) => {
         <Row gutter={[16, 32]}>
         <Col span={24}>
           <Card>
-            <p><b>Latitude:</b>  {coordinate.lat.toFixed(2)}</p>
-            <p><b>Longitude:</b>  {coordinate.long.toFixed(2)}</p>
+            <p><b>Latitude:</b>  {coordinate.lat.toFixed(5)}</p>
+            <p><b>Longitude:</b>  {coordinate.long.toFixed(5)}</p>
           </Card>
         </Col>
         <Col span={7} />

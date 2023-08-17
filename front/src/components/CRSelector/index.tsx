@@ -10,7 +10,9 @@ import {
          Cascader
         } from 'antd';
 
-import {CRSContext} from '../context/crs';
+import {CRSContext} from '../../context/crs';
+
+import LoadMoreButton from './loadmoreButton'
 
 interface Props{
     state:boolean
@@ -70,27 +72,9 @@ const CRSelector : React.FC<Props> = (prop:Props) => {
   const CRState = React.useContext<CRSListStateType>(CRSContext)
   const [data, setData] = React.useState<CRSModelType[]>([])
   const [list, setList] = React.useState<CRSModelType[]>([])
-  const [loading, setLoading] = React.useState<boolean>(false);
+  const [isLoading, setLoading] = React.useState<boolean>(false);
 
-  const onLoadMore = () => {
-    setLoading(true);
-    setList(data.slice(0, list.length + 30));
-    setLoading(false);
-  };
-
-  const loadMore = (!loading && list.length < data.length) ? (
-      <div
-        style={{
-          textAlign: 'center',
-          marginTop: 12,
-          height: 32,
-          lineHeight: '32px',
-        }}
-      >
-        <Button onClick={onLoadMore}>Load more</Button>
-      </div>
-    ) : null;
-        
+  
   const OnApply = () => {
     setList(data.slice(0, 30));
     prop.setViewState(false)
@@ -156,7 +140,7 @@ const CRSelector : React.FC<Props> = (prop:Props) => {
         <List
           style={{maxHeight:'50vh', overflow:'auto', overflowX:'hidden' }}
           dataSource={list}
-          loadMore={loadMore}
+          loadMore={<LoadMoreButton isLoading={isLoading} data={data} viewData={list} onLoad={setLoading}  setViewData={setList} />}
           renderItem={(item) => (
             <Row>
             <Col span={20}>
