@@ -3,55 +3,15 @@ import { Col, Row } from 'antd';
 
 import { SettingsContext } from '../context/settings';
 
-import BasicSettings from '../assets/BasicSettings';
-import CRSItem from '../assets/CRSItem';
-import FileUploader from '../assets/UploadFile';
-import P2PTransformation from '../assets/P2PTransformation';
-import {NumberOfTranfromationsEnum} from '../enums/settings';
+import BasicSettings from '../components/BasicSettings';
+import FileUploader from '../components/UploadFile';
+import P2PTransformation from '../components/P2PTransformation';
 
-interface CRSItemProps{
-  transformations:NumberOfTranfromationsEnum
-}
 
-const CRSItems:React.FC = (props:CRSItemProps) => {
-  
-  return (
-  <>
-      { (props.transformations===NumberOfTranfromationsEnum.One) ? 
-        <>
-        <Col span={3} />
-        <Col span={7}>
-          <CRSItem />
-        </Col>
-        <Col span={4}/>
-        <Col span={7}>
-            <CRSItem />
-        </Col>
-        <Col span={3}/>
-        </> : 
-        <>
-        <Col span={1} />
-        <Col span={6}>
-          <CRSItem />
-        </Col>
-        <Col span={2} />
-        <Col span={6} >
-          <CRSItem />
-        </Col>
-        <Col span={2} />
-        <Col span={6}>
-            <CRSItem />
-        </Col>
-        <Col span={1}/>
-        </> 
-      }
-  </>
-  )
-}
+import CRSelectorContainer from '../assets/CRSelectorContainer'
 
 const TransformPage : React.FC = () => {
   const CRState = React.useContext<SettingStateType>(SettingsContext);
-
   return (
     <div className="container" style={{margin:'auto', width:'90%', padding:'5px',}}>
       <div className="inner"></div>
@@ -65,7 +25,7 @@ const TransformPage : React.FC = () => {
           {/* RowEnd */}
 
           {/* Row */}
-            <CRSItems transformations={CRState.transformations} />
+            <CRSelectorContainer transformations={CRState.transformations} />
           {/* RowEnd */}
 
           {/* Row */}

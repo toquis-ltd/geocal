@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import { Layout } from 'antd';
 
-import Navbar from './assets/Navbar'
+import Navbar from './components/Navbar'
 
 import TransformPage from './pages/transform';
 
