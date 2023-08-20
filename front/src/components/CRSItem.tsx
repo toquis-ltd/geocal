@@ -2,24 +2,22 @@ import React from 'react'
 import { SettingOutlined } from '@ant-design/icons';
 import { Card, Button } from 'antd';
 
-
-import { CRSContext } from '../context/crs';
 import { SettingsContext } from '../context/settings';
 
 
 import CRSelector from './CRSelector';
 
 interface Props {
-  id:number
+  index:number
 }
-const CRSItem : React.FC = (props:Props) => {
-  const item = React.useContext<CRSListStateType>(CRSContext);
+
+const CRSItem : React.FC<Props> = ({index}) => {
   const settings = React.useContext<SettingStateType>(SettingsContext);
   const [isCRSelectorOpen, setCRSelectorState] = React.useState<boolean>(false);
 
   const onSelect = ( item : CRSModelType) => {
     const list = settings.transformationsItems;
-    list.splice(props.id, 1, item);
+    list.splice(index, 1, item);
     settings.setState({...settings, transformationsItems:list})
   }
   
@@ -31,13 +29,13 @@ const CRSItem : React.FC = (props:Props) => {
         </Button>
       ]}>
         {
-          (settings.transformationsItems[props.id] != undefined) ?
+          (settings.transformationsItems[index] != undefined) ?
           <>
-            <p><b>Name: </b> {settings.transformationsItems[props.id]?.name}</p>
-            <p><b>{settings.transformationsItems[props.id]?.auth_name}:</b> {settings.transformationsItems[props.id]?.code}</p>
-            <p><b>Type:</b> {settings.transformationsItems[props.id]?.type}</p>
-            <p><b>Area of use:</b> {settings.transformationsItems[props.id]?.area_of_use_name}</p>
-            {(settings.transformationsItems[props.id]?.projection_method_name) ? <p><b>Projection:</b> {settings.transformationsItems[props.id]?.projection_method_name}</p> : null}
+            <p><b>Name: </b> {settings.transformationsItems[index]?.name}</p>
+            <p><b>{settings.transformationsItems[index]?.auth_name}:</b> {settings.transformationsItems[index]?.code}</p>
+            <p><b>Type:</b> {settings.transformationsItems[index]?.type}</p>
+            <p><b>Area of use:</b> {settings.transformationsItems[index]?.area_of_use_name}</p>
+            {(settings.transformationsItems[index]?.projection_method_name) ? <p><b>Projection:</b> {settings.transformationsItems[index]?.projection_method_name}</p> : null}
           </>
           :
           <p>No CRS selected</p>

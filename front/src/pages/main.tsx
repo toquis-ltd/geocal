@@ -1,5 +1,5 @@
 import React from 'react';
-import { Col, Row } from 'antd';
+import { Col, Row , Tabs} from 'antd';
 
 import { SettingsContext } from '../context/settings';
 
@@ -8,9 +8,10 @@ import FileUploader from '../components/UploadFile';
 import P2PTransformation from '../components/P2PTransformation';
 
 
-import CRSelectorContainer from '../assets/CRSelectorContainer'
+import CRSelectorContainer from '../assets/CRSelectorContainer';
+import TransformationContainer from '../assets/TransformationContainer';
 
-const TransformPage : React.FC = () => {
+const Main : React.FC = () => {
   const CRState = React.useContext<SettingStateType>(SettingsContext);
   return (
     <div className="container" style={{margin:'auto', width:'90%', padding:'5px',}}>
@@ -25,25 +26,15 @@ const TransformPage : React.FC = () => {
           {/* RowEnd */}
 
           {/* Row */}
-            <CRSelectorContainer transformationsNum={CRState.transformationsNumber} />
+            <CRSelectorContainer transformationsNumber={CRState.transformationsNumber}/>
           {/* RowEnd */}
-
-          {/* Row */}
           <Col span={24}>
-            <P2PTransformation />
+            <TransformationContainer />
           </Col>
-          {/* RowEnd */}
 
-          {/* Row */}
-          <Col span={5} />
-          <Col span={14}>
-            <FileUploader/>
-          </Col>
-          <Col span={5} />
-          {/* RowEnd */}
         </Row>
       </div>
   )
 }
 
-export default TransformPage
+export default Main

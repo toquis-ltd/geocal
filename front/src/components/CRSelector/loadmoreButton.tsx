@@ -1,23 +1,23 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {Button} from 'antd';
 
 interface Props {
     isLoading:boolean
     data: CRSModelType[]
     viewData: CRSModelType[]
-    setViewData: VoidFunction
-    onLoad: VoidFunction
+    setViewData: React.Dispatch<CRSModelType[]>
+    onLoad: React.Dispatch<boolean>
 }
 
-const LoadMoreButton:React.FC = (props:Props) => {
+const LoadMoreButton:React.FC<Props> = ({isLoading, data, viewData, setViewData,  onLoad}) => {
 
     const onLoadMore = () => {
-      props.onLoad(true);
-      props.setViewData(props.data.slice(0, props.viewData.length + 30));
-      props.onLoad(false);
+      onLoad(true);
+      setViewData(data.slice(0, viewData.length + 30));
+      onLoad(false);
     };
 
-    return ( (!props.isLoading && props.viewData.length < props.data.length) ? (
+    return ( (!isLoading && viewData.length < data.length) ? (
     <div
       style={{
         textAlign: 'center',

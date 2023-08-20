@@ -4,7 +4,7 @@ import { Layout } from 'antd';
 
 import Navbar from './components/Navbar'
 
-import TransformPage from './pages/transform';
+import Main from './pages/main';
 
 import {SettingsContext} from './context/settings'
 import {CRSContext} from './context/crs'
@@ -40,7 +40,7 @@ const App : React.FC = () => {
     <CRSContext.Provider value={{...CRState, setCRSList}}>
       <SettingsContext.Provider value={{...state, setState}}>
         <Routes>
-            <Route path="/" Component={TransformPage} />
+            <Route path="/" Component={Main} />
         </Routes>
       </SettingsContext.Provider>
       </CRSContext.Provider>
