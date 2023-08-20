@@ -57,10 +57,11 @@ declare  global {
 
     interface SettingStateType {
         isHeightIncluded:boolean,
-        transformations:NumberOfTranfromationsEnum,
+        transformationsNumber:NumberOfTranfromationsEnum,
         dataOutputFormat: FormatVerificationOutputEnum,
         outputFile: FileFormatEnum,
         areaOfUse: CRSArea
+        transformationsItems:(CRSModelType | undefined)[]
         setState:(c:SettingStateType)=>void,
     };
 }

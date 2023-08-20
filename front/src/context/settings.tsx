@@ -8,10 +8,10 @@ import {
 
 export const SettingsContext = React.createContext<SettingStateType>({
     isHeightIncluded:false,
-    transformations: NumberOfTranfromationsEnum.One,
+    transformationsNumber: NumberOfTranfromationsEnum.One,
     dataOutputFormat: FormatVerificationOutputEnum.DecimalDegrees,
     outputFile: FileFormatEnum.csv,
-    areaOfUse: {lat:0.0, long:0.0, areaSize:200},
+    transformationsItems: [],
+    areaOfUse: {lat:0.0, long:0.0},
     setState: () => {},
 } as SettingStateType);
-

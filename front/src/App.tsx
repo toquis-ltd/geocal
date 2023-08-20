@@ -20,9 +20,10 @@ const { Content, Footer } = Layout;
 const App : React.FC = () => {
   const [state, setState] = React.useState<SettingStateType>({
     isHeightIncluded:false,
-    transformations: NumberOfTranfromationsEnum.One,
+    transformationsNumber: NumberOfTranfromationsEnum.One,
     dataOutputFormat: FormatVerificationOutputEnum.DecimalDegrees,
     outputFile: FileFormatEnum.geojson,
+    transformationsItems: [undefined, undefined, undefined],
     areaOfUse: {lat:0.0, long:0.0},
     setState: () => {},
   }  as SettingStateType);

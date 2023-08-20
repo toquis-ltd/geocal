@@ -25,7 +25,7 @@ const TransformPage : React.FC = () => {
           {/* RowEnd */}
 
           {/* Row */}
-            <CRSelectorContainer transformations={CRState.transformations} />
+            <CRSelectorContainer transformationsNum={CRState.transformationsNumber} />
           {/* RowEnd */}
 
           {/* Row */}

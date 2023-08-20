@@ -17,6 +17,7 @@ import LoadMoreButton from './loadmoreButton'
 interface Props{
     state:boolean
     setViewState:React.Dispatch<boolean>
+    onSelect:React.Dispatch<CRSModelType>
 }
 
 interface Option {
@@ -71,12 +72,13 @@ const options: Option[] = [
 const CRSelector : React.FC<Props> = (prop:Props) => {
   const CRState = React.useContext<CRSListStateType>(CRSContext)
   const [data, setData] = React.useState<CRSModelType[]>([])
-  const [list, setList] = React.useState<CRSModelType[]>([])
+  const [viewData, setViewData] = React.useState<CRSModelType[]>([])
   const [isLoading, setLoading] = React.useState<boolean>(false);
 
   
-  const OnApply = () => {
-    setList(data.slice(0, 30));
+  const OnApply = (crs:CRSModelType) => {
+    setViewData(data.slice(0, 30));
+    prop.onSelect(crs);
     prop.setViewState(false)
   };
 
@@ -109,7 +111,7 @@ const CRSelector : React.FC<Props> = (prop:Props) => {
   }, [CRState.CRSList])
 
   React.useEffect(() => {
-    setList(data.slice(0, 50))
+    setViewData(data.slice(0, 50))
   }, [data])
 
   return (
@@ -139,8 +141,8 @@ const CRSelector : React.FC<Props> = (prop:Props) => {
         </Row >
         <List
           style={{maxHeight:'50vh', overflow:'auto', overflowX:'hidden' }}
-          dataSource={list}
-          loadMore={<LoadMoreButton isLoading={isLoading} data={data} viewData={list} onLoad={setLoading}  setViewData={setList} />}
+          dataSource={viewData}
+          loadMore={<LoadMoreButton isLoading={isLoading} data={data} viewData={viewData} onLoad={setLoading} setViewData={setViewData}/>}
           renderItem={(item) => (
             <Row>
             <Col span={20}>
@@ -160,7 +162,7 @@ const CRSelector : React.FC<Props> = (prop:Props) => {
                       style={{marginTop:'50%'}}
                       size='large'
                       type="primary"
-                      onClick={OnApply}
+                      onClick={()=>OnApply(item)}
                       >Select</Button>
             </Col>
             <Divider />

@@ -33,11 +33,11 @@ const BasicSettings : React.FC = () => {
           <div className="transformations-settings" style={{margin:'5px'}}>
             <span className="label" style={{marginRight:'5px'}}>Number of transformations:</span>
             <Radio.Group 
-              value={state.transformations}
+              value={state.transformationsNumber}
               options={transformationNumberOptions}
               optionType="button"
               buttonStyle="solid"
-              onChange={e => state.setState({...state, transformations:e.target.value} as SettingStateType)}
+              onChange={e => state.setState({...state, transformationsNumber:e.target.value} as SettingStateType)}
               />
           </div>
           <div className="transformations-settings" style={{margin:'5px'}}>

@@ -4,21 +4,21 @@ import CRSItem from '../components/CRSItem';
 import {NumberOfTranfromationsEnum} from '../enums/settings';
 
 interface CRSItemProps{
-    transformations:NumberOfTranfromationsEnum
-  }
-  
+    transformationsNum:NumberOfTranfromationsEnum
+};
+
 const CRSelectorContainer:React.FC = (props:CRSItemProps) => {
     return (
     <>
-        { (props.transformations===NumberOfTranfromationsEnum.One) ? 
+        { (props.transformationsNum===NumberOfTranfromationsEnum.One) ? 
             <>
             <Col span={3} />
             <Col span={7}>
-            <CRSItem />
+                <CRSItem id={0} />
             </Col>
             <Col span={4}/>
             <Col span={7}>
-                <CRSItem />
+                <CRSItem id={1} />
             </Col>
             <Col span={3}/>
             </> 
@@ -26,15 +26,15 @@ const CRSelectorContainer:React.FC = (props:CRSItemProps) => {
             <>
             <Col span={1} />
             <Col span={6}>
-            <CRSItem />
+                <CRSItem id={0} />
             </Col>
             <Col span={2} />
             <Col span={6} >
-            <CRSItem />
+                <CRSItem id={1} />
             </Col>
             <Col span={2} />
             <Col span={6}>
-                <CRSItem />
+                <CRSItem id={2} />
             </Col>
             <Col span={1}/>
             </> 
