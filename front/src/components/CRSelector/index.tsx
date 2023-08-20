@@ -65,6 +65,10 @@ const options: Option[] = [
         value: 'VERTICAL_CRS',
         label: 'VERTICAL CRS',
       },
+      {
+        value:'COMPOUND_CRS',
+        label:'COMPOUND CRS',
+      }
     ],
   },
 ]

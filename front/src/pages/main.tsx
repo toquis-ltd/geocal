@@ -17,21 +17,13 @@ const Main : React.FC = () => {
     <div className="container" style={{margin:'auto', width:'90%', padding:'5px',}}>
       <div className="inner"></div>
         <Row gutter={[16, 32]} >
-          {/* Row */}
           <Col span={7}/>
           <Col span={10}>
             <BasicSettings />
           </Col>
           <Col span={7}/>
-          {/* RowEnd */}
-
-          {/* Row */}
-            <CRSelectorContainer transformationsNumber={CRState.transformationsNumber}/>
-          {/* RowEnd */}
-          <Col span={24}>
-            <TransformationContainer />
-          </Col>
-
+          <CRSelectorContainer transformationsNumber={CRState.transformationsNumber}/>
+          <TransformationContainer />
         </Row>
       </div>
   )

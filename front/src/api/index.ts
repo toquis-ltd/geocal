@@ -10,7 +10,7 @@ export const TransformedFileDownloadRequest = (props:FileDownloadProps) => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          "pipeline": [0],
+          "pipeline": [4326],
           "pipe_ids": [0],
           "file_format": props.file_format
         })
