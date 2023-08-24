@@ -35,9 +35,10 @@ declare  global {
         file:File
     }
 
-    interface CRSArea {
+    interface PointCoordinate {
         lat: number
         long: number
+        height?: number
     }
 
     interface CRSModelType {
@@ -60,8 +61,8 @@ declare  global {
         transformationsNumber:NumberOfTranfromationsEnum,
         dataOutputFormat: FormatVerificationOutputEnum,
         outputFile: FileFormatEnum,
-        areaOfUse: CRSArea
-        transformationsItems:(CRSModelType | undefined)[]
+        areaOfUse: PointCoordinate
+        transformationsItems:CRSModelType[]
         setState:(c:SettingStateType)=>void,
     };
 }

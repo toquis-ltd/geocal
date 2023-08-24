@@ -14,7 +14,7 @@ interface Props{
 }
 
 const AreaSelector : React.FC<Props> = (prop:Props) => {
-  const [coordinate, setCoordinate] = React.useState<CRSArea>({lat:0, long:0} as CRSArea)
+  const [coordinate, setCoordinate] = React.useState<PointCoordinate>({lat:0, long:0} as PointCoordinate)
   const CRSItems = React.useContext<CRSListStateType>(CRSContext);
   
   const OnApply = () => {

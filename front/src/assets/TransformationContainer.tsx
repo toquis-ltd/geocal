@@ -6,15 +6,16 @@ import FileUploader from '../components/UploadFile'
 
 const items = [
 {
+    key:'0',
+    label:'Single point transformation',
+    children: <P2PTransformation /> 
+},
+{
     key:'1',
     label:'File transformation',
     children:<FileUploader /> 
 },
-{
-    key:'0',
-    label:'Verify transformation',
-    children: <P2PTransformation /> 
-}]
+]
 
 const TransformationContainer:React.FC = () => {
     return  (

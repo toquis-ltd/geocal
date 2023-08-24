@@ -8,7 +8,6 @@ import type { UploadFile, UploadProps } from 'antd/es/upload/interface';
 
 import { TransformedFileDownloadRequest } from '../api';
 import { SettingsContext } from '../context/settings';
-import { FileDownloadProps } from "../@types/api"
 
 const { Dragger } = Upload;
 
@@ -21,7 +20,7 @@ const FileUploader : React.FC = () => {
     action: `${import.meta.env.VITE_server}/api/transform/upload`,
     maxCount: 1,
     multiple: false,
-    
+
     onChange({file, fileList}) {
       const { status, response } = file;
       if (status === 'done') {
@@ -44,7 +43,7 @@ const FileUploader : React.FC = () => {
   }
 
   const onTransform = () => {
-    TransformedFileDownloadRequest({pipline:[], pipe_ids:[], file_format:state.outputFile} as FileDownloadProps);
+    TransformedFileDownloadRequest(state);
   }
 
   return (

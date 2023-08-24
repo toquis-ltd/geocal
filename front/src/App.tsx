@@ -23,8 +23,8 @@ const App : React.FC = () => {
     transformationsNumber: NumberOfTranfromationsEnum.One,
     dataOutputFormat: FormatVerificationOutputEnum.DecimalDegrees,
     outputFile: FileFormatEnum.geojson,
-    transformationsItems: [undefined, undefined, undefined],
-    areaOfUse: {lat:0.0, long:0.0},
+    transformationsItems: [],
+    areaOfUse: {lat:0.0, long:0.0, height:0.0},
     setState: () => {},
   }  as SettingStateType);
   

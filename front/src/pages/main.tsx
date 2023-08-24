@@ -1,12 +1,9 @@
 import React from 'react';
-import { Col, Row , Tabs} from 'antd';
+import { Col, Row} from 'antd';
 
 import { SettingsContext } from '../context/settings';
 
 import BasicSettings from '../components/BasicSettings';
-import FileUploader from '../components/UploadFile';
-import P2PTransformation from '../components/P2PTransformation';
-
 
 import CRSelectorContainer from '../assets/CRSelectorContainer';
 import TransformationContainer from '../assets/TransformationContainer';

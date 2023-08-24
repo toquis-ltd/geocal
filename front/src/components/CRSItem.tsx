@@ -34,7 +34,7 @@ const CRSItem : React.FC<Props> = ({index}) => {
             <p><b>Name: </b> {settings.transformationsItems[index]?.name}</p>
             <p><b>{settings.transformationsItems[index]?.auth_name}:</b> {settings.transformationsItems[index]?.code}</p>
             <p><b>Type:</b> {settings.transformationsItems[index]?.type}</p>
-            <p><b>Area of use:</b> {settings.transformationsItems[index]?.area_of_use_name}</p>
+            <p><b>Area of use:</b> {settings.transformationsItems[index]?.area_of_use_name.slice(0, 300)}...</p>
             {(settings.transformationsItems[index]?.projection_method_name) ? <p><b>Projection:</b> {settings.transformationsItems[index]?.projection_method_name}</p> : null}
           </>
           :

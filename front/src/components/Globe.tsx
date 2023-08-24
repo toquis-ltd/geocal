@@ -10,7 +10,7 @@ import world from '../data/map.json';
 interface GlobeProps {
   width: number;
   height: number;
-  onSelect: (name: CRSArea) => void;
+  onSelect: React.Dispatch<PointCoordinate>;
 }
 
 const Globe: React.FC<GlobeProps> = React.memo(({ width, height, onSelect }) => {
