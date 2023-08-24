@@ -6,6 +6,8 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
+from pyproj import network
+
 from core.transform import api as transform_api
 from core.search import api as search_api
 
@@ -15,6 +17,9 @@ templates = Jinja2Templates(directory="./template")
 app.mount("/static/", StaticFiles(directory="static"), name="static")
 app.include_router(transform_api)
 app.include_router(search_api)
+
+network.set_network_enabled(True)
+
 
 @app.get("/", response_class=HTMLResponse)
 async def read_item(request: Request):

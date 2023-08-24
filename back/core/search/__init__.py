@@ -28,6 +28,7 @@ async def get_crs_from_area(lat:float, long:float):
         return abs((x1-x2)*(y1-y2))
 
     crs_list = list(query_crs_info(
+                    auth_name='EPSG',
                     area_of_interest=AreaOfInterest(
                         north_lat_degree=lat,
                         south_lat_degree=lat,

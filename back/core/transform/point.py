@@ -13,13 +13,18 @@ class PointTransformation:
         point = self.point.unwrap()
 
         for source, target in zip(self.pipline[:-1], self.pipline[1:]):
-            transformer = Transformer.from_crs(source, target)
-
+            try:
+                transformer = Transformer.from_crs(source, target)
+            except:
+                print(f"Can't transform {source} to {target}")
+                
             try:
                 point = transformer.transform(*point)
             except Exception as e:
                 raise f"Point transformation error: {e}"
-            
+        
+        print(point)
+
         if isinstance(self.point, Point3D):
             return Point3D(x=point[0], y=point[1], z=point[2])
         else:
