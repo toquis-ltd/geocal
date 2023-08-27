@@ -28,28 +28,6 @@ interface Option {
 
 const options: Option[] = [
   {
-    value: 'authority',
-    label: 'Authority',
-    children: [
-      {
-        value: 'EPSG',
-        label: 'EPSG',
-      },
-      {
-        value: 'ESRI',
-        label: 'ESRI',
-      },
-      {
-        value: 'IGNF',
-        label: 'IGNF',
-      },
-      {
-        value: 'IAU_2015',
-        label: 'IAU_2015',
-      }
-    ],
-  },
-  {
     value: 'type',
     label: 'Type',
     children: [
@@ -60,6 +38,10 @@ const options: Option[] = [
       {
         value: 'GEOGRAPHIC_2D_CRS',
         label: 'GEOGRAPHIC 2D CRS',
+      },
+      {
+        value: 'GEOGRAPHIC_3D_CRS',
+        label: 'GEOGRAPHIC 3D CRS',
       },
       {
         value: 'VERTICAL_CRS',
@@ -100,9 +82,6 @@ const CRSelector : React.FC<Props> = (prop:Props) => {
     
     let db = CRState.CRSList
     switch (value[0]) {
-        case 'authority':
-          db = db.filter(item => value[1] === (item.auth_name))
-          break;
         case 'type':
           db = db.filter(item => value[1] === item.type.toString())
           break

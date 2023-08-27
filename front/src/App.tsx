@@ -17,8 +17,20 @@ import {
 
 const { Content, Footer } = Layout;
 
+
+
+function useStickyState<T>(defaultValue:T, key:string):[T, React.Dispatch<T>] {
+  const [value, setValue] = React.useState<T>(() => {
+    const stickyValue = window.localStorage.getItem(key);
+    return stickyValue !== null
+      ? (JSON.parse(stickyValue) as T)
+      : defaultValue;
+  });
+  return [value, setValue]
+}
+
 const App : React.FC = () => {
-  const [state, setState] = React.useState<SettingStateType>({
+  const [state, setState] = useStickyState<SettingStateType>({
     isHeightIncluded:false,
     transformationsNumber: NumberOfTranfromationsEnum.One,
     dataOutputFormat: FormatVerificationOutputEnum.DecimalDegrees,
@@ -26,13 +38,18 @@ const App : React.FC = () => {
     transformationsItems: [],
     areaOfUse: {lat:0.0, long:0.0, height:0.0},
     setState: () => {},
-  }  as SettingStateType);
+  }  as SettingStateType, 'AppState');
   
-  const [CRState, setCRSList] = React.useState<CRSListStateType>({
+  const [CRState, setCRSList] = useStickyState<CRSListStateType>({
     CRSList:[],
     setCRSList: () => {}
-  } as CRSListStateType);
-
+  } as CRSListStateType, 'Find');
+  
+  React.useEffect(() => {
+    localStorage.setItem('AppState', JSON.stringify(state));
+    localStorage.setItem('Find', JSON.stringify(CRState));
+  }, [state, CRState]);
+  
   return (
   <Layout className="layout">
     <Navbar/>
