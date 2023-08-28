@@ -74,7 +74,6 @@ const P2PTransformation : React.FC = () => {
                         onChange={e => setInput({...input, z:e.target.value})}/>
                 </>
                 : null}
-
               </div>
           </div>
           <div className="transform__buttons" style={{display:'flex', flexDirection: 'column', margin:'auto 10px'}}>
@@ -82,7 +81,7 @@ const P2PTransformation : React.FC = () => {
           </div>
           <div className="output__point" style={{width:'20vw'}}>
               <Input value={output.x}/>
-              <Input value={output.y} />
+              <Input value={output.y}/>
               {(settings.isHeightIncluded) ? <Input value={output.z}/>: null}
           </div>
     </div>

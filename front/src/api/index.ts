@@ -32,9 +32,9 @@ export const GetCRSFromGeoPoint = async (coordinate:PointCoordinate) => {
       .then(res => {
         response = (res.content as CRSModelType[])
         return response
-      })
-    
+      })   
 }
+
 interface PointAPI {
   x:string
   y:string
@@ -44,10 +44,11 @@ interface PointAPI {
 export const TransformedPoint = async (coordinate:PointAPI, settings:SettingStateType) => {
   let input:PointAPI;
   let is2D:boolean = true;
+  const precision = 20
 
   input =  {
-    x: parseFloat(coordinate.x).toFixed(12),
-    y: parseFloat(coordinate.y).toFixed(12),
+    x: parseFloat(coordinate.x).toFixed(precision),
+    y: parseFloat(coordinate.y).toFixed(precision),
   }
 
   if (coordinate?.z != undefined && !Number.isNaN(parseFloat(coordinate?.z))) {
@@ -82,14 +83,34 @@ export const TransformedPoint = async (coordinate:PointAPI, settings:SettingStat
     .then(res => {
       if (is2D) {
         return {
-          x: parseFloat(res.point.x).toFixed(12),
-          y: parseFloat(res.point.y).toFixed(12)
+          x: parseFloat(res.point.x).toFixed(precision),
+          y: parseFloat(res.point.y).toFixed(precision)
         } as PointAPI
       }
       return {
-        x: parseFloat(res.point.x).toFixed(12),
-        y: parseFloat(res.point.y).toFixed(12),
-        z: parseFloat(res.point.z).toFixed(12)
+        x: parseFloat(res.point.x).toFixed(precision),
+        y: parseFloat(res.point.y).toFixed(precision),
+        z: parseFloat(res.point.z).toFixed(precision)
       } as PointAPI
+    })
+}
+
+type pipesList = [string[], string[]]
+
+export const TransformationsList = async (props:SettingStateType) => {
+
+  const pipeline:string[] = props.transformationsItems.slice(0, 2+Number(props.transformationsNumber)).map(e => e.code);
+  return await await fetch(`${server}/api/transform/list`, {
+      method:'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(pipeline)
+    })
+    .then(res => res.json())
+    .then(res => {
+      let response = ((res!.transformation_pipe) as pipesList)
+      return response
     })
 }

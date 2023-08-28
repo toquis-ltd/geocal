@@ -63,6 +63,7 @@ declare  global {
         outputFile: FileFormatEnum,
         areaOfUse: PointCoordinate
         transformationsItems:CRSModelType[]
+        pipeIds:number[]
         setState:(c:SettingStateType)=>void,
     };
 }

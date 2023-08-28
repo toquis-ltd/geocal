@@ -5,6 +5,7 @@ import BasicSettings from '../components/BasicSettings';
 
 import CRSelectorContainer from '../assets/CRSelectorContainer';
 import TransformationContainer from '../assets/TransformationContainer';
+import TransformationSelectorContainer from '../assets/TransformationSelectorContainer';
 
 const Main : React.FC = () => {
   return (
@@ -17,6 +18,7 @@ const Main : React.FC = () => {
           </Col>
           <Col span={7}/>
           <CRSelectorContainer/>
+          <TransformationSelectorContainer/>
           <TransformationContainer />
         </Row>
       </div>

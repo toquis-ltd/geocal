@@ -1,12 +1,11 @@
 import React from 'react'
-import { SettingOutlined } from '@ant-design/icons';
+import { SettingOutlined, DeleteOutlined } from '@ant-design/icons';
 import { Card, Button } from 'antd';
 
 import { SettingsContext } from '../context/settings';
 
 
 import CRSelector from './CRSelector';
-
 interface Props {
   index:number
 }
@@ -19,13 +18,21 @@ const CRSItem : React.FC<Props> = ({index}) => {
     const list = settings.transformationsItems;
     list.splice(index, 1, item);
     settings.setState({...settings, transformationsItems:list})
-  }
-  
+  };
+
+  const onDelete = () => {
+    const withoutItem = settings.transformationsItems.filter(item => item != settings.transformationsItems[index]);
+    settings.setState({...settings, transformationsItems:withoutItem});
+  };
+
   return (
     <Card
       actions={[
         <Button onClick={() => setCRSelectorState(true)}>
           <SettingOutlined key="setting" /> Change
+        </Button>,
+        <Button onClick={onDelete}>
+          <DeleteOutlined />  Delete
         </Button>
       ]}>
         {

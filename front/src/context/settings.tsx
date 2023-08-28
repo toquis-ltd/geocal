@@ -13,5 +13,6 @@ export const SettingsContext = React.createContext<SettingStateType>({
     outputFile: FileFormatEnum.csv,
     transformationsItems: [],
     areaOfUse: {lat:0.0, long:0.0},
+    pipeIds:[],
     setState: () => {},
 } as SettingStateType);

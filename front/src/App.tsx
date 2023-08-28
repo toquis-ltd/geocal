@@ -17,8 +17,6 @@ import {
 
 const { Content, Footer } = Layout;
 
-
-
 function useStickyState<T>(defaultValue:T, key:string):[T, React.Dispatch<T>] {
   const [value, setValue] = React.useState<T>(() => {
     const stickyValue = window.localStorage.getItem(key);
@@ -36,6 +34,7 @@ const App : React.FC = () => {
     dataOutputFormat: FormatVerificationOutputEnum.DecimalDegrees,
     outputFile: FileFormatEnum.geojson,
     transformationsItems: [],
+    pipeIds:[0],
     areaOfUse: {lat:0.0, long:0.0, height:0.0},
     setState: () => {},
   }  as SettingStateType, 'AppState');
