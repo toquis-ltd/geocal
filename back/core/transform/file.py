@@ -1,12 +1,14 @@
 import os
 import shutil
 
-from enum import Enum
+from typing import Sequence
+
+from pyproj import CRS
 
 import geopandas as gpd
 import fiona
 
-from ..types.file import FileTransformatioDef, FileFormatEnum
+from ..types.file import FileFormatEnum
 
 # By default, this file formats are disabled. 
 # This allow fiona to transform this formats.
@@ -16,8 +18,30 @@ fiona.drvsupport.supported_drivers['GPX'] = 'rw'
 
 
 class FileCoordinateTransformation:
-    pass
+    def __init__(self, gdf:gpd.GeoDataFrame, pipeline:Sequence[int]) -> None:
+        self.gdf = gdf.rename(columns=str.lower)
+        self.pipeline = pipeline
+        self.gdf.crs = CRS.from_user_input(pipeline[0])
 
+    def transformation(self):
+        try:
+            self.gdf.geometry = gpd.points_from_xy(self.gdf['x'], self.gdf['y'], self.gdf['z'])
+        except:
+            self.gdf.geometry = gpd.points_from_xy(self.gdf['x'], self.gdf['y'])
+        
+        for i in self.pipeline[1:]:
+            self.gdf = self.gdf.to_crs(i)
+        
+        if self.gdf.geometry.has_z[1]:
+            self.gdf['Height'] = self.gdf.geometry.z
+
+        if CRS.from_user_input(self.pipeline[-1]).axis_info[0].unit_name == "degree":
+            self.gdf['Lat'], self.gdf['Long'] = self.gdf.geometry.x, self.gdf.geometry.y
+        else:
+            self.gdf['X_OUT'], self.gdf['Y_OUT'] = self.gdf.geometry.x, self.gdf.geometry.y
+
+        return self.gdf
+        
 class FileFormatTransformation:
     """This class wraps the transformation between files formats and manage files"""
     def __init__(self, gdf:gpd.GeoDataFrame, output_file_path:str, target_file_format:FileFormatEnum) -> None:
@@ -30,6 +54,7 @@ class FileFormatTransformation:
 
         match self.target_file_format:
             case self.target_file_format.shp:
+                
                 self.gdf.to_file(self.output_path, driver='ESRI Shapefile', schema={"properties": {"time": "str", "datetime": "str"}})
             case self.target_file_format.geojson:
                 self.gdf.to_file(self.output_path+'/mapless.geojson', driver='GeoJSON')

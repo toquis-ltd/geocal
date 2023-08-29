@@ -20,11 +20,12 @@ class PointTransformation:
                 
             try:
                 point = transformer.transform(*point)
+                print(self.point)
+
             except Exception as e:
                 raise f"Point transformation error: {e}"
-        
-        print(point)
 
+        print(point)
         if isinstance(self.point, Point3D):
             return Point3D(x=point[0], y=point[1], z=point[2])
         else:
