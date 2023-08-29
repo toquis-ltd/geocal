@@ -26,7 +26,8 @@ try:
         ORIGINS = [
             "http://localhost",
             "http://localhost:8080",
-            "http://127.0.0.1:8000"
+            "http://127.0.0.1:8000",
+            "http://mapless.toquis.com"
         ]
         app.add_middleware(
             CORSMiddleware,
@@ -35,8 +36,11 @@ try:
             allow_methods=["*"],
             allow_headers=["*"],
         )
+    host = "0.0.0.0"
 except:
     print("DEBUG variable is not setup")
+    host='localhost'
+
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="localhost", port=8000, reload=True)
+    uvicorn.run("main:app", host=host, port=8000, reload=True)
