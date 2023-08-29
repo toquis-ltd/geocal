@@ -3,7 +3,13 @@ import { NumberOfTranfromationsEnum } from "../enums/settings";
 const server = `${import.meta.env.VITE_server}`
 
 export const TransformedFileDownloadRequest = (props:SettingStateType) => {
-    const pipeline:string[] = props.transformationsItems.map(e => e.code);
+    let pipeline:string[];
+    if (props.transformationsNumber == NumberOfTranfromationsEnum.One){
+      pipeline = props.transformationsItems.slice(0, 2).map(e => e.code);
+    } else {
+      pipeline= props.transformationsItems.map(e => e.code);
+    };
+
     fetch(`${server}/api/transform/file`, {
         method:'POST',
         headers: {
@@ -12,7 +18,7 @@ export const TransformedFileDownloadRequest = (props:SettingStateType) => {
         },
         body: JSON.stringify({
           "pipeline": pipeline,
-          "pipe_ids": [0],
+          "pipe_ids": props.pipeIds,
           "file_format": props.outputFile
         })
       }).then(()=>{

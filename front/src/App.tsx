@@ -34,7 +34,7 @@ const App : React.FC = () => {
     dataOutputFormat: FormatVerificationOutputEnum.DecimalDegrees,
     outputFile: FileFormatEnum.geojson,
     transformationsItems: [],
-    pipeIds:[0],
+    pipeIds:[0, 0],
     areaOfUse: {lat:0.0, long:0.0, height:0.0},
     setState: () => {},
   }  as SettingStateType, 'AppState');

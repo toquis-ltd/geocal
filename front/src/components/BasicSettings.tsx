@@ -28,7 +28,7 @@ const BasicSettings : React.FC = () => {
     <Card title="Geodetic calculator" headStyle={{ textAlign:'center' }} bodyStyle={{ backgroundColor:'#f5f5f5'}}>
           <div className="transformations-settings" style={{margin:'5px'}}>
             <span className="label" style={{marginRight:'5px'}}>Elevation/Z:</span>
-            <Checkbox onChange={() => state.setState({...state, isHeightIncluded: !state.isHeightIncluded})} />
+            <Checkbox checked={state.isHeightIncluded} onChange={() => state.setState({...state, isHeightIncluded: !state.isHeightIncluded})} />
           </div>
           <div className="transformations-settings" style={{margin:'5px'}}>
             <span className="label" style={{marginRight:'5px'}}>Number of transformations:</span>

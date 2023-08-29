@@ -1,26 +1,34 @@
 import React from 'react';
 
-import { Modal, Button, Card } from 'antd';
+import { Modal, Button, Card, List, Divider } from 'antd';
 import { SettingOutlined } from '@ant-design/icons';
 
 import { SettingsContext } from '../context/settings';
 
 
 interface ViewProps {
+  index:number
   isOpen:boolean,
-  setViewState:React.Dispatch<boolean>
+  data:string[]
+  toggleView:React.Dispatch<boolean>
 }
 
 interface SelectorProps {
   state:string[]
+  index:number
 }
 
 const { Meta } = Card;
 
 
 const View : React.FC<ViewProps> = (props) => {
-  const onApply = () => {
-    props.setViewState(false)
+  const settings = React.useContext<SettingStateType>(SettingsContext);
+
+  const onApply = (value:number) => {
+    const pipe = settings.pipeIds;
+    pipe[props.index] = value
+    settings.setState({...settings, pipeIds:pipe})
+    props.toggleView(false)
   }
 
   return (
@@ -28,18 +36,34 @@ const View : React.FC<ViewProps> = (props) => {
         title="Select coordinate referance area"
         centered
         open={props.isOpen}
-        onCancel={() => props.setViewState(false)}
-        footer={[<Button key="ok" type="primary" onClick={onApply} children={'Apply'} />]}
-        width={1000}>
-      
-    </Modal> 
+        onCancel={() => props.toggleView(false)}
+        footer={[]}
+        width={1000}
+        >
+        
+       <List
+          style={{maxHeight:'50vh', overflow:'auto', overflowX:'hidden' }}
+          dataSource={props.data}
+          renderItem={(item, index) => (
+            <List.Item key={index}>
+              <div className="item" style={{width:'100%', display:'flex', justifyContent:"space-between"}}>
+                <p>{item}</p>
+                <Button
+                      size='large'
+                      type="primary"
+                      onClick={()=>onApply(index)}
+                      >Select</Button>
+              </div>
+            </List.Item>
+          )} />
+          <Divider />
+      </Modal>
   )
 }
 
-const TransformationSelector : React.FC<SelectorProps> = ({state}) => {
+const TransformationSelector : React.FC<SelectorProps> = ({state, index}) => {
   const settings = React.useContext<SettingStateType>(SettingsContext);
   const [isViewed, toggleView] = React.useState<boolean>(false);
-
   return (
     <>
     <Card
@@ -50,10 +74,10 @@ const TransformationSelector : React.FC<SelectorProps> = ({state}) => {
       ]}>
     <Meta
       title='Transformation'
-      description={(state != undefined | state?.length > 0) ? state[0]:"No transformation found"}
+      description={(state != undefined && state?.length > 0) ? state[settings.pipeIds[index]]:"No transformation found"}
     />
     </Card>
-    <View setViewState={toggleView} isOpen={isViewed}  />
+    <View toggleView={toggleView} isOpen={isViewed} data={state} index={index} />
     </>
   )
 }
