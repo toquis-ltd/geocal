@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM python:3.11.5-bullseye
 
 ENV PYTHONBUFFERED=1
 ENV PATH="/sripts:${PATH}"
@@ -7,9 +7,9 @@ ENV DEBIAN_FRONTEND=noninteractive
 # Install python dependencies 
 ADD ./back/requirements.txt /requirements.txt
 RUN apt update
-RUN apt -y install python3-pip
-RUN pip3 install --upgrade pip
-RUN pip3 install -r requirements.txt
+
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
 
 #build folder
 RUN mkdir -p /usr/back/static
