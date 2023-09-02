@@ -41,10 +41,10 @@ try:
             allow_methods=["*"],
             allow_headers=["*"],
         )
-    host = "0.0.0.0"
+    host='localhost'
 except:
     print("DEBUG variable is not setup")
-    host='localhost'
+    host = "0.0.0.0"
 
 
 if __name__ == "__main__":

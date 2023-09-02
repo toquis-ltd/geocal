@@ -1,28 +1,25 @@
-from typing import Union, Sequence
+from typing import Union
 
-from pyproj import Transformer
+from pyproj import transformer
 
-from ..types.point import Point2D, Point3D
+from ..types.point import Point2D, Point3D, TransformatioDef
 
 class PointTransformation:
-    def __init__(self, point: Union[Point3D, Point2D], pipline:Sequence[int]):
+    def __init__(self, point: Union[Point3D, Point2D], transformation:TransformatioDef):
         self.point = point
-        self.pipline = pipline
+        self.pipline = transformation.pipeline
+        self.pipe_id = transformation.pipe_ids
     
     def get_transformed_point(self) -> Point3D:
         point = self.point.unwrap()
 
         for source, target in zip(self.pipline[:-1], self.pipline[1:]):
             try:
-                transformer = Transformer.from_crs(source, target)
-            except:
-                print(f"Can't transform {source} to {target}")
-                
-            try:
-                point = transformer.transform(*point)
-                print(self.point)
-
+                transformation = transformer.TransformerGroup(source,
+                                                              target).transformers[self.pipe_id[self.pipline.index(source)]]
+                point = transformation.transform(*point)
             except Exception as e:
+                print(f"Can't transform {source} to {target} and at {self.point}")
                 raise f"Point transformation error: {e}"
 
         print(point)

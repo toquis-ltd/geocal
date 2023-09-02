@@ -1,10 +1,13 @@
-from typing import Optional
+from typing import Optional, Sequence
 from fastapi import APIRouter
 from pydantic import BaseModel
 
+from pyproj import transformer
 from pyproj.aoi import AreaOfInterest
 from pyproj.database import query_crs_info, CRSInfo
 from pyproj.enums import PJType
+
+from ..types.comm import TransformationList
 
 api = APIRouter(prefix="/api/search")
 
@@ -17,7 +20,7 @@ class CRSModel(BaseModel):
     area_of_use_name: Optional[str]
     projection_method_name: Optional[str]
 
-@api.get("/crs")
+@api.get("/area/crs")
 async def get_crs_from_area(lat:float, long:float):
 
     def get_crs_area(crs:CRSInfo) -> float:
@@ -51,3 +54,16 @@ async def get_crs_from_area(lat:float, long:float):
         ))
 
     return {'length':len(response), "content":response}
+
+@api.post("/transformation")
+def list_transformations(pipeline:Sequence[int]):
+    transformations = TransformationList()
+    try:
+        for source, target in zip(pipeline[:-1],  pipeline[1:]):
+            transformations.transformation_pipe.append((tuple(map(
+                        lambda item:"\n".join(item.description.split(" + ")),
+                        transformer.TransformerGroup(source, target).transformers
+                ))))
+        return transformations
+    except:
+        return transformations

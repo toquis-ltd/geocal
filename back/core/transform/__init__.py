@@ -1,15 +1,14 @@
 import os
 import shutil
 
-from typing import Union, Sequence
+from typing import Union
 
 from fastapi import APIRouter, UploadFile, Request
 from fastapi.responses import FileResponse
-from pyproj import CRS, transformer
 
 import geopandas as gpd
 
-from ..types.comm import TransformatioDef, TransformationList
+from ..types.comm import TransformatioDef
 from ..types.file import FileTransformatioDef
 
 from .point import Point2D, Point3D, PointTransformation
@@ -86,18 +85,5 @@ async def download_transformed_file(request: Request):
 
 @api.post("/point")
 async def transform_point(point:Union[Point3D, Point2D], transformation:TransformatioDef):
-    transformed_point = PointTransformation(point, transformation.pipeline).get_transformed_point()
+    transformed_point = PointTransformation(point, transformation).get_transformed_point()
     return {'status_code':200, 'point':transformed_point}
-
-@api.post("/list")
-def list_transformations(pipeline:Sequence[int]):
-    transformations = TransformationList()
-    try:
-        for source, target in zip(pipeline[:-1],  pipeline[1:]):
-            transformations.transformation_pipe.append((tuple(map(
-                        lambda item:"\n".join(item.description.split(" + ")),
-                        transformer.TransformerGroup(source, target).transformers
-                ))))
-        return transformations
-    except:
-        return transformations

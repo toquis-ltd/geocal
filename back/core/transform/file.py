@@ -23,23 +23,34 @@ class FileCoordinateTransformation:
         self.pipeline = pipeline
         self.gdf.crs = CRS.from_user_input(pipeline[0])
 
+    def load_geometry(self):
+        if 'lat' in self.gdf.columns:
+            try:
+                self.gdf.geometry = gpd.points_from_xy(self.gdf['lat'], self.gdf['lon'], self.gdf['z'])
+            except:
+                self.gdf.geometry = gpd.points_from_xy(self.gdf['lat'], self.gdf['lon'])
+        elif 'x' in self.gdf.columns:
+            try:
+                self.gdf.geometry = gpd.points_from_xy(self.gdf['x'], self.gdf['y'], self.gdf['z'])
+            except:
+                self.gdf.geometry = gpd.points_from_xy(self.gdf['x'], self.gdf['y'])
+        else:
+            print('Source file geometry')
+
     def transformation(self):
-        try:
-            self.gdf.geometry = gpd.points_from_xy(self.gdf['x'], self.gdf['y'], self.gdf['z'])
-        except:
-            self.gdf.geometry = gpd.points_from_xy(self.gdf['x'], self.gdf['y'])
-        
+        self.load_geometry()
+
         for i in self.pipeline[1:]:
             self.gdf = self.gdf.to_crs(i)
-        
-        if self.gdf.geometry.has_z[1]:
-            self.gdf['Height'] = self.gdf.geometry.z
 
         if CRS.from_user_input(self.pipeline[-1]).axis_info[0].unit_name == "degree":
-            self.gdf['Lat'], self.gdf['Long'] = self.gdf.geometry.x, self.gdf.geometry.y
+            self.gdf['lat_out'], self.gdf['lon_out'] = self.gdf.geometry.x, self.gdf.geometry.y
         else:
-            self.gdf['X_OUT'], self.gdf['Y_OUT'] = self.gdf.geometry.x, self.gdf.geometry.y
+            self.gdf['x_out'], self.gdf['y_out'] = self.gdf.geometry.x, self.gdf.geometry.y
 
+        if self.gdf.geometry.has_z[1]:
+            self.gdf['z_out'] = self.gdf.geometry.z
+        
         return self.gdf
         
 class FileFormatTransformation:
