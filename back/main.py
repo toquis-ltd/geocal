@@ -41,11 +41,11 @@ try:
             allow_methods=["*"],
             allow_headers=["*"],
         )
-    host='localhost'
+        host='localhost'
+    else:
+        host = "0.0.0.0"
 except:
     print("DEBUG variable is not setup")
-    host = "0.0.0.0"
-
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host=host, port=8000, reload=True)

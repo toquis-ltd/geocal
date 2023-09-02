@@ -19,6 +19,8 @@ class PointTransformation:
                                                               target).transformers[self.pipe_id[self.pipline.index(source)]]
                 point = transformation.transform(*point)
             except Exception as e:
+                print(self.pipe_id, self.pipline.index(source))
+
                 print(f"Can't transform {source} to {target} and at {self.point}")
                 raise f"Point transformation error: {e}"
 
