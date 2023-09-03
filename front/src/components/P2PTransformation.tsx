@@ -33,6 +33,7 @@ const P2PTransformation : React.FC = () => {
   const holders:string[] = InputPlaceHolder(settings.transformationsItems[0])
 
   const transformPoint = () => {
+      setOutput({x:'Loding...', y:'Loding...' , z:'Loding...'})
       TransformedPoint(input, settings)
       .then(point => setOutput({x:point.x, y:point.y , z:point?.z}))
       .catch(() => message.error('Transformation error, please verify input data', 3));

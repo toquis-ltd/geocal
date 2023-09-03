@@ -9,7 +9,9 @@ import TransformationSelectorContainer from '../assets/TransformationSelectorCon
 
 const Main : React.FC = () => {
   return (
-    <div className="container" style={{margin:'auto', width:'90%', padding:'5px',}}>
+    <div 
+          className="container" 
+          style={{margin:'auto', width:'90%', padding:'5px'}}>
       <div className="inner"></div>
         <Row gutter={[16, 32]} >
           <Col span={7}/>

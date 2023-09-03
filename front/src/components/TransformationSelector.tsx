@@ -14,7 +14,7 @@ interface ViewProps {
 }
 
 interface SelectorProps {
-  state:string[]
+  availableTransformations:string[]
   index:number
 }
 
@@ -61,7 +61,7 @@ const View : React.FC<ViewProps> = (props) => {
   )
 }
 
-const TransformationSelector : React.FC<SelectorProps> = ({state, index}) => {
+const TransformationSelector : React.FC<SelectorProps> = ({availableTransformations, index}) => {
   const settings = React.useContext<SettingStateType>(SettingsContext);
   const [isViewed, toggleView] = React.useState<boolean>(false);
   return (
@@ -74,10 +74,10 @@ const TransformationSelector : React.FC<SelectorProps> = ({state, index}) => {
       ]}>
     <Meta
       title='Transformation'
-      description={(state != undefined && state?.length > 0) ? state[settings.pipeIds[index]]:"No transformation found"}
+      description={(availableTransformations != undefined && availableTransformations?.length > 0) ? availableTransformations[settings.pipeIds[index]]:"No transformation found"}
     />
     </Card>
-    <View toggleView={toggleView} isOpen={isViewed} data={state} index={index} />
+    <View toggleView={toggleView} isOpen={isViewed} data={availableTransformations} index={index} />
     </>
   )
 }

@@ -21,7 +21,10 @@ const TransformationSelectorContainer:React.FC = () => {
     const [state, setState] = React.useState<[string[], string[]]>([[], []])
 
     React.useEffect(()=>{
-        if ((settings.transformationsItems.length)<=1) return
+        if ((settings.transformationsItems.length)<=1) {
+            setState([[], []]);
+            return
+        };
         settings.setState({...settings, pipeIds:[0, 0]})
         TransformationsList(settings)
         .then(res=>{
@@ -40,12 +43,12 @@ const TransformationSelectorContainer:React.FC = () => {
     <>
         <Col span={sizes[Number(isSecondInluded)][1]} />
         <Col span={sizes[Number(isSecondInluded)][0]}>
-            <TransformationSelector index={0}  state={state[0]} />
+            <TransformationSelector index={0}  availableTransformations={state[0]} />
         </Col>
         {(isSecondInluded) ?
         <>
             <Col span={sizes[1][0]}>
-                <TransformationSelector index={1} state={state[1]} />
+                <TransformationSelector index={1} availableTransformations={state[1]} />
             </Col>
         </> : null
         }

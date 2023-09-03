@@ -6,13 +6,13 @@ import {
          Col,
          Button,
          List,
-         Divider,
-         Cascader
+         Divider
         } from 'antd';
 
 import {CRSContext} from '../../context/crs';
 
 import LoadMoreButton from './loadmoreButton'
+import Filter from './filters'
 
 interface Props{
     state:boolean
@@ -20,48 +20,13 @@ interface Props{
     onSelect:React.Dispatch<CRSModelType>
 }
 
-interface Option {
-  value: string;
-  label: string;
-  children?: Option[];
-}
-
-const options: Option[] = [
-  {
-    value: 'type',
-    label: 'Type',
-    children: [
-      {
-        value: 'PROJECTED_CRS',
-        label: 'PROJECTED CRS',
-      },
-      {
-        value: 'GEOGRAPHIC_2D_CRS',
-        label: 'GEOGRAPHIC 2D CRS',
-      },
-      {
-        value: 'GEOGRAPHIC_3D_CRS',
-        label: 'GEOGRAPHIC 3D CRS',
-      },
-      {
-        value: 'VERTICAL_CRS',
-        label: 'VERTICAL CRS',
-      },
-      {
-        value:'COMPOUND_CRS',
-        label:'COMPOUND CRS',
-      }
-    ],
-  },
-]
-
 const CRSelector : React.FC<Props> = (prop:Props) => {
   const CRState = React.useContext<CRSListStateType>(CRSContext)
   const [data, setData] = React.useState<CRSModelType[]>([])
   const [viewData, setViewData] = React.useState<CRSModelType[]>([])
   const [isLoading, setLoading] = React.useState<boolean>(false);
 
-  
+
   const OnApply = (crs:CRSModelType) => {
     setViewData(data.slice(0, 30));
     prop.onSelect(crs);
@@ -69,7 +34,6 @@ const CRSelector : React.FC<Props> = (prop:Props) => {
   };
 
   const onFilter = (value: (string | number)[] | undefined) => {
-    
     if (value === undefined) {
       setData(CRState.CRSList)
       return
@@ -89,6 +53,10 @@ const CRSelector : React.FC<Props> = (prop:Props) => {
     setData(db)
   }
 
+  const onSearch = (value:CRSModelType[]) => {
+    CRState.setCRSList({...CRState, CRSList:value})
+  }
+
   React.useEffect(() => {
     setData(CRState.CRSList)
   }, [CRState.CRSList])
@@ -106,22 +74,11 @@ const CRSelector : React.FC<Props> = (prop:Props) => {
         footer={[]}
         width={800}
         >
-        <Row>
-            <Col span={12} >
-              <b>Filters: </b> 
-              <Cascader 
-                        options={options}
-                        style={{width:"80%"}}
-                        maxTagCount="responsive"
-                        onChange={onFilter}
-                      />
-            </Col>
-            <Col span={10} >
-              <b>Data lenght: </b> {data.length} /{CRState.CRSList.length} 
-            </Col>
-            <Col span={4} />
-            <Divider />
-        </Row >
+        <Filter 
+                dataLength={`${data.length} / ${CRState.CRSList.length}`}
+                onFilter={onFilter}
+                onSearch={onSearch}
+                />
         <List
           style={{maxHeight:'50vh', overflow:'auto', overflowX:'hidden' }}
           dataSource={viewData}

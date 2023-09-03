@@ -47,7 +47,7 @@ const FileUploader : React.FC = () => {
   }
 
   return (
-    <div className="upload__file" style={{textAlign:"center"}}>
+    <div className="upload__file" style={{textAlign:"center"}} onDragOver={(e) => e.preventDefault()}    >
       <Dragger  fileList={fileList} {...props} height={300}>
             <p className="ant-upload-drag-icon">
               <InboxOutlined />

@@ -28,7 +28,7 @@ export const TransformedFileDownloadRequest = (props:SettingStateType) => {
 
 export const GetCRSFromGeoPoint = async (coordinate:PointCoordinate) => {
     let response:CRSModelType[];
-    return await await fetch(`${server}/api/search/crs?lat=${coordinate.lat}&long=${coordinate.long}`, {
+    return await await fetch(`${server}/api/search/area/crs?lat=${coordinate.lat}&long=${coordinate.long}`, {
         method:'GET',
         headers: {
           'Accept': 'application/json',
@@ -51,7 +51,8 @@ export const TransformedPoint = async (coordinate:PointAPI, settings:SettingStat
   let input:PointAPI;
   let is2D:boolean = true;
   const precision = 20
-
+  const n = new BigNumber("123.16516");
+  console.log(n.toString())
   input =  {
     x: parseFloat(coordinate.x).toFixed(precision),
     y: parseFloat(coordinate.y).toFixed(precision),
@@ -68,7 +69,7 @@ export const TransformedPoint = async (coordinate:PointAPI, settings:SettingStat
   } else {
     pipeline= settings.transformationsItems.map(e => e.code);
   }
-
+  console.log('feieifojzoijfezoizjeiozjfoi')
   return await await fetch(`${server}/api/transform/point`, {
       method:'POST',
       headers: {
@@ -79,9 +80,7 @@ export const TransformedPoint = async (coordinate:PointAPI, settings:SettingStat
         point: input,
         "transformation": {
           "pipeline": pipeline,
-          "pipe_ids": [
-            0
-          ]
+          "pipe_ids": settings.pipeIds
         }
       })
     })
@@ -104,9 +103,8 @@ export const TransformedPoint = async (coordinate:PointAPI, settings:SettingStat
 type pipesList = [string[], string[]]
 
 export const TransformationsList = async (props:SettingStateType) => {
-
   const pipeline:string[] = props.transformationsItems.slice(0, 2+Number(props.transformationsNumber)).map(e => e.code);
-  return await await fetch(`${server}/api/transform/list`, {
+  return await await fetch(`${server}/api/search/transformation`, {
       method:'POST',
       headers: {
         'Accept': 'application/json',
