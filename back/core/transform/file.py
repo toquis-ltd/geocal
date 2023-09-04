@@ -26,9 +26,9 @@ class FileCoordinateTransformation:
     def load_geometry(self):
         if 'lat' in self.gdf.columns:
             try:
-                self.gdf.geometry = gpd.points_from_xy(self.gdf['lat'], self.gdf['lon'], self.gdf['z'])
+                self.gdf.geometry = gpd.points_from_xy(self.gdf['lon'], self.gdf['lat'], self.gdf['z'])
             except:
-                self.gdf.geometry = gpd.points_from_xy(self.gdf['lat'], self.gdf['lon'])
+                self.gdf.geometry = gpd.points_from_xy(self.gdf['lon'], self.gdf['lat'])
         elif 'x' in self.gdf.columns:
             try:
                 self.gdf.geometry = gpd.points_from_xy(self.gdf['x'], self.gdf['y'], self.gdf['z'])
@@ -65,8 +65,7 @@ class FileFormatTransformation:
 
         match self.target_file_format:
             case self.target_file_format.shp:
-                
-                self.gdf.to_file(self.output_path, driver='ESRI Shapefile', schema={"properties": {"time": "str", "datetime": "str"}})
+                self.gdf.to_file(self.output_path, driver='ESRI Shapefile')
             case self.target_file_format.geojson:
                 self.gdf.to_file(self.output_path+'/mapless.geojson', driver='GeoJSON')
             case self.target_file_format.kml:
