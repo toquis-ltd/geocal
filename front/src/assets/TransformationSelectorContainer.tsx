@@ -41,18 +41,18 @@ const TransformationSelectorContainer:React.FC = () => {
       
     return (
     <>
-        <Col span={sizes[Number(isSecondInluded)][1]} />
-        <Col span={sizes[Number(isSecondInluded)][0]}>
+        <Col xl={sizes[Number(isSecondInluded)][1]} />
+        <Col xl={sizes[Number(isSecondInluded)][0]} xs={24}>
             <TransformationSelector index={0}  availableTransformations={state[0]} />
         </Col>
         {(isSecondInluded) ?
         <>
-            <Col span={sizes[1][0]}>
+            <Col xl={sizes[1][0]} xs={24}>
                 <TransformationSelector index={1} availableTransformations={state[1]} />
             </Col>
         </> : null
         }
-        <Col span={sizes[Number(isSecondInluded)][1]} />
+        <Col xl={sizes[Number(isSecondInluded)][1]} />
     </>
     )
 }

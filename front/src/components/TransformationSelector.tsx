@@ -40,7 +40,6 @@ const View : React.FC<ViewProps> = (props) => {
         footer={[]}
         width={1000}
         >
-        
        <List
           style={{maxHeight:'50vh', overflow:'auto', overflowX:'hidden' }}
           dataSource={props.data}
@@ -52,7 +51,8 @@ const View : React.FC<ViewProps> = (props) => {
                       size='large'
                       type="primary"
                       onClick={()=>onApply(index)}
-                      >Select</Button>
+                      >Select
+                </Button>
               </div>
             </List.Item>
           )} />

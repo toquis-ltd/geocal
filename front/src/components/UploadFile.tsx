@@ -1,5 +1,4 @@
 import React from 'react'
-import { Col, Row } from 'antd';
 
 import { InboxOutlined, DeleteOutlined, RocketFilled} from '@ant-design/icons';
 import { message, Upload, Button } from 'antd';
@@ -8,19 +7,30 @@ import type { UploadFile, UploadProps } from 'antd/es/upload/interface';
 
 import { TransformedFileDownloadRequest } from '../api';
 import { SettingsContext } from '../context/settings';
+import { useStickyState } from '../hooks';
 
 const { Dragger } = Upload;
+
+const uuid = () => {
+  return Array
+   .from(Array(16))
+   .map(e => Math.floor(Math.random() * 255)
+   .toString(16)
+   .padStart(2,"0"))
+   .join('')
+}
 
 const FileUploader : React.FC = () => {
   const state = React.useContext<SettingStateType>(SettingsContext)
   const [fileList, setFileList] = React.useState<UploadFile[]>([]);
+  const [user_id, setID] = useStickyState(uuid(), 'userID');
 
   const props: UploadProps = {
     name: 'file',
-    action: `${import.meta.env.VITE_server}/api/transform/upload`,
+    action: `${import.meta.env.VITE_server}/api/transform/upload/${user_id}`,
     maxCount: 1,
     multiple: false,
-
+    
     onChange({file, fileList}) {
       const { status, response } = file;
       if (status === 'done') {
@@ -43,7 +53,7 @@ const FileUploader : React.FC = () => {
   }
 
   const onTransform = () => {
-    TransformedFileDownloadRequest(state);
+    TransformedFileDownloadRequest(state, user_id);
   }
 
   return (
@@ -54,30 +64,25 @@ const FileUploader : React.FC = () => {
             </p>
             <p className="ant-upload-text">Click or drag file to this area to upload</p>
       </Dragger>
-      <Row style={{marginTop: '10px'}}>
-        <Col span={6}>
-        </Col>
-        <Col span={6}>
-          <Button 
-            type="primary"
-            onClick={onDelete}
-            icon={<DeleteOutlined />}
+      <div className="file-upload__container" style={{margin:'0 auto', width:'50vw', display:'flex', justifyContent:'center'}}>
+            <Button 
+              style={{margin:'5px'}}
+              type="primary"
+              onClick={onDelete}
+              icon={<DeleteOutlined />}
+              size={'large'}
+              children={'Delete'}
+            />
+            <Button
+            style={{margin:'5px'}}
             size={'large'}
-            children={'Delete'}
+            type="primary"
+            icon={<RocketFilled />}
+            onClick={onTransform}
+            children={'Transform'}
           />
-        </Col>
-        <Col span={6}>
-          <Button
-          size={'large'}
-          type="primary"
-          icon={<RocketFilled />}
-          onClick={onTransform}
-          children={'Transform'}
-        />
-        </Col>
-        <Col span={6}>
-        </Col>
-      </Row>
+      </div>
+
   </div>
   )
 

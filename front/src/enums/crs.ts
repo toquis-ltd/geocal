@@ -25,3 +25,25 @@ export enum PJEnum{
     CONCATENATED_OPERATION="CONCATENATED_OPERATION",
     OTHER_COORDINATE_OPERATION="OTHER_COORDINATE_OPERATIO"
 }
+
+
+export enum UnitEnume {
+    METRE = "metre", 
+    GERMAN_LEGAL_METRE = "German legal metre", 
+    KILOMETRE = "kilometre", 
+    DEGREE = "degree", 
+    LINK = "link", 
+    CLARKES_LINK = "Clarke's link", 
+    GRAD = "grad", 
+    FOOT = "foot", 
+    US_SURVEY_FOOT = "US survey foot", 
+    CLARKES_FOOT = "Clarke's foot", 
+    BRITISH_FOOT_1936 = "British foot (1936)", 
+    GOLD_COAST_FOOT = "Gold Coast foot", 
+    BRITISH_FOOT_SEARS_1922 = "British foot (Sears 1922)", 
+    BRITISH_YARD_SEARS_1922 = "British yard (Sears 1922)", 
+    BRITISH_CHAIN_SEARS_1922_TRUNCATED = "British chain (Sears 1922 truncated)", 
+    INDIAN_YARD = "Indian yard", 
+    CLARKES_YARD = "Clarke's yard",
+    BRITISH_CHAIN_SEARS_1922 = "British chain (Sears 1922)", 
+}

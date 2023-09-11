@@ -8,6 +8,7 @@ import Main from './pages/main';
 
 import {SettingsContext} from './context/settings'
 import {CRSContext} from './context/crs'
+import { isMobile } from "react-device-detect";
 
 import {
   NumberOfTranfromationsEnum,
@@ -15,17 +16,11 @@ import {
   FileFormatEnum
 } from './enums/settings';
 
+import {useStickyState} from './hooks';
+
 const { Content, Footer } = Layout;
 
-function useStickyState<T>(defaultValue:T, key:string):[T, React.Dispatch<T>] {
-  const [value, setValue] = React.useState<T>(() => {
-    const stickyValue = window.localStorage.getItem(key);
-    return stickyValue !== null
-      ? (JSON.parse(stickyValue) as T)
-      : defaultValue;
-  });
-  return [value, setValue]
-}
+const AppStyle = { margin: '20px 5px', backgroundColor: '#ffffff', borderRadius: "15px", minHeight: '70vh'}
 
 const App : React.FC = () => {
   const [state, setState] = useStickyState<SettingStateType>({
@@ -52,7 +47,7 @@ const App : React.FC = () => {
   return (
   <Layout className="layout">
     <Navbar/>
-    <Content style={{ margin: '20px 50px', backgroundColor: '#ffffff', borderRadius: "15px", minHeight: '70vh'}}>
+    <Content style={AppStyle}>
     <CRSContext.Provider value={{...CRState, setCRSList}}>
       <SettingsContext.Provider value={{...state, setState}}>
         <Routes>

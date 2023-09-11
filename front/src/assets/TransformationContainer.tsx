@@ -19,7 +19,7 @@ const items = [
 
 const TransformationContainer:React.FC = () => {
     return  (
-        <Col span={24} >
+        <Col span={24} style={{height:'450px'}}>
             <Tabs items={items} />
         </Col>
     )

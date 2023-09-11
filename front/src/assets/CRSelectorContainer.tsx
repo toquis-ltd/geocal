@@ -1,10 +1,10 @@
+import React from 'react';
 import { Col, Button} from 'antd';
 import {SwapOutlined} from '@ant-design/icons';
 
+
 import CRSItem from '../components/CRSItem';
 import {NumberOfTranfromationsEnum} from '../enums/settings';
-import React from 'react';
-
 import { SettingsContext } from '../context/settings';
 
 
@@ -43,17 +43,17 @@ const CRSelectorContainer:React.FC = () => {
     };
     return (
     <>
-        <Col span={sizes[Number(isSmall)][0]}>
+        <Col xl={sizes[Number(isSmall)][0]} xs={24}>
             <CRSItem index={0} />
         </Col>
         <SwapButton size={sizes[Number(isSmall)][1]} onClick={() => onSwap(true)}/>
-        <Col span={sizes[Number(isSmall)][0]}>
+        <Col xl={sizes[Number(isSmall)][0]} xs={24}>
             <CRSItem index={1} />
         </Col>
         {(isSmall) ?  
         <>
             <SwapButton size={sizes[Number(isSmall)][1]} onClick={() => onSwap(false)}/>
-            <Col span={sizes[1][0]}>
+            <Col  xl={sizes[1][0]} xs={24}>
                 <CRSItem index={2} />
             </Col>
         </> : null

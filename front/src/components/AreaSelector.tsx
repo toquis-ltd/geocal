@@ -1,16 +1,28 @@
 import React from 'react'
+
 import { Modal, Row, Col, Card, Button} from 'antd';
 
 import { CRSContext } from '../context/crs';
 
-import {GetCRSFromGeoPoint} from '../api'
-
-
 import Globe from './Globe';
+
+import data from '../data/crs.json'
+
+const DATA = data as CRSModelType[];
 
 interface Props{
     state:boolean
     setViewState:React.Dispatch<boolean>
+}
+
+const onFilter = async (coordinate:PointCoordinate) => {
+  const res = DATA.filter(e => (
+                    e.area_bounds[0] < coordinate.long &&
+                    e.area_bounds[2] > coordinate.long &&
+                    e.area_bounds[1] < coordinate.lat &&
+                    e.area_bounds[3] > coordinate.lat
+    ))
+  return res;
 }
 
 const AreaSelector : React.FC<Props> = (prop:Props) => {
@@ -19,7 +31,7 @@ const AreaSelector : React.FC<Props> = (prop:Props) => {
   
   const OnApply = () => {
     prop.setViewState(false)
-    GetCRSFromGeoPoint(coordinate).then(res => {
+    onFilter(coordinate).then(res => {
       CRSItems.setCRSList({...CRSItems, CRSList:res});
     })
   }
@@ -39,11 +51,9 @@ const AreaSelector : React.FC<Props> = (prop:Props) => {
             <p><b>Longitude:</b>  {coordinate.long.toFixed(5)}</p>
           </Card>
         </Col>
-        <Col span={7} />
-        <Col span={10}>
+        <div style={{margin:'auto'}}>
           <Globe width={400} height={400} onSelect={e => setCoordinate(e)} />
-        </Col>
-        <Col span={7}/>
+        </div>
         </Row >
     </Modal>
   );

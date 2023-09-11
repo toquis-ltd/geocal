@@ -43,7 +43,6 @@ const CRSelector : React.FC<Props> = (prop:Props) => {
       setData(CRState.CRSList.slice(0, 30))
       return
     }
-    
     let db = CRState.CRSList
     switch (value[0]) {
         case 'type':
@@ -76,8 +75,8 @@ const CRSelector : React.FC<Props> = (prop:Props) => {
         >
         <Filter 
                 dataLength={`${data.length} / ${CRState.CRSList.length}`}
-                onFilter={onFilter}
                 onSearch={onSearch}
+                onFilter={onFilter}
                 />
         <List
           style={{maxHeight:'50vh', overflow:'auto', overflowX:'hidden' }}
@@ -89,8 +88,8 @@ const CRSelector : React.FC<Props> = (prop:Props) => {
             <List.Item key={item.auth_name + item.code}>
               <div className="item">
                 <p><b>Name: </b> {item.name}</p>
-                <p><b>Authority: </b> {item.auth_name}</p>
-                <p><b>ID Code: </b> {item.code}</p>
+                <p><b>{item.auth_name} Code: </b> {item.code}</p>
+                <p><b>Unit:</b> {item.unit}</p>
                 <p><b>Type:</b> {item.type}</p>
                 <p><b>Area of use:</b> {item.area_of_use_name}</p>
                 {(item?.projection_method_name) ? <p><b>Projection:</b> {item.projection_method_name}</p> : null}

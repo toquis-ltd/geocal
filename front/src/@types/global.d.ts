@@ -5,7 +5,7 @@ import {
     FileFormatEnum
     } from '../enums/settings';
 
-import {PJEnum} from '../enums/crs';
+import {PJEnum, UnityEnume} from '../enums/crs';
 
 declare  global {
     interface OneTransformation {
@@ -49,6 +49,8 @@ declare  global {
         deprecated: boolean
         area_of_use_name: string
         projection_method_name: string
+        area_bounds: float[]
+        unit: UnitEnume
     }
 
     interface CRSListStateType {
