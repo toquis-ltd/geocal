@@ -11,7 +11,16 @@ from pyproj import network
 from core.transform import api as transform_api
 from core.search import api as search_api
 
-app = FastAPI()
+app = FastAPI(
+    title="Mapless toquis api",
+    summary="",
+    version="0.0.1",
+    terms_of_service="https://toquis.com",
+    contact={
+        "name": "Jakob Oganesyan",
+        "email": "jakob.oganesyan@toquis.com",
+    },
+)
 
 templates = Jinja2Templates(directory="./template")
 app.mount("/static/", StaticFiles(directory="static"), name="static")

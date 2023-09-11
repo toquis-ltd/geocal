@@ -3,7 +3,7 @@ import shutil
 
 from typing import Union
 
-from fastapi import APIRouter, UploadFile, Request
+from fastapi import APIRouter, UploadFile
 from fastapi.responses import FileResponse
 
 import geopandas as gpd
@@ -36,9 +36,9 @@ def delete_all_tmp_files(path:str):
         except:
             shutil.rmtree(f'{path}{file}')
 
-@api.post("/upload")
-async def upload_file(request: Request, file:UploadFile):
-    path = f'{os.getcwd()}/tmpfile/{request.client.host}/'
+@api.post("/upload/{id}", status_code=201)
+async def upload_file(id:str, file:UploadFile):
+    path = f'{os.getcwd()}/tmpfile/{id}/'
     file_name = f'{"mapless"}{os.path.splitext(file.filename)[-1]}'
     file_path = f'{path}{file_name}'
 
@@ -54,12 +54,12 @@ async def upload_file(request: Request, file:UploadFile):
     except UploadFileException as e:
         return {'status_code':500, 'detail': str(e)}
     
-    return {'status_code':200}
+    return {'status_code':201}
 
 
-@api.post("/file")
-async def transform_file(request: Request, transformation:FileTransformatioDef):
-    dir_path:str = f'{os.getcwd()}/tmpfile/{request.client.host}/'    
+@api.post("/file/{id}", status_code=202)
+async def transform_file(id:str, transformation:FileTransformatioDef):
+    dir_path:str = f'{os.getcwd()}/tmpfile/{id}/'    
     file_extension:str = os.path.splitext(list(filter(lambda n: n.startswith('mapless'), os.listdir(dir_path)))[0])[1]
     file_name:str = f'mapless'
     file_path:str = f'{dir_path}{file_name}{file_extension}'
@@ -75,11 +75,11 @@ async def transform_file(request: Request, transformation:FileTransformatioDef):
     
     shutil.make_archive(f'{output_file_path}', 'zip', output_file_path)
 
-    return {'status': 200}
+    return {}
 
-@api.get("/download")
-async def download_transformed_file(request: Request):
-    dir_path:str = f'{os.getcwd()}/tmpfile/{request.client.host}'    
+@api.get("/download/{id}")
+async def download_transformed_file(id:str):
+    dir_path:str = f'{os.getcwd()}/tmpfile/{id}'    
     output_file_path:str = f'{dir_path}/mapless_out'
     return FileResponse(f'{output_file_path}.zip', media_type='application/octet-stream', filename='mapless-download.zip')
 
