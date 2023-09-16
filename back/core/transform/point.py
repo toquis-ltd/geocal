@@ -4,23 +4,22 @@ from pyproj import transformer
 
 from ..types.point import Point2D, Point3D, TransformatioDef
 
-class PointTransformation:
+from .comm import ABSTransformation 
+
+class PointTransformation(ABSTransformation):
     def __init__(self, point: Union[Point3D, Point2D], transformation:TransformatioDef):
+        super().__init__(transformation)
         self.point = point
-        self.pipline = transformation.pipeline
-        self.pipe_id = transformation.pipe_ids
     
-    def get_transformed_point(self) -> Point3D:
+    def transformation(self) -> Point3D:
         point = self.point.unwrap()
 
-        for source, target in zip(self.pipline[:-1], self.pipline[1:]):
+        for source, target in self._iter_transformation_pipeline(self.pipeline):
             try:
-                transformation = transformer.TransformerGroup(source,
-                                                              target).transformers[self.pipe_id[self.pipline.index(source)]]
+                transformation = transformer.TransformerGroup(source, target).transformers[self.pipe_id[self.pipeline.index(source)]]
                 point = transformation.transform(*point)
             except Exception as e:
-                print(self.pipe_id, self.pipline.index(source))
-
+                print(self.pipe_id, self.pipeline.index(source))
                 print(f"Can't transform {source} to {target} and at {self.point}")
                 raise f"Point transformation error: {e}"
             

@@ -20,6 +20,8 @@ app = FastAPI(
         "name": "Jakob Oganesyan",
         "email": "jakob.oganesyan@toquis.com",
     },
+    docs_url=None,
+    redoc_url=None,
 )
 
 templates = Jinja2Templates(directory="./template")
@@ -27,8 +29,9 @@ app.mount("/static/", StaticFiles(directory="static"), name="static")
 app.include_router(transform_api)
 app.include_router(search_api)
 
-network.set_network_enabled(True)
+host = "0.0.0.0"
 
+network.set_network_enabled(True)
 
 @app.get("/", response_class=HTMLResponse)
 async def read_item(request: Request):
@@ -40,8 +43,7 @@ try:
         ORIGINS = [
             "http://localhost",
             "http://localhost:8080",
-            "http://127.0.0.1:8000",
-            "http://mapless.toquis.com"
+            "http://127.0.0.1:8000"
         ]
         app.add_middleware(
             CORSMiddleware,
@@ -50,9 +52,9 @@ try:
             allow_methods=["*"],
             allow_headers=["*"],
         )
-        host='localhost'
-    else:
-        host = "0.0.0.0"
+        app.docs_url="docs",
+        app.redoc_url="redoc",
+        host = 'localhost'
 except:
     print("DEBUG variable is not setup")
 

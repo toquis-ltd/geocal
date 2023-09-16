@@ -1,14 +1,15 @@
 import os
 import shutil
 
-from typing import Sequence
-
-from pyproj import CRS
-
+from pyproj import CRS, transformer
+import pandas as pd
 import geopandas as gpd
 import fiona
 
 from ..types.file import FileFormatEnum
+from ..types.comm import TransformatioDef
+
+from .comm import ABSTransformation
 
 # By default, this file formats are disabled. 
 # This allow fiona to transform this formats.
@@ -16,13 +17,12 @@ fiona.drvsupport.supported_drivers['KML'] = 'rw'
 fiona.drvsupport.supported_drivers['GML'] = 'rw'
 fiona.drvsupport.supported_drivers['GPX'] = 'rw'
 
-
-class FileCoordinateTransformation:
-    def __init__(self, gdf:gpd.GeoDataFrame, pipeline:Sequence[int]) -> None:
+class FileCoordinateTransformation(ABSTransformation):
+    def __init__(self, gdf:gpd.GeoDataFrame, transformation:TransformatioDef) -> None:
+        super().__init__(transformation)
         self.gdf = gdf.rename(columns=str.lower)
-        self.pipeline = pipeline
-        self.gdf.crs = CRS.from_user_input(pipeline[0])
-
+        self.gdf.crs = CRS.from_user_input(transformation.pipeline[0])
+    
     def load_geometry(self):
         if 'lat' in self.gdf.columns:
             try:
@@ -35,22 +35,36 @@ class FileCoordinateTransformation:
             except:
                 self.gdf.geometry = gpd.points_from_xy(self.gdf['x'], self.gdf['y'])
         else:
-            print('Source file geometry')
+            print('direct geometry load')
 
     def transformation(self):
+        is_3d = False
+        df = pd.DataFrame()
+
         self.load_geometry()
 
-        for i in self.pipeline[1:]:
-            self.gdf = self.gdf.to_crs(i)
-
-        if CRS.from_user_input(self.pipeline[-1]).axis_info[0].unit_name == "degree":
-            self.gdf['lat_out'], self.gdf['lon_out'] = self.gdf.geometry.x, self.gdf.geometry.y
-        else:
-            self.gdf['x_out'], self.gdf['y_out'] = self.gdf.geometry.x, self.gdf.geometry.y
+        df['x'], df['y'] = self.gdf.geometry.x, self.gdf.geometry.y
 
         if self.gdf.geometry.has_z[1]:
-            self.gdf['z_out'] = self.gdf.geometry.z
+            df['z'] = self.gdf.geometry.z
+            is_3d = True
+
+        for source, target in self._iter_transformation_pipeline(self.pipeline):
+            func = transformer.TransformerGroup(source, target).transformers[self.pipe_id[self.pipeline.index(source)]]
+            if is_3d:
+                df['x'], df['y'], df['z'] = func.transform(df['x'].to_list(), df['y'].to_list(), df['z'].to_list())
+            else:
+                df['x'], df['y'] = func.transform(df['x'].to_list(), df['y'].to_list())
+                
+
+        if CRS.from_user_input(self.pipeline[-1]).axis_info[0].unit_name == "degree":
+            self.gdf['lat_out'], self.gdf['lon_out'] = df['x'], df['y']
+        else:
+            self.gdf['x_out'], self.gdf['y_out'] = df['x'], df['y']
         
+        if is_3d: 
+            self.gdf['z_out'] = self.gdf.geometry.z
+
         return self.gdf
         
 class FileFormatTransformation:

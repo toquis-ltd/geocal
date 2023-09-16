@@ -2,50 +2,13 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/static/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Toquis - Mapless</title>
     <link rel="stylesheet" href="/static/style.css">
-    <style>
-      #loader {
-          border: 12px solid #f3f3f3;
-          border-radius: 50%;
-          border-top: 12px solid #444444;
-          width: 70px;
-          height: 70px;
-          animation: spin 1s linear infinite;
-      }
-
-      .center {
-          position: absolute;
-          top: 0;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          margin: auto;
-      }
-
-      @keyframes spin {
-          100% {
-              transform: rotate(360deg);
-          }
-      }
-  </style>
     <script>
-      document.onreadystatechange = function () {
-          if (document.readyState !== "complete") {
-              document.querySelector(
-                  "body").style.visibility = "hidden";
-              document.querySelector(
-                  "#loader").style.visibility = "visible";
-          } else {
-              document.querySelector(
-                  "#loader").style.display = "none";
-              document.querySelector(
-                  "body").style.visibility = "visible";
-          }
-      };
-  </script>
+        // this script allow loading animation
+      document.onreadystatechange=function(){"complete"!==document.readyState?(document.querySelector("body").style.visibility="hidden",document.querySelector("#loader").style.visibility="visible"):(document.querySelector("#loader").style.display="none",document.querySelector("body").style.visibility="visible")};
+    </script>
    <script type="module" crossorigin src="/static/bundle.js"></script>
   </head>
   <body>
