@@ -10,13 +10,15 @@ class PointTransformation(ABSTransformation):
     def __init__(self, point: Union[Point3D, Point2D], transformation:TransformatioDef):
         super().__init__(transformation)
         self.point = point
+
     
     def transformation(self) -> Point3D:
         point = self.point.unwrap()
 
         for source, target in self._iter_transformation_pipeline(self.pipeline):
             try:
-                transformation = transformer.TransformerGroup(source, target).transformers[self.pipe_id[self.pipeline.index(source)]]
+                print(source, target, point)
+                transformation = transformer.TransformerGroup(source, target, always_xy=True).transformers[self.pipe_id[self.pipeline.index(source)]]
                 point = transformation.transform(*point)
             except Exception as e:
                 print(self.pipe_id, self.pipeline.index(source))

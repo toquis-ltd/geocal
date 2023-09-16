@@ -38,34 +38,44 @@ class FileCoordinateTransformation(ABSTransformation):
             print('direct geometry load')
 
     def transformation(self):
-        is_3d = False
-        df = pd.DataFrame()
-
         self.load_geometry()
+
+        for source, target in self._iter_transformation_pipeline(self.pipeline):
+            func = transformer.TransformerGroup(source, target, always_xy=True).transformers[self.pipe_id[self.pipeline.index(source)]]
+            self.__transform(func)
+        
+        if CRS.from_user_input(self.pipeline[-1]).axis_info[0].unit_name == "degree":
+            self.gdf['lat_out'], self.gdf['lon_out'] = self.gdf.geometry.x, self.gdf.geometry.y
+        else:
+            self.gdf['x_out'], self.gdf['y_out'] = self.gdf.geometry.x, self.gdf.geometry.y
+        
+        if self.gdf.geometry.has_z[1]:
+            self.gdf['z_out'] = self.gdf.geometry.z
+
+        return self.gdf
+    
+    def __transform(self, t_func):
+        df = pd.DataFrame()
+        is_3d = False
 
         df['x'], df['y'] = self.gdf.geometry.x, self.gdf.geometry.y
 
         if self.gdf.geometry.has_z[1]:
-            df['z'] = self.gdf.geometry.z
             is_3d = True
+            df['z'] = self.gdf.geometry.z
 
-        for source, target in self._iter_transformation_pipeline(self.pipeline):
-            func = transformer.TransformerGroup(source, target).transformers[self.pipe_id[self.pipeline.index(source)]]
-            if is_3d:
-                df['x'], df['y'], df['z'] = func.transform(df['x'].to_list(), df['y'].to_list(), df['z'].to_list())
-            else:
-                df['x'], df['y'] = func.transform(df['x'].to_list(), df['y'].to_list())
-                
-
-        if CRS.from_user_input(self.pipeline[-1]).axis_info[0].unit_name == "degree":
-            self.gdf['lat_out'], self.gdf['lon_out'] = df['x'], df['y']
+        if is_3d:
+            df[['x', 'y', 'z']] = df.apply(
+                                            lambda row: pd.Series(t_func.transform(row['x'], row['y'], row['z'])), 
+                                            axis=1
+                                            )
+            self.gdf.geometry = gpd.points_from_xy(df['x'], df['y'], df['z'])
         else:
-            self.gdf['x_out'], self.gdf['y_out'] = df['x'], df['y']
-        
-        if is_3d: 
-            self.gdf['z_out'] = self.gdf.geometry.z
-
-        return self.gdf
+            df[['x', 'y']] = df.apply(
+                                        lambda row: pd.Series(t_func.transform(row['x'], row['y'])),
+                                        axis=1
+                                    )
+            self.gdf.geometry = gpd.points_from_xy(df['x'], df['y'])
         
 class FileFormatTransformation:
     """This class wraps the transformation between files formats and manage files"""

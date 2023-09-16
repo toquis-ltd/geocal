@@ -16,4 +16,4 @@ class ABSTransformation:
     @classmethod
     def _iter_transformation_pipeline(cls, pipeline:Sequence[int]):
         for i, j in zip(pipeline[:-1], pipeline[1:]):
-            yield j, i
+            yield i, j
