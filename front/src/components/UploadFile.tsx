@@ -14,7 +14,7 @@ const { Dragger } = Upload;
 const uuid = () => {
   return Array
    .from(Array(16))
-   .map(e => Math.floor(Math.random() * 255)
+   .map(() => Math.floor(Math.random() * 255)
    .toString(16)
    .padStart(2,"0"))
    .join('')
@@ -23,7 +23,7 @@ const uuid = () => {
 const FileUploader : React.FC = () => {
   const state = React.useContext<SettingStateType>(SettingsContext)
   const [fileList, setFileList] = React.useState<UploadFile[]>([]);
-  const [user_id, setID] = useStickyState(uuid(), 'userID');
+  const [user_id, ] = useStickyState(uuid(), 'userID');
 
   const props: UploadProps = {
     name: 'file',
@@ -54,6 +54,7 @@ const FileUploader : React.FC = () => {
 
   const onTransform = () => {
     TransformedFileDownloadRequest(state, user_id);
+    onDelete()
   }
 
   return (
@@ -74,6 +75,7 @@ const FileUploader : React.FC = () => {
               children={'Delete'}
             />
             <Button
+            disabled={fileList.length<1}
             style={{margin:'5px'}}
             size={'large'}
             type="primary"
