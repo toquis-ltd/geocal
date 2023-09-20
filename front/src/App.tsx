@@ -8,7 +8,6 @@ import Main from './pages/main';
 
 import {SettingsContext} from './context/settings'
 import {CRSContext} from './context/crs'
-import { isMobile } from "react-device-detect";
 
 import {
   NumberOfTranfromationsEnum,
@@ -27,10 +26,9 @@ const App : React.FC = () => {
     isHeightIncluded:false,
     transformationsNumber: NumberOfTranfromationsEnum.One,
     dataOutputFormat: FormatVerificationOutputEnum.DecimalDegrees,
-    outputFile: FileFormatEnum.geojson,
+    outputFile: FileFormatEnum.csv,
     transformationsItems: [],
     pipeIds:[0, 0],
-    areaOfUse: {lat:0.0, long:0.0, height:0.0},
     setState: () => {},
   }  as SettingStateType, 'AppState');
   

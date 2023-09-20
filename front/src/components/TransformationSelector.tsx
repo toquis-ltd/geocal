@@ -9,12 +9,12 @@ import { SettingsContext } from '../context/settings';
 interface ViewProps {
   index:number
   isOpen:boolean,
-  data:string[]
+  data:TransformationDefinition[]
   toggleView:React.Dispatch<boolean>
 }
 
 interface SelectorProps {
-  availableTransformations:string[]
+  availableTransformations:TransformationDefinition[]
   index:number
 }
 
@@ -46,7 +46,11 @@ const View : React.FC<ViewProps> = (props) => {
           renderItem={(item, index) => (
             <List.Item key={index}>
               <div className="item" style={{width:'100%', display:'flex', justifyContent:"space-between"}}>
-                <p>{item}</p>
+                <div className="item">
+                  <p><b>Name: </b>{item.name}</p>
+                  <p><b>EPSG: </b>{item.code}</p>
+                  <p><b>Area: </b>{item.area[0]}N - {item.area[2]}N {item.area[1]}E - {item.area[3]}E</p>
+                </div>
                 <Button
                       size='large'
                       type="primary"
@@ -58,6 +62,15 @@ const View : React.FC<ViewProps> = (props) => {
           )} />
           <Divider />
       </Modal>
+  )
+}
+const display = (item:TransformationDefinition) => {
+  return (
+  <>
+  <p><b>Name: </b>{item.name}</p>
+  <p><b>EPSG: </b>{item.code}</p>
+  <p><b>Area: </b>{item.area[0]}N - {item.area[2]}N {item.area[1]}E - {item.area[3]}E</p>
+  </>
   )
 }
 
@@ -74,7 +87,10 @@ const TransformationSelector : React.FC<SelectorProps> = ({availableTransformati
       ]}>
     <Meta
       title='Transformation'
-      description={(availableTransformations != undefined && availableTransformations?.length > 0) ? availableTransformations[settings.pipeIds[index]]:"No transformation found"}
+      description={
+                    (availableTransformations != undefined && availableTransformations?.length > 0) ? 
+                    display(availableTransformations[settings.pipeIds[index]]):"No transformation found"
+                  }
     />
     </Card>
     <View toggleView={toggleView} isOpen={isViewed} data={availableTransformations} index={index} />

@@ -32,8 +32,6 @@ interface PointAPI {
   z?:string
 };
 
-type pipesList = [string[], string[]];
-
 export const TransformedPoint = async (coordinate:PointAPI, settings:SettingStateType) => {
   let input:PointAPI;
   let is2D:boolean = true;
@@ -97,7 +95,7 @@ export const TransformationsList = async (props:SettingStateType) => {
     })
     .then(res => res.json())
     .then(res => {
-      let response = ((res!.transformation_pipe) as pipesList)
+      let response = ((res!.transformation_pipe) as [TransformationDefinition[], TransformationDefinition[]])
       return response
     })
 }

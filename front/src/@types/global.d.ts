@@ -8,6 +8,13 @@ import {
 import {PJEnum, UnityEnume} from '../enums/crs';
 
 declare  global {
+
+    interface TransformationDefinition {
+        name: string
+        code: string
+        area: number[]
+    }
+
     interface OneTransformation {
         sourceEPSG: number
         targetEPSG: number
@@ -63,7 +70,6 @@ declare  global {
         transformationsNumber:NumberOfTranfromationsEnum,
         dataOutputFormat: FormatVerificationOutputEnum,
         outputFile: FileFormatEnum,
-        areaOfUse: PointCoordinate
         transformationsItems:CRSModelType[]
         pipeIds:number[]
         setState:(c:SettingStateType)=>void,

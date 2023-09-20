@@ -12,3 +12,19 @@ body {
 box-sizing: inherit;
 margin: 0;
 }
+
+#loader {
+    border: 12px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 12px solid #444444;
+    animation: spin 1s linear infinite;
+    width: 70px;
+    height: 70px;
+    margin: calc(50vh - 35px) calc(50vw - 35px);
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}

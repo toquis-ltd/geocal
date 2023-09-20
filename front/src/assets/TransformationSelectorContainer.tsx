@@ -18,7 +18,7 @@ const sizes = [
 const TransformationSelectorContainer:React.FC = () => {
     const settings = React.useContext(SettingsContext);
     const isSecondInluded = settings.transformationsNumber == NumberOfTranfromationsEnum.Two
-    const [state, setState] = React.useState<[string[], string[]]>([[], []])
+    const [state, setState] = React.useState<[TransformationDefinition[], TransformationDefinition[]]>([[], []])
 
     React.useEffect(()=>{
         if ((settings.transformationsItems.length)<=1) {
@@ -37,7 +37,8 @@ const TransformationSelectorContainer:React.FC = () => {
       }, 
       [     settings.transformationsItems[0], 
             settings.transformationsItems[1],
-            settings.transformationsItems[2]])
+            settings.transformationsItems[2],
+            settings.transformationsNumber])
       
     return (
     <>
