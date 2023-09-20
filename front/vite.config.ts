@@ -10,10 +10,11 @@ export default defineConfig({
     ignored: ['!**/node_modules/your-package-name/**'],
   },
   build: {
+    cssMinify:true,
     emptyOutDir: true,
+    cssCodeSplit: false,
     outDir : '../back/static',
     pulicDir: '../back/template',
-    cssCodeSplit: false,
     rollupOptions: {
       input: {
         index: "./src/main.tsx"

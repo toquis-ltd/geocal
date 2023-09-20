@@ -45,3 +45,5 @@ uvicorn==0.23.2
 uvloop==0.17.0
 watchfiles==0.20.0
 websockets==11.0.3
+opentelemetry-instrumentation-fastapi==0.41b0
+uptrace==1.20.0

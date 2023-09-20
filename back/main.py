@@ -6,6 +6,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
+from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
 from pyproj import network
 
 from core.transform import api as transform_api
@@ -23,6 +24,7 @@ app = FastAPI(
     docs_url=None,
     redoc_url=None,
 )
+FastAPIInstrumentor(app)
 
 templates = Jinja2Templates(directory="./template")
 app.mount("/static/", StaticFiles(directory="static"), name="static")
@@ -52,8 +54,8 @@ try:
         )
         app.docs_url="docs",
         app.redoc_url="redoc",
+
+        if __name__ == "__main__":
+            uvicorn.run("main:app", host='localhost', port=8000, reload=True)
 except:
     print("DEBUG variable is not setup")
-
-if __name__ == "__main__":
-    uvicorn.run("main:app", host='localhost', port=8000, reload=True)
