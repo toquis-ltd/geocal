@@ -29,8 +29,6 @@ app.mount("/static/", StaticFiles(directory="static"), name="static")
 app.include_router(transform_api)
 app.include_router(search_api)
 
-host = "0.0.0.0"
-
 network.set_network_enabled(True)
 
 @app.get("/", response_class=HTMLResponse)
@@ -54,9 +52,8 @@ try:
         )
         app.docs_url="docs",
         app.redoc_url="redoc",
-        host = 'localhost'
 except:
     print("DEBUG variable is not setup")
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host=host, port=8000, reload=True)
+    uvicorn.run("main:app", host='localhost', port=8000, reload=True)

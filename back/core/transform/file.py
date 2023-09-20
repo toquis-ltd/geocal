@@ -17,42 +17,37 @@ fiona.drvsupport.supported_drivers['KML'] = 'rw'
 fiona.drvsupport.supported_drivers['GML'] = 'rw'
 fiona.drvsupport.supported_drivers['GPX'] = 'rw'
 
+
+def load_geometry(gdf) -> gpd.GeoDataFrame:
+    df = gpd.GeoDataFrame()
+
+    if 'lat' in gdf.columns:
+        try:
+            df.geometry = gpd.points_from_xy(gdf['lon'], gdf['lat'], gdf['z'])
+        except:
+            df.geometry = gpd.points_from_xy(gdf['lon'], gdf['lat'])
+    elif 'x' in gdf.columns:
+        try:
+            df.geometry = gpd.points_from_xy(gdf['x'], gdf['y'], gdf['z'])
+        except:
+            df.geometry = gpd.points_from_xy(gdf['x'], gdf['y'])
+    else:
+        df = df.set_geometry(gdf.geometry)
+        print('direct geometry load')
+    return df
+
 class FileCoordinateTransformation(ABSTransformation):
     def __init__(self, gdf:gpd.GeoDataFrame, transformation:TransformatioDef) -> None:
         super().__init__(transformation)
-        self.gdf = gdf.rename(columns=str.lower)
+        self.gdf = gdf.set_geometry(load_geometry(gdf.rename(columns=str.lower)).geometry)
         self.gdf.crs = CRS.from_user_input(transformation.pipeline[0])
     
-    def load_geometry(self):
-        if 'lat' in self.gdf.columns:
-            try:
-                self.gdf.geometry = gpd.points_from_xy(self.gdf['lon'], self.gdf['lat'], self.gdf['z'])
-            except:
-                self.gdf.geometry = gpd.points_from_xy(self.gdf['lon'], self.gdf['lat'])
-        elif 'x' in self.gdf.columns:
-            try:
-                self.gdf.geometry = gpd.points_from_xy(self.gdf['x'], self.gdf['y'], self.gdf['z'])
-            except:
-                self.gdf.geometry = gpd.points_from_xy(self.gdf['x'], self.gdf['y'])
-        else:
-            print('direct geometry load')
-
     def transformation(self):
-        self.load_geometry()
-
         for source, target in self._iter_transformation_pipeline(self.pipeline):
             func = transformer.TransformerGroup(source, target, always_xy=True).transformers[self.pipe_id[self.pipeline.index(source)]]
             self.__transform(func)
-        
-        if CRS.from_user_input(self.pipeline[-1]).axis_info[0].unit_name == "degree":
-            self.gdf['lat_out'], self.gdf['lon_out'] = self.gdf.geometry.x, self.gdf.geometry.y
-        else:
-            self.gdf['x_out'], self.gdf['y_out'] = self.gdf.geometry.x, self.gdf.geometry.y
-        
-        if self.gdf.geometry.has_z[1]:
-            self.gdf['z_out'] = self.gdf.geometry.z
 
-        return self.gdf
+        return self._get_output_df()
     
     def __transform(self, t_func):
         df = pd.DataFrame()
@@ -76,11 +71,25 @@ class FileCoordinateTransformation(ABSTransformation):
                                         axis=1
                                     )
             self.gdf.geometry = gpd.points_from_xy(df['x'], df['y'])
+    
+    def _get_output_df(self):
+        df = gpd.GeoDataFrame()
         
+        if CRS.from_user_input(self.pipeline[-1]).axis_info[0].unit_name == "degree":
+            df['lon'], df['lat']  = self.gdf.geometry.x, self.gdf.geometry.y
+        else:
+            df['x'], df['y'] = self.gdf.geometry.x, self.gdf.geometry.y
+        
+        if self.gdf.geometry.has_z[1]:
+            df['z'] = self.gdf.geometry.z
+        
+        df = df.set_geometry(self.gdf.geometry)
+        return df
+
 class FileFormatTransformation:
     """This class wraps the transformation between files formats and manage files"""
     def __init__(self, gdf:gpd.GeoDataFrame, output_file_path:str, target_file_format:FileFormatEnum) -> None:
-        self.gdf = gdf
+        self.gdf = gdf.set_geometry(load_geometry(gdf.rename(columns=str.lower)).geometry)
         self.output_path = output_file_path
         self.target_file_format = target_file_format
     
@@ -99,7 +108,7 @@ class FileFormatTransformation:
             case self.target_file_format.gpx:
                 self.gdf.to_file(self.output_path+'/mapless.gpx', driver='GPX')
             case self.target_file_format.csv:
-                self.gdf = self.gdf.set_geometry('geometry')
+                self.gdf = self.gdf.drop('geometry', axis=1)
                 self.gdf.to_csv(self.output_path+'/mapless.csv', index=False)
             
             ### They are not working

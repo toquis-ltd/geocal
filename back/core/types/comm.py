@@ -6,5 +6,11 @@ class TransformatioDef(BaseModel):
     pipeline:Sequence[int]
     pipe_ids:Sequence[int]
 
-class TransformationList(BaseModel):
-    transformation_pipe: List[Sequence[str]] = []
+
+class TransformationInfo(BaseModel):
+    name:str
+    code:str
+    area:Sequence[float]
+
+class TransformationInfoList(BaseModel):
+    transformation_pipe: List[Sequence[TransformationInfo]] = []

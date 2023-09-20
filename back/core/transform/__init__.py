@@ -25,9 +25,9 @@ def verify_uploaded_file(path: str):
     
     try:
         gdf:gpd.GeoDataFrame = gpd.read_file(path)
-    except:
+    except Exception as e:
+        print(e)
         raise UploadFileException("File is unreadable or corrupted")
-
 
 def delete_all_user_tmp_files(path:str):
     for file in os.listdir(path):
@@ -66,8 +66,9 @@ async def transform_file(id:str, transformation:FileTransformatioDef):
     file_path:str = f'{path}/{file_name}{file_extension}'
     output_folder_path:str = f'{path}/{file_name}_out'
 
+    gdf:gpd.GeoDataFrame = gpd.read_file(file_path)
+
     if len(transformation.pipeline) > 1:
-        gdf:gpd.GeoDataFrame = gpd.read_file(file_path)
         gdf = FileCoordinateTransformation(gdf, transformation).transformation()
  
     file_format_transformation = FileFormatTransformation(gdf, output_folder_path, transformation.file_format)

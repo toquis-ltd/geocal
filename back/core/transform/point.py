@@ -24,7 +24,7 @@ class PointTransformation(ABSTransformation):
                 print(self.pipe_id, self.pipeline.index(source))
                 print(f"Can't transform {source} to {target} and at {self.point}")
                 raise f"Point transformation error: {e}"
-            
+        
         if isinstance(self.point, Point3D):
             return Point3D(x=point[0], y=point[1], z=point[2])
         else:
