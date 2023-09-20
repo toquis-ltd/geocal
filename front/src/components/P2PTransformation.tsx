@@ -20,19 +20,19 @@ interface PointCoordinateInput {
 
 const InputPlaceHolder = (item:CRSModelType) => {
   if (item?.unit === UnitEnume.DEGREE) {
-    return ['Latitude', 'Longitude']
+    return ['Longitude', 'Latitude']
   }
   return ['X', 'Y']
 }
 
-const lineStyle = {
+const lineStyle:React.CSSProperties = {
   display:'grid', 
   gridTemplateColumns: '3fr 6fr',
   width:'15vw', 
   minWidth:'200px'
 };
 
-const transformationStyle = {
+const transformationStyle:React.CSSProperties = {
   display:'flex',
   flexDirection: 'column',
   justifyContent:'center', 
@@ -45,7 +45,7 @@ const P2PTransformation : React.FC = () => {
   const [input, setInput] = React.useState<PointCoordinateInput>({x:'', y:''})
   const [output, setOutput] = React.useState<PointCoordinateInput>({x:'', y:''})
   const inputHolders:string[] = InputPlaceHolder(settings.transformationsItems[0])
-  const outputHolders:string[] = InputPlaceHolder(settings.transformationsItems[settings.transformationsItems.length-1])
+  const outputHolders:string[] = InputPlaceHolder(settings.transformationsItems[settings.transformationsNumber+1])
 
   const transformPoint = () => {
       setOutput({x:'Loading...', y:'Loading...' , z:'Loading...'});
