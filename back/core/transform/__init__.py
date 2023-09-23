@@ -48,10 +48,11 @@ async def upload_file(id:str, file:UploadFile):
 
     with open(file_path, 'wb+') as local_file:
         local_file.write(file.file.read())
-    
+
     try:
         verify_uploaded_file(file_path)
     except UploadFileException as e:
+        delete_all_user_tmp_files(path=path)
         return {'status_code':500, 'detail': str(e)}
     
     return {'status_code':201}
@@ -61,7 +62,7 @@ async def upload_file(id:str, file:UploadFile):
 async def transform_file(id:str, transformation:FileTransformatioDef):
     path:str = f'{os.getcwd()}/tmpfile/{id}'
 
-    file_extension:str = os.path.splitext(list(filter(lambda n: n.startswith('mapless'), os.listdir(path)))[0])[1]
+    file_extension:str = os.path.splitext(os.listdir(path)[0])[1]
     file_name:str = f'mapless'
     file_path:str = f'{path}/{file_name}{file_extension}'
     output_folder_path:str = f'{path}/{file_name}_out'
@@ -75,7 +76,7 @@ async def transform_file(id:str, transformation:FileTransformatioDef):
     file_format_transformation.transformation()
     
     shutil.make_archive(f'{output_folder_path}', 'zip', output_folder_path)
-    return {}
+    return {'status_code':'202'}
 
 @api.get("/download/{id}")
 async def download_transformed_file(id:str, background_tasks: BackgroundTasks):

@@ -2,12 +2,13 @@ import os
 import shutil
 
 from pyproj import CRS, transformer
+
 import pandas as pd
 import geopandas as gpd
 import fiona
 
 from ..types.file import FileFormatEnum
-from ..types.comm import TransformatioDef
+from ..types.comm import TransformatioDef, Unit
 
 from .comm import ABSTransformation
 
@@ -32,9 +33,17 @@ def load_geometry(gdf) -> gpd.GeoDataFrame:
         except:
             df.geometry = gpd.points_from_xy(gdf['x'], gdf['y'])
     else:
-        df = df.set_geometry(gdf.geometry)
         print('direct geometry load')
+        return gdf
     return df
+
+def mk_output_dir(path) -> None:
+    #create ouput file directory
+    try:
+        os.mkdir(f'{path}')
+    except:
+        shutil.rmtree(f'{path}')
+        os.mkdir(f'{path}')
 
 class FileCoordinateTransformation(ABSTransformation):
     def __init__(self, gdf:gpd.GeoDataFrame, transformation:TransformatioDef) -> None:
@@ -42,24 +51,19 @@ class FileCoordinateTransformation(ABSTransformation):
         self.gdf = gdf.set_geometry(load_geometry(gdf.rename(columns=str.lower)).geometry)
         self.gdf.crs = CRS.from_user_input(transformation.pipeline[0])
     
-    def transformation(self):
+    def transformation(self) -> gpd.GeoDataFrame:
         for source, target in self._iter_transformation_pipeline(self.pipeline):
             func = transformer.TransformerGroup(source, target, always_xy=True).transformers[self.pipe_id[self.pipeline.index(source)]]
             self.__transform(func)
-
         return self._get_output_df()
     
-    def __transform(self, t_func):
+    def __transform(self, t_func) -> None:
         df = pd.DataFrame()
-        is_3d = False
 
         df['x'], df['y'] = self.gdf.geometry.x, self.gdf.geometry.y
 
         if self.gdf.geometry.has_z[1]:
-            is_3d = True
             df['z'] = self.gdf.geometry.z
-
-        if is_3d:
             df[['x', 'y', 'z']] = df.apply(
                                             lambda row: pd.Series(t_func.transform(row['x'], row['y'], row['z'])), 
                                             axis=1
@@ -72,14 +76,13 @@ class FileCoordinateTransformation(ABSTransformation):
                                     )
             self.gdf.geometry = gpd.points_from_xy(df['x'], df['y'])
     
-    def _get_output_df(self):
+    def _get_output_df(self) -> gpd.GeoDataFrame:
         df = gpd.GeoDataFrame()
-        
-        if CRS.from_user_input(self.pipeline[-1]).axis_info[0].unit_name == "degree":
+        output_unit = CRS.from_user_input(self.pipeline[-1]).axis_info[0].unit_name
+        if output_unit == Unit.DEGREE or output_unit == Unit.GRAD:
             df['lon'], df['lat']  = self.gdf.geometry.x, self.gdf.geometry.y
         else:
             df['x'], df['y'] = self.gdf.geometry.x, self.gdf.geometry.y
-        
         if self.gdf.geometry.has_z[1]:
             df['z'] = self.gdf.geometry.z
         
@@ -93,8 +96,8 @@ class FileFormatTransformation:
         self.output_path = output_file_path
         self.target_file_format = target_file_format
     
-    def transformation(self):
-        self.mk_output_dir()
+    def transformation(self) -> None:
+        mk_output_dir(self.output_path)
 
         match self.target_file_format:
             case self.target_file_format.shp:
@@ -114,11 +117,3 @@ class FileFormatTransformation:
             ### They are not working
             case [ self.target_file_format.nc  | self.target_file_format.tif ]:
                 raise "Can't Transformat for the moment into this formats"
-    
-    def mk_output_dir(self):
-        #create ouput file directory
-        try:
-            os.mkdir(f'{self.output_path}')
-        except:
-            shutil.rmtree(f'{self.output_path}')
-            os.mkdir(f'{self.output_path}')
