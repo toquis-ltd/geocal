@@ -28,7 +28,7 @@ const BasicSettings : React.FC = () => {
           title="Geodetic calculator"
           style={{ minWidth:'300px', width:'30vw', margin:'auto', }}
           headStyle={{ textAlign:'center' }} 
-          bodyStyle={{backgroundColor:'#f5f5f5', padding:'15px'}}>
+          bodyStyle={{ padding:'15px'}}>
           
           <div className="transformations-settings" style={{margin:'5px'}}>
             <span className="label" style={{marginRight:'5px'}}>Elevation/Z:</span>

@@ -12,6 +12,7 @@ import {
 import {isMobile} from 'react-device-detect';
 
 import AreaSelector from '../AreaSelector'
+import {UnitEnume, PJEnum} from '../../enums/crs'
 
 import data from '../../data/crs.json'
 
@@ -27,34 +28,27 @@ interface Props{
   onFilter: (value: (string | number)[] | undefined) => void;
 }
 
+interface Item {
+  value:string
+  label:string
+}
 
+function getAll<T>(e: T[]):Item[]  {
+  let res: Item[] = [];
+  e.forEach(val => res.push({value:val, label:val} as Item))
+  return res
+}
 
 const filterOptions: Option[] = [
     {
       value: 'type',
       label: 'Type',
-      children: [
-        {
-          value: 'PROJECTED_CRS',
-          label: 'PROJECTED CRS',
-        },
-        {
-          value: 'GEOGRAPHIC_2D_CRS',
-          label: 'GEOGRAPHIC 2D CRS',
-        },
-        {
-          value: 'GEOGRAPHIC_3D_CRS',
-          label: 'GEOGRAPHIC 3D CRS',
-        },
-        {
-          value: 'VERTICAL_CRS',
-          label: 'VERTICAL CRS',
-        },
-        {
-          value:'COMPOUND_CRS',
-          label:'COMPOUND CRS',
-        }
-      ],
+      children: getAll(Object.values(PJEnum))
+    },
+    {
+      value: 'unit',
+      label: 'Unit',
+      children: getAll(Object.values(UnitEnume))
     },
 ]
 

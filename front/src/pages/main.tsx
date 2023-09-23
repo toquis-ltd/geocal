@@ -12,7 +12,6 @@ const Main : React.FC = () => {
     <div 
           className="container" 
           style={{margin:'auto', width:'90%', padding:'5px'}}>
-      <div className="inner"></div>
         <Row gutter={[16, 32]} >
           <BasicSettings />
           <CRSelectorContainer/>

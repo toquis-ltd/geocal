@@ -19,7 +19,12 @@ import {useStickyState} from './hooks';
 
 const { Content, Footer } = Layout;
 
-const AppStyle = { margin: '20px 5px', backgroundColor: '#ffffff', borderRadius: "15px", minHeight: '70vh'}
+const AppStyle = { 
+    margin: '20px 5px', 
+    backgroundColor: 'rgb(245 245 245)',
+    borderRadius: "15px",
+    minHeight: '70vh'
+}
 
 const App : React.FC = () => {
   const [state, setState] = useStickyState<SettingStateType>({

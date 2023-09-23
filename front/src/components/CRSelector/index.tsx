@@ -26,7 +26,6 @@ const CRSelector : React.FC<Props> = (prop:Props) => {
   const [viewData, setViewData] = React.useState<CRSModelType[]>([])
   const [isLoading, setLoading] = React.useState<boolean>(false);
 
-
   const OnApply = (crs:CRSModelType) => {
     setViewData(data.slice(0, 30));
     prop.onSelect(crs);
@@ -43,11 +42,15 @@ const CRSelector : React.FC<Props> = (prop:Props) => {
       setData(CRState.CRSList.slice(0, 30))
       return
     }
+
     let db = CRState.CRSList
     switch (value[0]) {
         case 'type':
-          db = db.filter(item => value[1] === item.type.toString())
+          db = db.filter(item => value[1] === item.type)
           break
+        case 'unit':
+            db = db.filter(item => value[1] === item.unit)
+            break
     }
     setData(db)
   }
