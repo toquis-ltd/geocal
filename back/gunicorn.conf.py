@@ -10,5 +10,6 @@ def post_fork(server, worker):
         deployment_environment="production",
     )
     tracer = trace.get_tracer("mapless", "0.0.1")
+    print("post fork is running")
 
 

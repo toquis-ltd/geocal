@@ -52,5 +52,7 @@ network.set_network_enabled(True)
 async def read_item(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
+
 if __name__ == "__main__":
     uvicorn.run("main:app", host='localhost', port=8000, reload=True)
+
