@@ -11,21 +11,24 @@ class PointTransformation(ABSTransformation):
         super().__init__(transformation)
         self.point = point
 
-    
     def transformation(self) -> Point3D:
         point = self.point.unwrap()
-
+        print(point)
         for source, target in self._iter_transformation_pipeline(self.pipeline):
             try:
-                print(source, target, point)
-                transformation = transformer.TransformerGroup(source, target, always_xy=True).transformers[self.pipe_id[self.pipeline.index(source)]]
+                transformation = transformer.TransformerGroup(
+                                                              source, 
+                                                              target, 
+                                                              always_xy=True).transformers[
+                                                                  self.pipe_id[self.pipeline.index(source)]
+                                                                ]
                 point = transformation.transform(*point)
             except Exception as e:
                 print(self.pipe_id, self.pipeline.index(source))
                 print(f"Can't transform {source} to {target} and at {self.point}")
                 raise f"Point transformation error: {e}"
-        
-        if isinstance(self.point, Point3D):
-            return Point3D(x=point[0], y=point[1], z=point[2])
+        print(point)
+        if len(point) == 3:
+            return Point3D(x=f'{point[0]:.8f}', y=f'{point[1]:.8f}', z=f'{point[2]:.8f}')
         else:
-            return Point2D(x=point[0], y=point[1])
+            return Point2D(x=f'{point[0]:.8f}', y=f'{point[1]:.8f}')
