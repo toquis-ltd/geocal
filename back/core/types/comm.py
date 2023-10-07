@@ -1,12 +1,21 @@
-from typing import Sequence, List
+from typing import Sequence, List, Union, Optional
 from enum import Enum
 
 from pydantic import BaseModel
 
+
+class ResultFormEnum(Enum):
+    DD = 'DD'
+    DD_MM = 'DD MM'
+    DD_MM_SS = 'DD MM SS'
+    DDdnMM = 'DD-MM'
+    DDdnMMdnSS = 'DD-MM-SS'
+    DDdtMM = 'DD.MM'
+
 class TransformatioDef(BaseModel):
     pipeline:Sequence[int]
     pipe_ids:Sequence[int]
-
+    result_form:ResultFormEnum
 
 class TransformationInfo(BaseModel):
     name:str
@@ -16,7 +25,7 @@ class TransformationInfo(BaseModel):
 class TransformationInfoList(BaseModel):
     transformation_pipe: List[Sequence[TransformationInfo]] = []
 
-class Unit(Enum):
+class UnitEnum(Enum):
     KILOMETRE = "kilometre" 
     US_SURVEY_FOOT = "US survey foot" 
     BRITISH_YARD_SEARS_1922 = "British yard (Sears 1922)" 
