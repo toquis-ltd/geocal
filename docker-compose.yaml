@@ -12,6 +12,7 @@ services:
     entrypoint: ["sh", "./entrypoint.sh"]
     environment:
       - DEBUG=0
+      - UPTRACE_DSN=https://vBQE3_FQ0eyZkoSFE5iCrA@api.uptrace.dev/2427
 
 volumes:
   static:
