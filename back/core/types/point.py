@@ -4,10 +4,6 @@ from pydantic import BaseModel
 from lat_lon_parser import parse
 
 
-class TransformatioDef(BaseModel):
-    pipeline:Sequence[int]
-    pipe_ids:Sequence[int]
-
 class Point2D(BaseModel):
     x:str
     y:str

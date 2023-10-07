@@ -1,12 +1,14 @@
 import os
 import shutil
 
-from typing import Union
+from typing import Union, Optional
 
 from fastapi import APIRouter, UploadFile, BackgroundTasks
 from fastapi.responses import FileResponse
 
+import asyncio
 import geopandas as gpd
+
 
 from ..types.comm import TransformatioDef
 from ..types.file import FileTransformatioDef
@@ -20,9 +22,15 @@ api = APIRouter(prefix="/api/transform")
 class UploadFileException(Exception):
     pass
 
+class FileTransformationException(Exception):
+    pass
+
 def verify_uploaded_file(path: str):
     if os.path.getsize(path) == 0:
         raise UploadFileException('Uploaded file is empty')
+    
+    if os.path.splitext(path)[-1] == '.xlsx':
+        raise UploadFileException('Exel file are not accepted please convert to csv')
     try:
         gdf:gpd.GeoDataFrame = gpd.read_file(path)
         gdf = load_geometry(gdf)
@@ -30,7 +38,10 @@ def verify_uploaded_file(path: str):
         print(e)
         raise UploadFileException("File is unreadable or corrupted")
 
-def delete_all_user_tmp_files(path:str):
+async def delete_all_user_tmp_files(path:str, timer:Optional[int]= None):
+    if timer != None:
+        await asyncio.sleep(timer)
+
     for file in os.listdir(path):
         try:
             os.remove(f'{path}/{file}')
@@ -38,14 +49,19 @@ def delete_all_user_tmp_files(path:str):
             shutil.rmtree(f'{path}/{file}')
 
 @api.post("/upload/{id}", status_code=201)
-async def upload_file(id:str, file:UploadFile):
+async def upload_file(id:str, file:UploadFile, background_tasks: BackgroundTasks):
+    """This fonction create folder with uploaded file, id is a random string of any length
+    all file are stokced in tmpfile folder, after creation"""
     path = f'{os.getcwd()}/tmpfile/{id}'
     file_name = f'{"mapless"}{os.path.splitext(file.filename)[-1]}'
     file_path = f'{path}/{file_name}'
     
     if not os.path.exists(path):
         os.makedirs(path)
-    delete_all_user_tmp_files(path=path)
+    
+    #In normal cases, this file cleaning is useless
+    #but, files can persist during the development
+    await delete_all_user_tmp_files(path)
 
     with open(file_path, 'wb+') as local_file:
         local_file.write(file.file.read())
@@ -53,8 +69,17 @@ async def upload_file(id:str, file:UploadFile):
     try:
         verify_uploaded_file(file_path)
     except UploadFileException as e:
-        delete_all_user_tmp_files(path=path)
+        await delete_all_user_tmp_files(path)
         return {'status_code':500, 'detail': str(e)}
+    
+    # In normal cases, files are deleted upon download, but
+    # if the user doesn't download the file, it will be deleted in 6 hours
+    # hot reload waits for the end of this task, so for development purposes, I've disabled it.
+    # I'm also not sure if it will do the same on the server, so maybe I have to find a better
+    # solution for scheduled cleaning of unused data
+    # if not bool(int(os.environ.get("DEBUG"))):
+    background_tasks.add_task(func=delete_all_user_tmp_files, path=path, timer=60)
+    
     return {'status_code':201}
 
 
@@ -70,10 +95,14 @@ async def transform_file(id:str, transformation:FileTransformatioDef):
     gdf:gpd.GeoDataFrame = gpd.read_file(file_path)
 
     if len(transformation.pipeline) > 1:
-        gdf = FileCoordinateTransformation(gdf, transformation).transformation()
- 
-    file_format_transformation = FileFormatTransformation(gdf, transformation.file_format, output_folder_path)
-    file_format_transformation.transformation()
+        try:
+            gdf = FileCoordinateTransformation(gdf, transformation).transformation()
+        except Exception as e:
+            await delete_all_user_tmp_files(path)
+            print(e)
+            raise FileTransformationException("Transformation can't complete")
+    
+    FileFormatTransformation(gdf, transformation.file_format, output_folder_path).transformation()
     
     return {'status_code':'200'}
 
