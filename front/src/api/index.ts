@@ -1,4 +1,4 @@
-import { NumberOfTranfromationsEnum } from "../enums/settings";
+import { NumberOfTranfromationsEnum, ResultFormatEnum } from "../enums/settings";
 
 const server = `${import.meta.env.VITE_server}`
 
@@ -10,6 +10,7 @@ export const TransformedFileDownloadRequest = (props:SettingStateType, id:string
       pipeline= props.transformationsItems.map(e => e.code);
     };
 
+    console.log(props.dataOutputFormat)
     fetch(`${server}/api/transform/file/${id}`, {
         method:'POST',
         headers: {
@@ -19,11 +20,10 @@ export const TransformedFileDownloadRequest = (props:SettingStateType, id:string
         body: JSON.stringify({
           "pipeline": pipeline,
           "pipe_ids": props.pipeIds,
-          "file_format": props.outputFile
+          "file_format": props.outputFile,
+          "result_form":ResultFormatEnum[props.dataOutputFormat as keyof typeof ResultFormatEnum],
         })
-      }).then(()=>{
-        window.open(`${server}/api/transform/download/${id}`)
-      })
+      }).then(()=>window.open(`${server}/api/transform/download/${id}`))
 }
 
 interface PointAPI {
@@ -35,9 +35,10 @@ interface PointAPI {
 export const TransformedPoint = async (coordinate:PointAPI, settings:SettingStateType) => {
   let input:PointAPI;
   let is2D:boolean = true;
+  
   input =  {
-    x: parseFloat(coordinate.x).toString(),
-    y: parseFloat(coordinate.y).toString(),
+    x: coordinate.x,
+    y: coordinate.y,
   }
 
   if (coordinate?.z != undefined && !Number.isNaN(parseFloat(coordinate?.z))) {
@@ -62,7 +63,8 @@ export const TransformedPoint = async (coordinate:PointAPI, settings:SettingStat
         point: input,
         "transformation": {
           "pipeline": pipeline,
-          "pipe_ids": settings.pipeIds
+          "pipe_ids": settings.pipeIds,
+          "result_form":  ResultFormatEnum[settings.dataOutputFormat as keyof typeof ResultFormatEnum],
         }
       })
     })
@@ -70,18 +72,17 @@ export const TransformedPoint = async (coordinate:PointAPI, settings:SettingStat
     .then(res => {
       if (is2D) {
         return {
-          x: parseFloat(res.point.x).toFixed(8),
-          y: parseFloat(res.point.y).toFixed(8)
+          x: String(res.point.x),
+          y: String(res.point.y)
         } as PointAPI
       }
       return {
-        x: parseFloat(res.point.x).toFixed(8),
-        y: parseFloat(res.point.y).toFixed(8),
-        z: parseFloat(res.point.z).toFixed(8)
+        x: String(res.point.x),
+        y: String(res.point.y),
+        z: String(res.point.z)
       } as PointAPI
     })
 }
-
 
 export const TransformationsList = async (props:SettingStateType) => {
   const pipeline:string[] = props.transformationsItems.slice(0, 2+Number(props.transformationsNumber)).map(e => e.code);

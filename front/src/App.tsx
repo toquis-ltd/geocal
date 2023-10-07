@@ -11,8 +11,8 @@ import {CRSContext} from './context/crs'
 
 import {
   NumberOfTranfromationsEnum,
-  FormatVerificationOutputEnum,
-  FileFormatEnum
+  FileFormatEnum,
+  ResultFormatEnum
 } from './enums/settings';
 
 import {useStickyState} from './hooks';
@@ -30,7 +30,7 @@ const App : React.FC = () => {
   const [state, setState] = useStickyState<SettingStateType>({
     isHeightIncluded:false,
     transformationsNumber: NumberOfTranfromationsEnum.One,
-    dataOutputFormat: FormatVerificationOutputEnum.DecimalDegrees,
+    dataOutputFormat: ResultFormatEnum.DD,
     outputFile: FileFormatEnum.csv,
     transformationsItems: [],
     pipeIds:[0, 0],

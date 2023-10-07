@@ -2,14 +2,14 @@ import React from 'react';
 
 import {
     NumberOfTranfromationsEnum,
-    FormatVerificationOutputEnum,
-    FileFormatEnum
+    FileFormatEnum,
+    ResultFormatEnum,
 } from '../enums/settings';
 
 export const SettingsContext = React.createContext<SettingStateType>({
     isHeightIncluded:false,
     transformationsNumber: NumberOfTranfromationsEnum.One,
-    dataOutputFormat: FormatVerificationOutputEnum.DecimalDegrees,
+    dataOutputFormat: ResultFormatEnum.DD,
     outputFile: FileFormatEnum.csv,
     transformationsItems: [],
     pipeIds:[],

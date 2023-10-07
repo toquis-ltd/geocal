@@ -4,7 +4,7 @@ import {TransformedPoint} from '../api';
 
 import { SettingsContext } from '../context/settings';
 
-import { UnitEnume } from '../enums/crs';
+import { UnitEnum } from '../enums/crs';
 
 interface PointCoordinateInput {
   x:string
@@ -19,7 +19,7 @@ interface PointCoordinateInput {
 }
 
 const InputPlaceHolder = (item:CRSModelType) => {
-  if (item?.unit === UnitEnume.DEGREE) {
+  if (item?.unit === UnitEnum.DEGREE) {
     return ['Longitude', 'Latitude']
   }
   return ['X', 'Y']

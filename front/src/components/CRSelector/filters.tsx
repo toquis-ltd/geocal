@@ -12,7 +12,7 @@ import {
 import {isMobile} from 'react-device-detect';
 
 import AreaSelector from '../AreaSelector'
-import {UnitEnume, PJEnum} from '../../enums/crs'
+import {UnitEnum, PJEnum} from '../../enums/crs'
 
 import data from '../../data/crs.json'
 
@@ -48,7 +48,7 @@ const filterOptions: Option[] = [
     {
       value: 'unit',
       label: 'Unit',
-      children: getAll(Object.values(UnitEnume))
+      children: getAll(Object.values(UnitEnum))
     },
 ]
 

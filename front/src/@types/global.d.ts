@@ -1,8 +1,8 @@
 import {
     TransformationDimentionEnum,
     NumberOfTranfromationsEnum,
-    FormatVerificationOutputEnum,
-    FileFormatEnum
+    FileFormatEnum,
+    ResultFormatEnum
     } from '../enums/settings';
 
 import {PJEnum, UnityEnume} from '../enums/crs';
@@ -13,33 +13,6 @@ declare  global {
         name: string
         code: string
         area: number[]
-    }
-
-    interface OneTransformation {
-        sourceEPSG: number
-        targetEPSG: number
-        transformationIndex: number
-    }
-
-    interface TwoTransformation {
-        sourceEPSG: number
-        middleEPSG: number
-        targetEPSG: number
-        FirstTransformationIndex: number
-        SecondTransformationIndex: number
-    }
-    
-    interface PointTransformation {
-        transform : OneTransformation | TwoTransformation
-        point:{
-            x:number
-            y:number
-        }
-    }
-
-    interface FileTransformation {
-        transform : OneTransformation | TwoTransformation
-        file:File
     }
 
     interface PointCoordinate {
@@ -57,7 +30,7 @@ declare  global {
         area_of_use_name: string
         projection_method_name: string
         area_bounds: float[]
-        unit: UnitEnume
+        unit: UnitEnum
     }
 
     interface CRSListStateType {
@@ -68,10 +41,10 @@ declare  global {
     interface SettingStateType {
         isHeightIncluded:boolean,
         transformationsNumber:NumberOfTranfromationsEnum,
-        dataOutputFormat: FormatVerificationOutputEnum,
+        dataOutputFormat: ResultFormatEnum,
         outputFile: FileFormatEnum,
-        transformationsItems:CRSModelType[]
-        pipeIds:number[]
+        transformationsItems:CRSModelType[],
+        pipeIds:number[],
         setState:(c:SettingStateType)=>void,
     };
 }

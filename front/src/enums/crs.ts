@@ -8,7 +8,7 @@ export enum PJEnum{
 }
 
 
-export enum UnitEnume {
+export enum UnitEnum {
     METRE = "metre", 
     DEGREE = "degree", 
     FOOT = "foot", 

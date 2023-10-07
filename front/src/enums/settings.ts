@@ -3,10 +3,13 @@ export enum NumberOfTranfromationsEnum{
     Two
 }
 
-export enum FormatVerificationOutputEnum{
-    DecimalDegrees='Decimal Degrees',
-    DegreesMinutes='Degrees Minutes',
-    DegreesMinutesSeconds='Degrees Minutes Seconds',
+export enum ResultFormatEnum{
+    DD = 'DD',
+    DD_MM = 'DD MM',
+    DD_MM_SS = 'DD MM SS',
+    DDdnMM = 'DD-MM',
+    DDdnMMdnSS = 'DD-MM-SS',
+    // DDdtMM = 'DD.MM',
 }
 
 export enum FileFormatEnum{
