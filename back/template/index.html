@@ -10,11 +10,16 @@
     <meta name="google-site-verification" content="8lN41R2HMM69gb9lf2hZoocwV421yOC3iQD-IA3KIp4" />
     <title>Toquis - Mapless</title>
     <link rel="stylesheet" href="/static/style.css">
+    <script>document.onreadystatechange=function(){"complete"!==document.readyState?(document.querySelector("body").style.visibility="hidden",document.querySelector("#loader").style.visibility="visible"):(document.querySelector("#loader").style.display="none",document.querySelector("body").style.visibility="visible")};</script>
+    <script type="module" crossorigin src="/static/bundle.js"></script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XWJLWM38MD"></script>
     <script>
-        // this script allow loading animation
-      document.onreadystatechange=function(){"complete"!==document.readyState?(document.querySelector("body").style.visibility="hidden",document.querySelector("#loader").style.visibility="visible"):(document.querySelector("#loader").style.display="none",document.querySelector("body").style.visibility="visible")};
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XWJLWM38MD');
     </script>
-   <script type="module" crossorigin src="/static/bundle.js"></script>
   </head>
   <body>
     <div id="loader"></div>
