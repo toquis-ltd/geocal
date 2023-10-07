@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from typing import Iterator, Sequence
+from typing import Iterator
 
 import geopandas as gpd
 import pandas as pd
@@ -45,6 +45,9 @@ def format_point(value:float, result:ResultFormEnum) -> str:
         case ResultFormEnum.DDdnMMdnSS:
             out_values = to_deg_min_sec(value)
             return f'{int(out_values[0])}-{int(out_values[1])}-{out_values[2]:3f}'
+        # case ResultFormEnum.DDdtMM:
+        #     out_values = to_deg_min_sec(value)
+        #     return f'{int(out_values[0])}.{int(out_values[1])}'
 
 
 class ABSTransformation:
