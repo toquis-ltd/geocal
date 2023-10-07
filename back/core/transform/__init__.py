@@ -77,8 +77,8 @@ async def upload_file(id:str, file:UploadFile, background_tasks: BackgroundTasks
     # hot reload waits for the end of this task, so for development purposes, I've disabled it.
     # I'm also not sure if it will do the same on the server, so maybe I have to find a better
     # solution for scheduled cleaning of unused data
-    # if not bool(int(os.environ.get("DEBUG"))):
-    background_tasks.add_task(func=delete_all_user_tmp_files, path=path, timer=60)
+    if not bool(int(os.environ.get("DEBUG"))):
+        background_tasks.add_task(func=delete_all_user_tmp_files, path=path, timer=60)
     
     return {'status_code':201}
 
