@@ -49,7 +49,7 @@ const View : React.FC<ViewProps> = (props) => {
                 <div className="item">
                   <p><b>Name: </b>{item.name}</p>
                   <p><b>EPSG: </b>{item.code}</p>
-                  <p><b>Area: </b>{item.area[0]}N - {item.area[2]}N {item.area[1]}E - {item.area[3]}E</p>
+                  <p><b>Area: </b>{item.area[0]}E to {item.area[2]}E and {item.area[1]}N - {item.area[3]}N</p>
                 </div>
                 <Button
                       size='large'
@@ -69,7 +69,7 @@ const display = (item:TransformationDefinition) => {
   <>
   <p><b>Name: </b>{item.name}</p>
   <p><b>EPSG: </b>{item.code}</p>
-  <p><b>Area: </b>{item.area[0]}N - {item.area[2]}N {item.area[1]}E - {item.area[3]}E</p>
+  <p><b>Area: </b>{item.area[0]}E to {item.area[2]}E and {item.area[1]}N - {item.area[3]}N</p>
   </>
   )
 }
