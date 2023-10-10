@@ -7,6 +7,9 @@ from ..types.comm import TransformatioDef
 
 from .comm import ABSTransformation, format_point
 
+class PointTransformationException(Exception):
+    pass
+
 class PointTransformation(ABSTransformation):
     def __init__(self, point: Union[Point3D, Point2D], transformation:TransformatioDef):
         super().__init__(transformation)
@@ -27,7 +30,7 @@ class PointTransformation(ABSTransformation):
             except Exception as e:
                 print(self.pipe_id, self.pipeline.index(source))
                 print(f"Can't transform {source} to {target} and at {self.point}")
-                raise f"Point transformation error: {e}"
+                raise PointTransformationException(f"Point transformation error: {e}")
         
         if len(point) == 3:
             return Point3D(x=f'{format_point(point[0], self.form)}', 
