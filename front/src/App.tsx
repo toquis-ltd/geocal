@@ -33,7 +33,7 @@ const App : React.FC = () => {
     dataOutputFormat: ResultFormatEnum.DD,
     outputFile: FileFormatEnum.csv,
     transformationsItems: [],
-    pipeIds:[0, 0],
+    pipeIds:[0, 0, 0],
     setState: () => {},
   }  as SettingStateType, 'AppState');
   

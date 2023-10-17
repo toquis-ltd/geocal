@@ -55,9 +55,7 @@ const CRSelector : React.FC<Props> = (prop:Props) => {
     setData(db)
   }
 
-  const onSearch = (value:CRSModelType[]) => {
-    CRState.setCRSList({...CRState, CRSList:value})
-  }
+  const onSearch = (value:CRSModelType[]) => CRState.setCRSList({...CRState, CRSList:value});
 
   React.useEffect(() => {
     setData(CRState.CRSList)
@@ -70,7 +68,7 @@ const CRSelector : React.FC<Props> = (prop:Props) => {
   return (
     <Modal
         title="Select coordinate referance area"
-        centered
+        // centered
         open={prop.state}
         onCancel={() => prop.setViewState(false)}
         footer={[]}

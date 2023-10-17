@@ -19,43 +19,54 @@ const SwapButton:React.FC<SwapProps> = ({onClick, size}) => {
             </ Col>
 }
 
-const swapPipeline =  (isSwapedFirst:boolean, pipeline:CRSModelType[]) => {
-    if (isSwapedFirst) {
-        [pipeline[0], pipeline[1]] = [pipeline[1], pipeline[0]];
-        return pipeline
-    }
+const SwapCRS =  (swaped_ids:Number[], pipeline:CRSModelType[]) => {
+    if (pipeline[swaped_ids[0]] == undefined || 
+        pipeline[swaped_ids[1]] == undefined) return pipeline;
 
-    [pipeline[1], pipeline[2]] = [pipeline[2], pipeline[1]];
+    [pipeline[swaped_ids[0]], pipeline[swaped_ids[1]]] = [pipeline[swaped_ids[1]], pipeline[swaped_ids[0]]];
     return pipeline
 }
 
 const sizes = [
     [10, 2],
-    [7, 1]
+    [7, 1],
+    [10, 2]
 ]
 
 const CRSelectorContainer:React.FC = () => {
     const settings = React.useContext<SettingStateType>(SettingsContext);
-    const isSmall = settings.transformationsNumber===NumberOfTranfromationsEnum.Two
-    const onSwap = (isSwapedFirst:boolean) => {
-        const pipeline = swapPipeline(isSwapedFirst, settings.transformationsItems)
+    const onSwap = (swaped_ids) => {
+        const pipeline = SwapCRS(swaped_ids, settings.transformationsItems)
         settings.setState({...settings, transformationsItems:pipeline} as SettingStateType)
     };
     return (
     <>
-        <Col xl={sizes[Number(isSmall)][0]} xs={24}>
+        <Col xl={sizes[Number(settings.transformationsNumber)][0]} xs={24}>
             <CRSItem index={0} />
         </Col>
-        <SwapButton size={sizes[Number(isSmall)][1]} onClick={() => onSwap(true)}/>
-        <Col xl={sizes[Number(isSmall)][0]} xs={24}>
+
+        <SwapButton size={sizes[Number(settings.transformationsNumber)][1]} onClick={() => onSwap([0, 1])}/>
+
+        <Col xl={sizes[Number(settings.transformationsNumber)][0]} xs={24}>
             <CRSItem index={1} />
         </Col>
-        {(isSmall) ?  
+
+        {(settings.transformationsNumber >= NumberOfTranfromationsEnum.Two) ?  
         <>
-            <SwapButton size={sizes[Number(isSmall)][1]} onClick={() => onSwap(false)}/>
-            <Col  xl={sizes[1][0]} xs={24}>
+            <SwapButton size={sizes[Number(settings.transformationsNumber)][1]} onClick={() => onSwap([1, 2])}/>
+            <Col  xl={sizes[Number(settings.transformationsNumber)][0]} xs={24}>
                 <CRSItem index={2} />
             </Col>
+        </> : null
+        }
+        {(settings.transformationsNumber >= NumberOfTranfromationsEnum.Three) ?  
+        <>
+            <SwapButton size={sizes[Number(settings.transformationsNumber)][1]} onClick={() => onSwap([2, 3])}/>
+            <Col  xl={sizes[Number(settings.transformationsNumber)][0]} xs={24}>
+                <CRSItem index={3} />
+            </Col>
+            <SwapButton size={sizes[Number(settings.transformationsNumber)][1]} onClick={() => onSwap([0, 3])}/>
+
         </> : null
         }
     </>

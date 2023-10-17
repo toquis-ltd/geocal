@@ -20,6 +20,8 @@ const uuid = () => {
    .join('')
 }
 
+const styleUpload = {margin:'0 auto', width:'50vw', display:'flex', justifyContent:'center'};
+
 const FileUploader : React.FC = () => {
   const state = React.useContext<SettingStateType>(SettingsContext)
   const [fileList, setFileList] = React.useState<UploadFile[]>([]);
@@ -58,14 +60,15 @@ const FileUploader : React.FC = () => {
   }
 
   return (
-    <div className="upload__file" style={{textAlign:"center"}} onDragOver={(e) => e.preventDefault()}    >
+    <form id='transform_file' className="upload__file" style={{textAlign:"center"}} onDragOver={(e) => e.preventDefault()}    >
       <Dragger  fileList={fileList} {...props} height={300}>
             <p className="ant-upload-drag-icon">
               <InboxOutlined />
             </p>
             <p className="ant-upload-text">Click or drag file to this area to upload</p>
       </Dragger>
-      <div className="file-upload__container" style={{margin:'0 auto', width:'50vw', display:'flex', justifyContent:'center'}}>
+
+      <div className="file-upload__container" style={styleUpload}>
             <Button 
               style={{margin:'5px'}}
               type="primary"
@@ -84,8 +87,7 @@ const FileUploader : React.FC = () => {
             children={'Transform'}
           />
       </div>
-
-  </div>
+  </form>
   )
 
 }

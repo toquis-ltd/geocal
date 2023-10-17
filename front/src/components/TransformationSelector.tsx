@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Modal, Button, Card, List, Divider } from 'antd';
+
 import { SettingOutlined } from '@ant-design/icons';
 
 import { SettingsContext } from '../context/settings';
@@ -19,6 +20,16 @@ interface SelectorProps {
 }
 
 const { Meta } = Card;
+
+const display = (item:TransformationDefinition) => {
+  return (
+  <>
+  <p><b>Name: </b>{item.name}</p>
+  <p><b>EPSG: </b>{item.code}</p>
+  <p><b>Area: </b>{item.area[0]}E to {item.area[2]}E and {item.area[1]}N to {item.area[3]}N</p>
+  </>
+  )
+}
 
 
 const View : React.FC<ViewProps> = (props) => {
@@ -47,9 +58,7 @@ const View : React.FC<ViewProps> = (props) => {
             <List.Item key={index}>
               <div className="item" style={{width:'100%', display:'flex', justifyContent:"space-between"}}>
                 <div className="item">
-                  <p><b>Name: </b>{item.name}</p>
-                  <p><b>EPSG: </b>{item.code}</p>
-                  <p><b>Area: </b>{item.area[0]}E to {item.area[2]}E and {item.area[1]}N - {item.area[3]}N</p>
+                  {display(item)}
                 </div>
                 <Button
                       size='large'
@@ -62,15 +71,6 @@ const View : React.FC<ViewProps> = (props) => {
           )} />
           <Divider />
       </Modal>
-  )
-}
-const display = (item:TransformationDefinition) => {
-  return (
-  <>
-  <p><b>Name: </b>{item.name}</p>
-  <p><b>EPSG: </b>{item.code}</p>
-  <p><b>Area: </b>{item.area[0]}E to {item.area[2]}E and {item.area[1]}N - {item.area[3]}N</p>
-  </>
   )
 }
 

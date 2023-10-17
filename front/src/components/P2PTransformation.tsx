@@ -39,6 +39,12 @@ const transformationStyle:React.CSSProperties = {
   alignItems:'center'
 };
 
+const centerInputFieldStyle:React.CSSProperties = {
+    display:'flex',
+    flexDirection: 'column',
+    alignItems:'center'
+};
+
 const P2PTransformation : React.FC = () => {
   const settings = React.useContext<SettingStateType>(SettingsContext);
 
@@ -55,7 +61,7 @@ const P2PTransformation : React.FC = () => {
         message.error('Transformation error, please verify input data', 3);
         setOutput({x:'', y:'' , z:''});
       });
-  }
+  };
   
   React.useEffect(() => {
     setInput({...input, z:''});
@@ -63,24 +69,21 @@ const P2PTransformation : React.FC = () => {
   }, [settings.isHeightIncluded])
 
   return (
-    <div className="transform__point" style={transformationStyle}>
-          <div className="input__point" style={{
-                                                display:'flex',
-                                                flexDirection: 'column',
-                                                alignItems:'center'
-                                                }}>
-              
+    <form id="point_transformation" className="transform__point" style={transformationStyle}>
+          <div className="input__point" style={centerInputFieldStyle}>
               <div className="line" style={lineStyle}>
-                <label htmlFor="x" style={{margin: 'auto 0px'}}>{inputHolders[0]}:</label>
+                <label htmlFor="in_x" style={{margin: 'auto 0px'}}>{inputHolders[0]}:</label>
                 <Input
+                      id='in_x'
                       type='tel'
                       placeholder={inputHolders[0]}
                       value={input.x}
                       onChange={e => setInput({...input, x:e.target.value})} />
               </div>
               <div className="line" style={lineStyle}>
-                <label htmlFor="y" style={{margin: 'auto 0px'}} >{inputHolders[1]}:</label>
+                <label htmlFor="in_y" style={{margin: 'auto 0px'}} >{inputHolders[1]}:</label>
                 <Input
+                      id='in_y'
                       type='tel'
                       placeholder={inputHolders[1]}
                       value={input.y}
@@ -90,8 +93,9 @@ const P2PTransformation : React.FC = () => {
               <div className="line" style={lineStyle}>
                 {(settings.isHeightIncluded) ?
                   <>
-                  <label htmlFor="Height" style={{margin: 'auto 0px'}}>Height:</label>
+                  <label htmlFor="in_z" style={{margin: 'auto 0px'}}>Height:</label>
                   <Input
+                          id='z'
                           type='tel'
                           placeholder='Height'
                           value={input.z} 
@@ -103,22 +107,20 @@ const P2PTransformation : React.FC = () => {
           <div className="transform__buttons" style={{margin:'10px auto'}}>
               <Button type="primary" onClick={transformPoint}>Transform</Button>
           </div>
-          <div className="output__point" style={{
-                                                display:'flex',
-                                                flexDirection: 'column',
-                                                alignItems:'center'
-                                                }}>
+          <div className="output__point" style={centerInputFieldStyle}>
               <div className="line" style={lineStyle}>
-                <label htmlFor="x" style={{margin: 'auto 0px'}} >{outputHolders[0]}:</label>
+                <label htmlFor="out_x" style={{margin: 'auto 0px'}} >{outputHolders[0]}:</label>
                 <Input
+                      id='out_x'
                       type='tel'
                       placeholder={outputHolders[0]}
                       value={output.x}
                       />
               </div>
               <div className="line" style={lineStyle}>
-                <label htmlFor="y" style={{margin: 'auto 0px'}} >{outputHolders[1]}:</label>
+                <label htmlFor="out_y" style={{margin: 'auto 0px'}} >{outputHolders[1]}:</label>
                 <Input
+                      id='out_y'
                       type='tel'
                       placeholder={outputHolders[1]}
                       value={output.y}
@@ -127,15 +129,16 @@ const P2PTransformation : React.FC = () => {
               <div className="line" style={lineStyle}>
                 {(settings.isHeightIncluded) ?
                   <>
-                  <label htmlFor="Height" style={{margin: 'auto 0px'}}>Height:</label>
+                  <label htmlFor="out_z" style={{margin: 'auto 0px'}}>Height:</label>
                   <Input
+                          id='out_z'
                           placeholder='Height'
                           value={output.z} />
                   </>
                   : null}
               </div>
           </div>
-    </div>
+    </form>
 )}
 
 export default P2PTransformation

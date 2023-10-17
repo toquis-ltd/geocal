@@ -21,21 +21,27 @@ function getOptions<T extends {}>(e:T):OptionType<T>[] {
     label: e[key as keyof typeof e],
     value: key as keyof typeof e
   }));
-}
+};
+
+const transformationNumberOptions =  [
+  { label: '1', value:  NumberOfTranfromationsEnum.One},
+  { label: '2', value:  NumberOfTranfromationsEnum.Two},
+  { label: '3', value:  NumberOfTranfromationsEnum.Three},
+];
+
+const outputFileOptions = getOptions(FileFormatEnum);
+
+const resultOutputOptions = getOptions(ResultFormatEnum);
 
 const BasicSettings : React.FC = () => {
   const settings = React.useContext<SettingStateType>(SettingsContext)
-  
-  const transformationNumberOptions =  [
-    { label: '1', value:  NumberOfTranfromationsEnum.One},
-    { label: '2', value:  NumberOfTranfromationsEnum.Two},
-  ];
-  const outputFileOptions = getOptions(FileFormatEnum);
-  const resultOutputOptions = getOptions(ResultFormatEnum);
 
   const isOutputFormatSelectionAllowed = () => {
-    const isShow = (settings.transformationsItems.length>1 &&
-                    [UnitEnum.DEGREE, UnitEnum.GRAD].includes(settings.transformationsItems[settings.transformationsItems.length-1].unit))
+    const index = ((settings.transformationsNumber+1) < settings.transformationsItems.length ) ?  settings.transformationsNumber + 1 : settings.transformationsItems.length - 1
+
+    const isShow = (settings.transformationsItems.length>=2 &&
+                    [UnitEnum.DEGREE, UnitEnum.GRAD].includes(settings.transformationsItems[index].unit));
+
     if (!isShow && settings.dataOutputFormat !== ResultFormatEnum.DD) {
       settings.setState({...settings, dataOutputFormat:ResultFormatEnum.DD})
     }
@@ -46,7 +52,7 @@ const BasicSettings : React.FC = () => {
     <Col span={24}>
     <Card 
           title="Geodetic calculator"
-          style={{ minWidth:'300px', width:'30vw', margin:'auto', }}
+          style={{ minWidth:'350px', width:'27vw', margin:'auto'}}
           headStyle={{ textAlign:'center' }} 
           bodyStyle={{ padding:'5px 10px 15px 10px',  height:'160px'}}>
           

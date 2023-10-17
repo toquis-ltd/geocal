@@ -1,4 +1,5 @@
 import { NumberOfTranfromationsEnum, ResultFormatEnum } from "../enums/settings";
+import { PointAPI } from '../@types/api';
 
 const server = `${import.meta.env.VITE_server}`
 
@@ -26,20 +27,13 @@ export const TransformedFileDownloadRequest = (props:SettingStateType, id:string
       }).then(()=>window.open(`${server}/api/transform/download/${id}`))
 }
 
-interface PointAPI {
-  x:string
-  y:string
-  z?:string
-};
-
 export const TransformedPoint = async (coordinate:PointAPI, settings:SettingStateType) => {
-  let input:PointAPI;
   let is2D:boolean = true;
   
-  input =  {
+  const input = {
     x: coordinate.x,
     y: coordinate.y,
-  }
+  } as PointAPI;
 
   if (coordinate?.z != undefined && !Number.isNaN(parseFloat(coordinate?.z))) {
     input.z = parseFloat(coordinate.z).toString()
@@ -47,12 +41,16 @@ export const TransformedPoint = async (coordinate:PointAPI, settings:SettingStat
   }
 
   let pipeline:string[];
-  if (settings.transformationsNumber == NumberOfTranfromationsEnum.One){
-    pipeline = settings.transformationsItems.slice(0, 2).map(e => e.code);
-  } else {
-    pipeline= settings.transformationsItems.map(e => e.code);
+  
+  switch(settings.transformationsNumber) {
+    case NumberOfTranfromationsEnum.One:
+      pipeline = settings.transformationsItems.slice(0, 2).map(e => e.code);
+      break;
+    case NumberOfTranfromationsEnum.Two:
+    case NumberOfTranfromationsEnum.Three:
+      pipeline= settings.transformationsItems.map(e => e.code);
+      break;
   }
-
   return await await fetch(`${server}/api/transform/point`, {
       method:'POST',
       headers: {

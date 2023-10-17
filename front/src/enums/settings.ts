@@ -1,6 +1,7 @@
 export enum NumberOfTranfromationsEnum{
     One,
-    Two
+    Two,
+    Three,
 }
 
 export enum ResultFormatEnum{
