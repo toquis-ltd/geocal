@@ -20,7 +20,7 @@ const uuid = () => {
    .join('')
 }
 
-const styleUpload = {margin:'0 auto', width:'50vw', display:'flex', justifyContent:'center'};
+const styleUpload = {margin:'0 auto', width:'100%', display:'flex', justifyContent:'center'};
 
 const FileUploader : React.FC = () => {
   const state = React.useContext<SettingStateType>(SettingsContext)
@@ -61,7 +61,7 @@ const FileUploader : React.FC = () => {
 
   return (
     <form id='transform_file' className="upload__file" style={{textAlign:"center"}} onDragOver={(e) => e.preventDefault()}    >
-      <Dragger  fileList={fileList} {...props} height={300}>
+      <Dragger  fileList={fileList} {...props} height={150}>
             <p className="ant-upload-drag-icon">
               <InboxOutlined />
             </p>

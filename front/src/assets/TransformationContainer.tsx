@@ -1,3 +1,4 @@
+import {isMobile} from "react-device-detect";
 import { Tabs, Col } from "antd";
 
 import P2PTransformation from '../components/P2PTransformation'
@@ -19,7 +20,7 @@ const items = [
 
 const TransformationContainer:React.FC = () => {
     return  (
-        <Col span={24} style={{height:'450px'}}>
+        <Col xl={12} xs={24} style={(!isMobile) ? {height:'270px'}:{height:'300px'}}>
             <Tabs items={items} />
         </Col>
     )

@@ -19,7 +19,7 @@ const SwapButton:React.FC<SwapProps> = ({onClick, size}) => {
             </ Col>
 }
 
-const SwapCRS =  (swaped_ids:Number[], pipeline:CRSModelType[]) => {
+const SwapCRS =  (swaped_ids:[number, number], pipeline:CRSModelType[]) => {
     if (pipeline[swaped_ids[0]] == undefined || 
         pipeline[swaped_ids[1]] == undefined) return pipeline;
 
@@ -35,7 +35,7 @@ const sizes = [
 
 const CRSelectorContainer:React.FC = () => {
     const settings = React.useContext<SettingStateType>(SettingsContext);
-    const onSwap = (swaped_ids) => {
+    const onSwap = (swaped_ids:[number, number]) => {
         const pipeline = SwapCRS(swaped_ids, settings.transformationsItems)
         settings.setState({...settings, transformationsItems:pipeline} as SettingStateType)
     };

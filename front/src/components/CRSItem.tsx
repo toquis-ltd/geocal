@@ -1,5 +1,5 @@
 import React from 'react'
-import { SettingOutlined, DeleteOutlined } from '@ant-design/icons';
+import { SettingOutlined, DeleteOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import { Card, Button } from 'antd';
 
 import { SettingsContext } from '../context/settings';
@@ -21,7 +21,8 @@ const CRSItem : React.FC<Props> = ({index}) => {
   };
 
   const onDelete = () => {
-    const withoutItem = settings.transformationsItems.filter(item => item != settings.transformationsItems[index]);
+    const withoutItem = settings.transformationsItems;
+    withoutItem.splice(index, 1)
     settings.setState({...settings, transformationsItems:withoutItem});
   };
 
@@ -31,9 +32,12 @@ const CRSItem : React.FC<Props> = ({index}) => {
         <Button onClick={() => setCRSelectorState(true)}>
           <SettingOutlined key="setting" /> Change
         </Button>,
+        <Button onClick={()=>null}>
+          <InfoCircleOutlined />  About
+        </Button>,
         <Button onClick={onDelete}>
           <DeleteOutlined />  Delete
-        </Button>
+        </Button>,
       ]}>
         {
           (settings.transformationsItems[index] != undefined) ?
@@ -42,7 +46,6 @@ const CRSItem : React.FC<Props> = ({index}) => {
             <p><b>{settings.transformationsItems[index]?.auth_name}:</b> {settings.transformationsItems[index]?.code}</p>
             <p><b>Unit:</b> {settings.transformationsItems[index]?.unit}</p>
             <p><b>Type:</b> {settings.transformationsItems[index]?.type}</p>
-            <p><b>Area of use:</b> {settings.transformationsItems[index]?.area_of_use_name.slice(0, 300)}...</p>
             {(settings.transformationsItems[index]?.projection_method_name) ? <p><b>Projection:</b> {settings.transformationsItems[index]?.projection_method_name}</p> : null}
           </>
           :

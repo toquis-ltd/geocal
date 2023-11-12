@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import { Layout } from 'antd';
+import { Layout, Alert, Space } from 'antd';
 
 import Navbar from './components/Navbar'
 
@@ -49,6 +49,23 @@ const App : React.FC = () => {
   
   return (
   <Layout className="layout">
+    <Space direction="vertical" style={{ width: '100%' }}>
+      <Alert
+        showIcon={false}
+        description={
+        <p style={{textAlign:'center'}}>
+          <a target="_blank"
+             href="https://docs.google.com/forms/d/e/1FAIpQLSdvxIfdqhPLp1ltSl-eyweUVBkoh29l9K5GhWWfUwfPBAqRGQ/viewform?usp=sf_link"
+            > Your feedback is incredibly important to us as we strive to enhance Mapless. <br/>
+              You can propose any additional features or report any bugs. <br/>
+          </a>
+             It takes 3 minutes to complete our form or you can contact us directly at  <a href="mailto: feedback@toquis.com">feedback@toquis.com</a> .
+        </p>
+        }
+        banner
+        closable
+      />
+    </Space>
     <Navbar/>
     <Content style={AppStyle}>
     <CRSContext.Provider value={{...CRState, setCRSList}}>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row} from 'antd';
+import { Row } from 'antd';
 
 import BasicSettings from '../components/BasicSettings';
 
@@ -14,9 +14,9 @@ const Main : React.FC = () => {
           style={{margin:'auto', width:'90%', padding:'5px'}}>
         <Row gutter={[16, 32]} >
           <BasicSettings />
+          <TransformationContainer />
           <CRSelectorContainer/>
           <TransformationSelectorContainer/>
-          <TransformationContainer />
         </Row>
       </div>
   )

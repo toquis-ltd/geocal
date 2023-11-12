@@ -1,25 +1,21 @@
 import React from 'react'
 import {Input, Button, message} from "antd";
+
+import {getLastVisibleSelectedCRSIndex} from '../outils';
 import {TransformedPoint} from '../api';
-
 import { SettingsContext } from '../context/settings';
-
 import { UnitEnum } from '../enums/crs';
+import {isMobile} from 'react-device-detect';
 
-interface PointCoordinateInput {
-  x:string
-  y:string
-  z?:string
-}
-
-interface PointCoordinateInput {
+interface PointCoordinate {
   x:string
   y:string
   z?:string
 }
 
 const InputPlaceHolder = (item:CRSModelType) => {
-  if (item?.unit === UnitEnum.DEGREE) {
+  if (item == undefined) return ['', '']
+  if (item.unit === UnitEnum.DEGREE) {
     return ['Longitude', 'Latitude']
   }
   return ['X', 'Y']
@@ -33,6 +29,13 @@ const lineStyle:React.CSSProperties = {
 };
 
 const transformationStyle:React.CSSProperties = {
+  display:'flex',
+  flexDirection: 'row',
+  justifyContent:'center', 
+  alignItems:'center'
+};
+
+const transformationStyleMobile:React.CSSProperties = {
   display:'flex',
   flexDirection: 'column',
   justifyContent:'center', 
@@ -48,10 +51,13 @@ const centerInputFieldStyle:React.CSSProperties = {
 const P2PTransformation : React.FC = () => {
   const settings = React.useContext<SettingStateType>(SettingsContext);
 
-  const [input, setInput] = React.useState<PointCoordinateInput>({x:'', y:''})
-  const [output, setOutput] = React.useState<PointCoordinateInput>({x:'', y:''})
+  const [input, setInput] = React.useState<PointCoordinate>({x:'', y:''})
+  const [output, setOutput] = React.useState<PointCoordinate>({x:'', y:''})
+
   const inputHolders:string[] = InputPlaceHolder(settings.transformationsItems[0])
-  const outputHolders:string[] = InputPlaceHolder(settings.transformationsItems[settings.transformationsNumber+1])
+  const outputHolders:string[] = InputPlaceHolder(
+    settings.transformationsItems[getLastVisibleSelectedCRSIndex(settings)]
+  );
 
   const transformPoint = () => {
       setOutput({x:'Loading...', y:'Loading...' , z:'Loading...'});
@@ -69,7 +75,7 @@ const P2PTransformation : React.FC = () => {
   }, [settings.isHeightIncluded])
 
   return (
-    <form id="point_transformation" className="transform__point" style={transformationStyle}>
+    <form id="point_transformation" className="transform__point" style={(!isMobile) ? transformationStyle:transformationStyleMobile}>
           <div className="input__point" style={centerInputFieldStyle}>
               <div className="line" style={lineStyle}>
                 <label htmlFor="in_x" style={{margin: 'auto 0px'}}>{inputHolders[0]}:</label>

@@ -4,6 +4,8 @@ import { Radio, Card, Select, Checkbox, Col } from 'antd';
 import { SettingsContext } from '../context/settings';
 import { UnitEnum } from '../enums/crs';
 
+import {getLastVisibleSelectedCRSIndex} from '../outils';
+
 import {
   NumberOfTranfromationsEnum,
   FileFormatEnum,
@@ -37,8 +39,7 @@ const BasicSettings : React.FC = () => {
   const settings = React.useContext<SettingStateType>(SettingsContext)
 
   const isOutputFormatSelectionAllowed = () => {
-    const index = ((settings.transformationsNumber+1) < settings.transformationsItems.length ) ?  settings.transformationsNumber + 1 : settings.transformationsItems.length - 1
-
+    const index = getLastVisibleSelectedCRSIndex(settings);
     const isShow = (settings.transformationsItems.length>=2 &&
                     [UnitEnum.DEGREE, UnitEnum.GRAD].includes(settings.transformationsItems[index].unit));
 
@@ -49,10 +50,9 @@ const BasicSettings : React.FC = () => {
   }
   
   return (
-    <Col span={24}>
+    <Col xl={8} xs={24}>
     <Card 
           title="Geodetic calculator"
-          style={{ minWidth:'350px', width:'27vw', margin:'auto'}}
           headStyle={{ textAlign:'center' }} 
           bodyStyle={{ padding:'5px 10px 15px 10px',  height:'160px'}}>
           
@@ -67,7 +67,7 @@ const BasicSettings : React.FC = () => {
               options={transformationNumberOptions}
               optionType="button"
               buttonStyle="solid"
-              onChange={e => settings.setState({...settings, transformationsNumber:e.target.value} as SettingStateType)}
+              onChange={e => settings.setState({...settings, transformationsNumber:e.target.value})}
               />
           </div>
           <div className="transformations-settings" style={{margin:'5px'}}>
