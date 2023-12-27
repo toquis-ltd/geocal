@@ -8,8 +8,8 @@ from fastapi.templating import Jinja2Templates
 
 from pyproj import network
 
-from core.transform import api as transform_api
-from core.search import api as search_api
+from core.v1.transform import api as transform_api
+from core.v1.search import api as search_api
 
 app = FastAPI(
     title="Mapless toquis api",
@@ -39,7 +39,6 @@ else:
         allow_methods=["*"],
         allow_headers=["*"],
     )
-    app.redoc_url=None
 
 templates = Jinja2Templates(directory="./template")
 app.mount("/static/", StaticFiles(directory="static"), name="static")

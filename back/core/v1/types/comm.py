@@ -16,6 +16,7 @@ class TransformatioDef(BaseModel):
     pipeline:Sequence[int]
     pipe_ids:Sequence[int]
     result_form:ResultFormEnum
+    result_length:int = 3
 
 class TransformationInfo(BaseModel):
     name:str

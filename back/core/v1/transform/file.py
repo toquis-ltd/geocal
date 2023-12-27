@@ -1,7 +1,7 @@
 import os
 import shutil
 
-from pyproj import CRS, transformer
+from pyproj import CRS
 
 import geopandas as gpd
 import pandas as pd
@@ -32,10 +32,7 @@ class FileCoordinateTransformation(ABSTransformation):
         self.gdf = load_geometry(gdf.rename(columns=str.lower))
     
     def transformation(self) -> gpd.GeoDataFrame:
-        for source, target in self._iter_transformation_pipeline():
-            func = transformer.TransformerGroup(source, 
-                                                target, 
-                                                always_xy=True).transformers[self.pipe_id[self.pipeline.index(source)]]
+        for func in self._iter_transformation_pipeline():
             self.__transform(func)
         return self._get_output_df()
     
@@ -61,30 +58,30 @@ class FileCoordinateTransformation(ABSTransformation):
     
     def _get_output_df(self) -> pd.DataFrame:
         """This function builds a new data frame from geogeometry. 
-        The output dataframe looks like this:
+        The output dataframe looks like this:s
 
-              x    |  y    |    z
+           easting |  northing | z
             val_x  | val_y | val_z
 
         or like this:
 
-            lon    | lat   |    z
+             lon   | lat   |    z
             val_x  | val_y | val_z
 
         Note that lon and lat could be in any possible format, like 15.45° or 15°27', 
         so it is recommended to use load_geometry before interacting with the output table
         """
         df = pd.DataFrame()
-        output_unit = CRS.from_user_input(self.pipeline[-1]).axis_info[0].unit_name
+        output_unit = CRS.from_user_input(self.td.pipeline[-1]).axis_info[0].unit_name
         
         if output_unit in [UnitEnum.DEGREE.value, UnitEnum.GRAD.value]:
-            df['lon'] = self.gdf.geometry.x.apply(lambda value:format_point(float(value), self.form))
-            df['lat'] = self.gdf.geometry.y.apply(lambda value:format_point(float(value), self.form))
+            df['lon'] = self.gdf.geometry.x.apply(lambda value:format_point(float(value), self.td))
+            df['lat'] = self.gdf.geometry.y.apply(lambda value:format_point(float(value), self.td))
         else:
-            df['x'], df['y'] = self.gdf.geometry.x, self.gdf.geometry.y
+            df['easting'], df['northing'] = self.gdf.geometry.x, self.gdf.geometry.y
 
         if self.gdf.has_z[0]:
-            df['z'] = self.gdf.geometry.z
+            df['z'] = self.gdf.geometry.z.apply(lambda value: f"{value:.{self.td.result_length}f}")
 
         return df
 

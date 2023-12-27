@@ -8,9 +8,10 @@ from ..types.comm import TransformationInfo, TransformationInfoList
 api = APIRouter(prefix="/api/search")
 
 
-def build_trs(item) -> TransformationInfo:
+def build_trs(item:transformer.Transformer) -> TransformationInfo:
     return TransformationInfo(
         name="\n".join(item.description.split(" + ")),
+        # name=item.name,
         code=str(item.operations[1].to_json_dict().get("id", {'code':'unknow'}).get('code')),
         area=item.area_of_use.bounds
     )

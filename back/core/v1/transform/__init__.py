@@ -1,7 +1,7 @@
 import os
 import shutil
 
-from typing import Union, Optional
+from typing import Union, Optional, Coroutine
 
 from fastapi import APIRouter, UploadFile, BackgroundTasks
 from fastapi.responses import FileResponse
@@ -17,13 +17,10 @@ from .comm import load_geometry
 from .point import Point2D, Point3D, PointTransformation
 from .file import FileFormatTransformation, FileCoordinateTransformation
 
+from .exceptions import UploadFileException,FileTransformationException
+
+
 api = APIRouter(prefix="/api/transform")
-
-class UploadFileException(Exception):
-    pass
-
-class FileTransformationException(Exception):
-    pass
 
 def verify_uploaded_file(path: str):
     if os.path.getsize(path) == 0:
@@ -38,7 +35,7 @@ def verify_uploaded_file(path: str):
         print(e)
         raise UploadFileException("File is unreadable or corrupted")
 
-async def delete_all_user_tmp_files(path:str, timer:Optional[int]= None):
+async def delete_all_user_tmp_files(path:str, timer:Optional[int]=None) -> None:
     if timer != None:
         await asyncio.sleep(timer)
 
@@ -51,8 +48,8 @@ async def delete_all_user_tmp_files(path:str, timer:Optional[int]= None):
 @api.post("/upload/{id}", status_code=201)
 async def upload_file(id:str, file:UploadFile, background_tasks: BackgroundTasks):
     """This fonction create folder with uploaded file, id is a random string of any length
-    all file are stokced in tmpfile folder, after creation"""
-    path = f'{os.getcwd()}/tmpfile/{id}'
+    all file are stocked in tmpfile folder, after creation"""
+    path = f'{os.getcwd()}/tmpfile/{hash(id)}'
     file_name = f'{"mapless"}{os.path.splitext(file.filename)[-1]}'
     file_path = f'{path}/{file_name}'
     
@@ -74,11 +71,9 @@ async def upload_file(id:str, file:UploadFile, background_tasks: BackgroundTasks
     
     # In normal cases, files are deleted upon download, but
     # if the user doesn't download the file, it will be deleted in 6 hours
-    # hot reload waits for the end of this task, so for development purposes, I've disabled it.
-    # I'm also not sure if it will do the same on the server, so maybe I have to find a better
-    # solution for scheduled cleaning of unused data
+    # hot reload waits for the end of this task, so for development purposes, disabled it.
     if not bool(int(os.environ.get("DEBUG"))):
-        background_tasks.add_task(func=delete_all_user_tmp_files, path=path, timer=60)
+        background_tasks.add_task(func=delete_all_user_tmp_files, path=path, timer=21600)
     
     return {'status_code':201}
 
@@ -98,8 +93,8 @@ async def transform_file(id:str, transformation:FileTransformatioDef):
         try:
             gdf = FileCoordinateTransformation(gdf, transformation).transformation()
         except Exception as e:
-            await delete_all_user_tmp_files(path)
             print(e)
+            await delete_all_user_tmp_files(path)
             raise FileTransformationException("Transformation can't complete")
     
     FileFormatTransformation(gdf, transformation.file_format, output_folder_path).transformation()

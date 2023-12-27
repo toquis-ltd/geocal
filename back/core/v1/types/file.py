@@ -15,5 +15,3 @@ class FileFormatEnum(str, Enum):
 
 class FileTransformatioDef(TransformatioDef):
     file_format:FileFormatEnum
-    pipeline:Sequence[int]
-    pipe_ids:Sequence[int]
