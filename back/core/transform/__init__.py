@@ -80,7 +80,7 @@ async def upload_file(id:str, file:UploadFile, background_tasks: BackgroundTasks
 
 @api.post("/file/{id}", status_code=200)
 async def transform_file(id:str, transformation:FileTransformatioDef):
-    path:str = f'{os.getcwd()}/tmpfile/{id}'
+    path:str = f'{os.getcwd()}/tmpfile/{hash(id)}'
 
     file_extension:str = os.path.splitext(os.listdir(path)[0])[1]
     file_name:str = f'mapless'
@@ -103,7 +103,7 @@ async def transform_file(id:str, transformation:FileTransformatioDef):
 
 @api.get("/download/{id}")
 async def download_transformed_file(id:str, background_tasks: BackgroundTasks):
-    path:str = f'{os.getcwd()}/tmpfile/{id}'
+    path:str = f'{os.getcwd()}/tmpfile/{hash(id)}'
     output_file_path:str = f'{path}/mapless_out'
     background_tasks.add_task(func=delete_all_user_tmp_files, path=path)
     return FileResponse(f'{output_file_path}.zip', media_type='application/octet-stream', filename='mapless-download.zip')
